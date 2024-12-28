@@ -1,0 +1,52 @@
+$date
+  Sat Dec 28 23:42:06 2024
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module cputb $end
+$var reg 1 ! in1 $end
+$var reg 1 " in2 $end
+$var reg 1 # result $end
+$scope module and_gate $end
+$var reg 1 $ a $end
+$var reg 1 % b $end
+$var reg 1 & f $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+X!
+X"
+X#
+X$
+X%
+X&
+#2000000
+0!
+0"
+0#
+0$
+0%
+0&
+#4000000
+1"
+1%
+#6000000
+1!
+0"
+1$
+0%
+#8000000
+1"
+1#
+1%
+1&
+#10000000
