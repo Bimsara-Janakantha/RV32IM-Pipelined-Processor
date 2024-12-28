@@ -20,7 +20,7 @@
 
 ## How to run the program
 
-### --- Method 01 ---
+### <hr> Method 01 <hr>
 
 - **Step 1:** Go to the actual directory
 
