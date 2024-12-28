@@ -1,3 +1,5 @@
+-- This is the component file for 2 input AND gate
+
 library ieee ;
 use ieee.std_logic_1164.all ;
 
