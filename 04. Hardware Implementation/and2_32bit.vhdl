@@ -24,7 +24,7 @@ entity and2_32bit is
     port(
         DATA1   : in std_logic_vector (31 downto 0);
         DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
 end and2_32bit;
 
