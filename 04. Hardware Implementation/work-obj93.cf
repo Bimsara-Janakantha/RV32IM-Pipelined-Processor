@@ -1,0 +1,7 @@
+v 4
+file . "alu_32bit.vhdl" "ec02acbf4d23687a3f3e5768488921da4665591d" "20241228194959.424":
+  entity alu_32bit at 19( 576) + 0 on 13;
+  architecture alu of alu_32bit at 27( 715) + 0 on 14;
+file . "and2_32bit.vhdl" "2f529da71d75b96a7e5765bab3908dc7622f4256" "20241228194934.421":
+  entity and2_32bit at 19( 557) + 0 on 11;
+  architecture alu of and2_32bit at 32( 871) + 0 on 12;
