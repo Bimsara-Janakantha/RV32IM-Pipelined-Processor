@@ -20,7 +20,7 @@
 
 ## How to run the program
 
-### Method 01
+### Method 01 ...
 
 - **Step 1:** Go to the actual directory
 
@@ -37,6 +37,8 @@
 - **Step 4:** Run the program
 
   > ghdl -r <entity_name><br> ex: \_ghdl -r T01_HelloWorldTb_
+
+
 
 ### Method 02: Using ghdl_run.sh File
 
