@@ -1,0 +1,4 @@
+1. How to install GHDL in Windows and run your first program
+https://youtube.com/playlist?list=PLY67kK07siHUp7L2Gd2MNAVkth_h7zUJK&si=jvYAyQQ7IkMeDYDj
+
+2. VHDL tutorials
