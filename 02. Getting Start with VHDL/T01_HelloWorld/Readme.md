@@ -20,7 +20,7 @@
 
 ## How to run the program
 
-- **Step 1:** Go to the actual directory<br>
+- **Step 1:** Go to the actual directory
 
   > cd <directory_name>
 
