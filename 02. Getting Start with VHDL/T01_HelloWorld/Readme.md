@@ -34,10 +34,18 @@
 
 - **Step 4:** Run the program
 
-  > ghdl -r <entity*name><br> \_ex: ghdl -r T01_HelloWorldTb*
+  > ghdl -r <entity*name><br> ex: \_ghdl -r T01_HelloWorldTb*
 
-- **Alternative Way:** Using ghdl_start.sh File
-  > ./ghdl*start.sh <file_name> <entity_name> <br> \_ex: ./ghdl_start.sh T01_HelloWorld T01_HelloWorldTb*
+### Alternative Way: Using ghdl_run.sh File
+
+**Note:** Use lynux base terminal _(ex: Git Bash, WSL)_
+
+- **Step 1:** Enable execution of ghdl_run.sh file
+
+  > chmod +x ghdl_runner.sh
+
+- **Step 2:** Run the ghdl_run.sh file
+  > ./ghdl*run.sh <file_name> <entity_name> <br> \_ex: ./ghdl_start.sh T01_HelloWorld T01_HelloWorldTb*
 
 ---
 
