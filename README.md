@@ -58,3 +58,4 @@ Install VHDL extension from the VS Code marketplace
 
 ## VHDL Online Tutorials
 1. Tutorials on VHDL by Nandland: https://nandland.com/learn-vhdl/
+2. Basic VHDL Course by VHDLwhiz: https://vhdlwhiz.com/basic-vhdl-tutorials/
