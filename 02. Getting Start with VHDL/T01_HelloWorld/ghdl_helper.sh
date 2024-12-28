@@ -29,3 +29,5 @@ ghdl -e "$ENTITY_NAME"
 # Step 4: Run the program
 echo "Running the entity: $ENTITY_NAME"
 ghdl -r "$ENTITY_NAME"
+
+echo "\nResult:"
