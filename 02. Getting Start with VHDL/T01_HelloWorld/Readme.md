@@ -26,14 +26,18 @@
 
 - **Step 2:** Analyze the file
 
-  > ghdl -a <filename>.vhdl<br> _ex: ghdl -a T01_HelloWorld.vhdl_
+  > ghdl -a <file*name>.vhdl<br> \_ex: ghdl -a T01_HelloWorld.vhdl*
 
 - **Step 3:** Execute the program
 
-  > ghdl -e <entity_name><br> _ex: ghdl -e T01_HelloWorldTb_
+  > ghdl -e <entity*name><br> \_ex: ghdl -e T01_HelloWorldTb*
 
 - **Step 4:** Run the program
-  > ghdl -r <entity_name><br> _ex: ghdl -r T01_HelloWorldTb_
+
+  > ghdl -r <entity*name><br> \_ex: ghdl -r T01_HelloWorldTb*
+
+- **Alternative Way:** Using ghdl_start.sh File
+  > ./ghdl*start.sh <file_name> <entity_name> <br> \_ex: ./ghdl_start.sh T01_HelloWorld T01_HelloWorldTb*
 
 ---
 
