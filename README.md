@@ -11,6 +11,7 @@ Design and implement a 32-bit RISC-V processor supporting the RV32IM instruction
 5. Copy the bin directory path of the GHDL file
 6. Add it as a new environment variable path and save. (If you add a new path as **System Variables** then it will be available for all users for your PC)
 7. Save path.
+
 Reference Video Tutorial (*Credits to original creater*) :
 [![Watch the video](https://img.youtube.com/vi/0JJku1vTu78/maxresdefault.jpg)](https://youtu.be/0JJku1vTu78)
 ### [Watch the full video on YouTube](https://youtu.be/0JJku1vTu78)
