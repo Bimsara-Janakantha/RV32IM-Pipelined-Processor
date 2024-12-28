@@ -40,10 +40,10 @@
 **Note:** Use lynux base terminal _(ex: Git Bash, WSL)_. Also, keep the **ghdl_run.sh** file is in the same working directory.
 
 - **Step 1:** Enable execution of ghdl_run.sh file
-  > chmod +x ghdl_runner.sh
+  > chmod +x ghdl_run.sh
 
 - **Step 2:** Run the ghdl_run.sh file
-  > ./ghdl_run.sh <file_name> <entity_name> <br> ex: _./ghdl_start.sh T01_HelloWorld T01_HelloWorldTb_
+  > ./ghdl_run.sh <file_name> <entity_name> <br> ex: _./ghdl_run.sh T01_HelloWorld T01_HelloWorldTb_
 
 ---
 
