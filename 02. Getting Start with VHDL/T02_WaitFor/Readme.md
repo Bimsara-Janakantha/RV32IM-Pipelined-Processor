@@ -1,4 +1,4 @@
-# T01_HelloWorld
+# T02_WaitFor
 
 ---
 
@@ -12,9 +12,22 @@
 
 ## About
 
-- This is my 1st program with VHDL.
-- This is used to print simple "Hello World!" text in the command line.
+- This is my 2nd program with VHDL
+- This is used to study the behaviour of the wait keyword in VHDL. 
 - This is running on the **VS Code** with **GHDL** and **GTKWave**.
+- The syntax of the Wait For statement is:
+  > wait for [time_value] [time_unit];
+
+- The default time value is femtoseconds (fs), but we can specify another time base.
+- The possible time values are:
+   > femtoseconds (fs) <br>
+   > picoseconds (ps) <br>
+   > nanoseconds (ns) <br>
+   > microseconds (us) <br>
+   > milliseconds (ms) <br>
+   > seconds (sec) <br>
+   > minutes (min) <br>
+   > hours (hr) <br>
 
 ---
 
@@ -26,13 +39,13 @@
   > cd <directory_name>
 
 - **Step 2:** Analyze the file
-  > ghdl -a <file_name>.vhdl<br> ex: _ghdl -a T01_HelloWorld.vhdl_
+  > ghdl -a <file_name>.vhdl<br> ex: _ghdl -a T02_WaitForTb.vhdl_
 
 - **Step 3:** Execute the program
-  > ghdl -e <entity_name><br> ex: _ghdl -e T01_HelloWorldTb_
+  > ghdl -e <entity_name><br> ex: _ghdl -e T02_WaitForTb_
 
 - **Step 4:** Run the program
-  > ghdl -r <entity_name><br> ex: _ghdl -r T01_HelloWorldTb_<be>
+  > ghdl -r <entity_name><br> ex: _ghdl -r T02_WaitForTb_<br>
 
 
 ### Method 02: Using ghdl_run.sh File
@@ -43,13 +56,13 @@
   > chmod +x ghdl_run.sh
 
 - **Step 2:** Run the ghdl_run.sh file
-  > ./ghdl_run.sh <file_name> <entity_name> <br> ex: _./ghdl_run.sh T01_HelloWorld T01_HelloWorldTb_
+  > ./ghdl_run.sh <file_name> <entity_name> <br> ex: _./ghdl_run.sh T02_WaitForTb T02_WaitForTb_
 
 ---
 
 ## Reference
 
 credits for the actual creator
-[![Watch the video](https://img.youtube.com/vi/h4ZXge1BE80/maxresdefault.jpg)](https://youtu.be/h4ZXge1BE80)
+[![Watch the video](https://img.youtube.com/vi/EoiqKxaJs18/maxresdefault.jpg)](https://youtu.be/EoiqKxaJs18)
 
-### [Watch the full video on YouTube](https://youtu.be/h4ZXge1BE80)
+### [Watch the full video on YouTube](https://youtu.be/EoiqKxaJs18)
