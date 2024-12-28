@@ -17,9 +17,8 @@ Reference Video Tutorial (*Credits to original creater*) :
 [![Watch the video](https://img.youtube.com/vi/0JJku1vTu78/maxresdefault.jpg)](https://youtu.be/0JJku1vTu78)
 ### [Watch the full video on YouTube](https://youtu.be/0JJku1vTu78)
 
-
-
 ---
+
 ## Setup VS Code for VHDL
 Install VHDL extension from the VS Code marketplace 
 #### Recommended Extensions: 
@@ -28,14 +27,15 @@ Install VHDL extension from the VS Code marketplace
 ![image](https://github.com/user-attachments/assets/b01c1c1c-f8d2-4884-b93e-b0623caf82e4) 
 
 **Note:** Second extension is more advanced. 
+
 ---
-
-
 
 ## Create the first VHDL program
 *Credits to original creater*
 [![Watch the video](https://img.youtube.com/vi/3klKQeY9pII/maxresdefault.jpg)](https://youtu.be/3klKQeY9pII)
 ### [Watch the full video on YouTube](https://youtu.be/3klKQeY9pII)
+
+---
 
 
 ## Create the testBench, run the first program and analyse the waveform with GTKWave
@@ -44,9 +44,14 @@ Install VHDL extension from the VS Code marketplace
 
 ### [Watch the full video on YouTube](https://youtu.be/N5kdRets-mc)
 
+---
 
 ## Concurrent statements in VHDL
 *Credits to original creater*
 [![Watch the video](https://img.youtube.com/vi/hjBp430joQg/maxresdefault.jpg)](https://youtu.be/hjBp430joQg)
 
 ### [Watch the full video on YouTube](https://youtu.be/hjBp430joQg)
+
+----
+
+## Video Guide
