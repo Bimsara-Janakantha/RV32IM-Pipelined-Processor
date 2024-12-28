@@ -27,7 +27,6 @@ echo "Building the entity: $ENTITY_NAME"
 ghdl -e "$ENTITY_NAME"
 
 # Step 4: Run the program
-echo "Running the entity: $ENTITY_NAME"
+echo "Running the entity: ${ENTITY_NAME}"
+echo -e "\nResult:"
 ghdl -r "$ENTITY_NAME"
-
-echo "\nResult:"
