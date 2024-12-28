@@ -24,13 +24,13 @@
 
   > cd <directory_name>
 
-- **Step 2:** analyse the file
+- **Step 2:** Analyze the file
 
   > ghdl -a <filename>.vhdl<br> _ex: ghdl -a T01_HelloWorld.vhdl_
 
-- **Step 3:** execute the program
+- **Step 3:** Execute the program
 
   > ghdl -e <entity*name><br> \_ex: ghdl -e T01_HelloWorldTb*
 
-- **Step 4:** run the program
+- **Step 4:** Run the program
   > ghdl -r <entity*name><br> \_ex: ghdl -r T01_HelloWorldTb*
