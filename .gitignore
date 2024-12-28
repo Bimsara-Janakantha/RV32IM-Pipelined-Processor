@@ -1,2 +1,2 @@
-# Ignore these files
+# Ignore any directory (folder) named as "Samples"
 **/Samples/
