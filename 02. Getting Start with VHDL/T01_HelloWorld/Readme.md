@@ -12,13 +12,15 @@
 
 ## About
 
-- This is the my 1st program with VHDL.
-- This is use to print simple "Hello World!" text in the command line.
+- This is my 1st program with VHDL.
+- This is used to print simple "Hello World!" text in the command line.
 - This is running on the **VS Code** with **GHDL** and **GTKWave**.
 
 ---
 
 ## How to run the program
+
+### Method 01
 
 - **Step 1:** Go to the actual directory
 
@@ -26,19 +28,19 @@
 
 - **Step 2:** Analyze the file
 
-  > ghdl -a <file*name>.vhdl<br> \_ex: ghdl -a T01_HelloWorld.vhdl*
+  > ghdl -a <file_name>.vhdl<br> \_ex: ghdl -a T01_HelloWorld.vhdl_
 
 - **Step 3:** Execute the program
 
-  > ghdl -e <entity*name><br> \_ex: ghdl -e T01_HelloWorldTb*
+  > ghdl -e <entity_name><br> \_ex: ghdl -e T01_HelloWorldTb_
 
 - **Step 4:** Run the program
 
-  > ghdl -r <entity*name><br> ex: \_ghdl -r T01_HelloWorldTb*
+  > ghdl -r <entity_name><br> ex: \_ghdl -r T01_HelloWorldTb_
 
-### Alternative Way: Using ghdl_run.sh File
+### Method 02: Using ghdl_run.sh File
 
-**Note:** Use lynux base terminal _(ex: Git Bash, WSL)_. Also keep the ghdl_run.sh file in the working directory
+**Note:** Use lynux base terminal _(ex: Git Bash, WSL)_. Also, keep the ghdl_run.sh file in the working directory
 
 - **Step 1:** Enable execution of ghdl_run.sh file
 
