@@ -8,7 +8,7 @@
 ------------------------------------ About -------------------------------------
 
 -- This is the my 1st program with VHDL
--- This is use to print simple "Hello World!" text in the command line
+-- This is used to print simple "Hello World!" text in the command line
 -- This is running on the VS Code with GHDL and GTKWave
 
 
