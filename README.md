@@ -1,6 +1,8 @@
 # RV32IM Pipelined-Processor
 Design and implement a 32-bit RISC-V processor supporting the RV32IM instruction set, developed as part of the Advanced Computer Architecture course (CO502). Webpage: https://cepdnaclk.github.io/e20-co502-RV32IM_Pipelined_Processor
 
+---
+
 # Tutorial Guide
 
 ## Install GHDL and GTKWave on Windows
@@ -13,7 +15,7 @@ Design and implement a 32-bit RISC-V processor supporting the RV32IM instruction
    (If you add a new path as **System Variables** then it will be available for all users for your PC)
 7. Save path.
 
-Reference Video Tutorial (*Credits to original creater*) :
+Reference Video Tutorial (*Credits to the original creator*) :
 [![Watch the video](https://img.youtube.com/vi/0JJku1vTu78/maxresdefault.jpg)](https://youtu.be/0JJku1vTu78)
 ### [Watch the full video on YouTube](https://youtu.be/0JJku1vTu78)
 
@@ -31,7 +33,7 @@ Install VHDL extension from the VS Code marketplace
 ---
 
 ## Create the first VHDL program
-*Credits to original creater*
+*Credits to the original creator*
 [![Watch the video](https://img.youtube.com/vi/3klKQeY9pII/maxresdefault.jpg)](https://youtu.be/3klKQeY9pII)
 ### [Watch the full video on YouTube](https://youtu.be/3klKQeY9pII)
 
@@ -39,7 +41,7 @@ Install VHDL extension from the VS Code marketplace
 
 
 ## Create the testBench, run the first program and analyse the waveform with GTKWave
-*Credits to original creater*
+*Credits to original creator*
 [![Watch the video](https://img.youtube.com/vi/N5kdRets-mc/maxresdefault.jpg)](https://youtu.be/N5kdRets-mc)
 
 ### [Watch the full video on YouTube](https://youtu.be/N5kdRets-mc)
@@ -47,11 +49,15 @@ Install VHDL extension from the VS Code marketplace
 ---
 
 ## Concurrent statements in VHDL
-*Credits to original creater*
+*Credits to the original creator*
 [![Watch the video](https://img.youtube.com/vi/hjBp430joQg/maxresdefault.jpg)](https://youtu.be/hjBp430joQg)
 
 ### [Watch the full video on YouTube](https://youtu.be/hjBp430joQg)
 
 ----
 
-## Video Guide
+## Digital system design using VHDL
+*Credits to the original creator*
+[![Watch the video](https://img.youtube.com/vi/7VQL0Ca51II/maxresdefault.jpg)](https://youtu.be/7VQL0Ca51II)
+
+### [Watch the full video series on YouTube](https://youtu.be/7VQL0Ca51II)
