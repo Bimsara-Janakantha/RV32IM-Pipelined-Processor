@@ -56,8 +56,5 @@ Install VHDL extension from the VS Code marketplace
 
 ----
 
-## Digital system design using VHDL
-*Credits to the original creator*
-[![Watch the video](https://img.youtube.com/vi/7VQL0Ca51II/maxresdefault.jpg)](https://youtu.be/7VQL0Ca51II)
-
-### [Watch the full video series on YouTube](https://youtu.be/7VQL0Ca51II)
+## VHDL Online Tutorials
+https://nandland.com/learn-vhdl/
