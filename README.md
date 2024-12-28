@@ -13,7 +13,6 @@ Design and implement a 32-bit RISC-V processor supporting the RV32IM instruction
 7. Save path.
 Reference Video Tutorial (*Credits to original creater*) :
 [![Watch the video](https://img.youtube.com/vi/0JJku1vTu78/maxresdefault.jpg)](https://youtu.be/0JJku1vTu78)
-
 ### [Watch the full video on YouTube](https://youtu.be/0JJku1vTu78)
 
 
@@ -26,10 +25,16 @@ Install VHDL extension from the VS Code marketplace
 
 
 ## Create the first VHDL program
-https://youtu.be/3klKQeY9pII?si=iBLLtT2DBe56PyF-
+*Credits to original creater*
+[![Watch the video](https://img.youtube.com/vi/3klKQeY9pII/maxresdefault.jpg)](https://youtu.be/3klKQeY9pII)
+### [Watch the full video on YouTube](https://youtu.be/3klKQeY9pII)
+
 
 ## Create the testBench, run the first program and analyse the waveform with GTKWave
+*Credits to original creater*
 https://youtu.be/N5kdRets-mc?si=uI3-pO94W8QOHnbV
 
+
 ## Concurrent statements in VHDL
+*Credits to original creater*
 https://youtu.be/hjBp430joQg?si=EdEYl6V8jFVSsV5t
