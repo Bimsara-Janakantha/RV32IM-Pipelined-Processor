@@ -1,7 +1,7 @@
 # RV32IM Pipelined-Processor
 Design and implement a 32-bit RISC-V processor supporting the RV32IM instruction set, developed as part of the Advanced Computer Architecture course (CO502). Webpage: https://cepdnaclk.github.io/e20-co502-RV32IM_Pipelined_Processor
 
-# Tutorial
+# Tutorial Guide
 
 ## Install GHDL and GTKWave on Windows
 1. Go to the GHDL official Github repo: https://github.com/ghdl/ghdl/releases
@@ -18,6 +18,8 @@ Reference Video Tutorial (*Credits to original creater*) :
 ### [Watch the full video on YouTube](https://youtu.be/0JJku1vTu78)
 
 
+
+---
 ## Setup VS Code for VHDL
 Install VHDL extension from the VS Code marketplace 
 #### Recommended Extensions: 
@@ -26,6 +28,8 @@ Install VHDL extension from the VS Code marketplace
 ![image](https://github.com/user-attachments/assets/b01c1c1c-f8d2-4884-b93e-b0623caf82e4) 
 
 **Note:** Second extension is more advanced. 
+---
+
 
 
 ## Create the first VHDL program
