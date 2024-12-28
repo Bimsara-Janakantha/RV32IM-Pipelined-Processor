@@ -30,10 +30,10 @@
 
 - **Step 3:** Execute the program
 
-  > ghdl -e <entity*name><br> \_ex: ghdl -e T01_HelloWorldTb*
+  > ghdl -e <entity\*name><br> _ex: ghdl -e T01_HelloWorldTb_
 
 - **Step 4:** Run the program
-  > ghdl -r <entity*name><br> \_ex: ghdl -r T01_HelloWorldTb*
+  > ghdl -r <entity\*name><br> _ex: ghdl -r T01_HelloWorldTb_
 
 ---
 
