@@ -16,7 +16,7 @@
 -- Step 1: Go to the actual directory
 --  	cd <directory_name>
 
--- Step 2: 
+-- Step 2: analyse the file
 --      ghdl -a <filename>.vhdl 
 --      ex: ghdl -a T01_HelloWorld.vhdl 
 
