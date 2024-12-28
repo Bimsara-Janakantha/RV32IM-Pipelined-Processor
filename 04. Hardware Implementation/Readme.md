@@ -1,19 +1,18 @@
-# T03_ANDGate
+# Hardware Implementation 
 
 ---
 
 ## Ownership Notice
 
 - Created by BG
-- Created on 2024-12-28
-- Last modified on 2024-12-28
+- Created on 2024-12-29
+- Last modified on 2024-12-29
 
 ---
 
 ## About
 
-- This is a simple 2 input AND gate and its' testbench file. 
-- This is used to study the behaviour of a 2 input AND Gate using VHDL and GTKWave. 
+- This is the directory for RV32IM Hardware Implementation. 
 - This is running on the **VS Code** with **GHDL** and **GTKWave**.
 
 ---
