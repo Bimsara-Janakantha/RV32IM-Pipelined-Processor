@@ -7,7 +7,7 @@
 
 ------------------------------------ About -------------------------------------
 
--- This is the my 2nd program with VHDL
+-- This is my 2nd program with VHDL
 -- This is used to study the behaviour of the wait keyword in VHDL. 
 -- This is running on the VS Code with GHDL and GTKWave
 
