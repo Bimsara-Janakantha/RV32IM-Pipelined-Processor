@@ -16,7 +16,7 @@ Reference Video Tutorial (*Credits to original creater*) :
 <html>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/0JJku1vTu78?si=lBeh6OnTvlOcce4z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div id="player"><iframe width="560" height="315" src="https://www.youtube.com/embed/0JJku1vTu78?si=lBeh6OnTvlOcce4z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
