@@ -34,3 +34,12 @@
 
 - **Step 4:** Run the program
   > ghdl -r <entity*name><br> \_ex: ghdl -r T01_HelloWorldTb*
+
+---
+
+## Reference
+
+credits for the actual creator
+[![Watch the video](https://img.youtube.com/vi/h4ZXge1BE80/maxresdefault.jpg)](https://youtu.be/h4ZXge1BE80)
+
+### [Watch the full video on YouTube](https://youtu.be/h4ZXge1BE80)
