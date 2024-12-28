@@ -38,7 +38,7 @@
 
 ### Alternative Way: Using ghdl_run.sh File
 
-**Note:** Use lynux base terminal _(ex: Git Bash, WSL)_
+**Note:** Use lynux base terminal _(ex: Git Bash, WSL)_. Also keep the ghdl_run.sh file in the working directory
 
 - **Step 1:** Enable execution of ghdl_run.sh file
 
