@@ -1,7 +1,7 @@
 v 4
-file . "ALU.vhdl" "c97177b451d27e34c2687cf4b4769dfe2f9cf342" "20241229062358.893":
-  entity alu at 16( 538) + 0 on 17;
-  architecture alu_architecture of alu at 24( 665) + 0 on 18;
+file . "ALU.vhdl" "91025560f17ffc1fb2c032af4163f98967eed49a" "20241229063707.587":
+  entity alu at 19( 652) + 0 on 21;
+  architecture alu_architecture of alu at 27( 779) + 0 on 22;
 file . "alu_32bit.vhdl" "ec02acbf4d23687a3f3e5768488921da4665591d" "20241228194959.424":
   entity alu_32bit at 19( 576) + 0 on 13;
   architecture alu of alu_32bit at 27( 715) + 0 on 14;
@@ -11,3 +11,6 @@ file . "and2_32bit.vhdl" "2f529da71d75b96a7e5765bab3908dc7622f4256" "20241228194
 file . "AND.vhdl" "57b46a4abf89676a11ae1107a6a75b0c73dab220" "20241229062329.972":
   entity ander at 16( 549) + 0 on 15;
   architecture and_architecture of ander at 29( 929) + 0 on 16;
+file . "OR.vhdl" "4155727ad7ac99078a7c63a95f36ae7cbf23ecdd" "20241229063703.766":
+  entity orer at 16( 542) + 0 on 19;
+  architecture or_architecture of orer at 29( 920) + 0 on 20;

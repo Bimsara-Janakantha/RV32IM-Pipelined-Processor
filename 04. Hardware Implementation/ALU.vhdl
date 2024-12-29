@@ -9,7 +9,10 @@
 ------------------------------------------------------
 -- An ALU with 2 input streams and 1 output stream. --
 -- Each input and output stream is 32 bit wide.     --
+-- Containing Modules:                              --
+-- 1. AND           2. OR                           --
 ------------------------------------------------------
+
 
 
 -- Libraries (IEEE)
@@ -32,21 +35,35 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
+  component orer
+    port(
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
+
   -- signals
-  signal rs1, rs2, anderOutput : std_logic_vector (31 downto 0);
+  signal rs1, rs2, anderOutput, orOutput : std_logic_vector (31 downto 0);
 
   
 begin
-  And_operator : ander 
+  ------------------- Port Mapping -------------------
+  AND_operator : ander 
     port map(
       input_1 => rs1, 
       input_2 => rs2, 
       output_1 => anderOutput
     );
 
-  
-  
-    -- Process(es)
+  OR_operator : orer 
+    port map(
+      input_1 => rs1, 
+      input_2 => rs2, 
+      output_1 => orOutput
+    );
+ 
+  -- Process(es)
   process 
   begin
     -- Test case 1 : All bits zero
