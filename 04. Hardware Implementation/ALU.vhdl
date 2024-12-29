@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Sun, 29 Dec 2024 at 01:00 AM
--- Last modified on Sun, 29 Dec 2024 at 01:00 AM
+-- Last modified on Sun, 29 Dec 2024 at 12:30 PM
 -- This is the module for 32 bit Arithmetic Logic Unit (ALU)
 
 
@@ -10,7 +10,7 @@
 -- An ALU with 2 input streams and 1 output stream. --
 -- Each input and output stream is 32 bit wide.     --
 -- Containing Modules:                              --
--- 1. AND           2. OR                           --
+-- 1. AND           2. OR           3. XOR          --
 ------------------------------------------------------
 
 
@@ -43,8 +43,16 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
+  component xorer
+    port(
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
+
   -- signals
-  signal rs1, rs2, anderOutput, orOutput : std_logic_vector (31 downto 0);
+  signal rs1, rs2, anderOutput, orOutput, xorOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -61,6 +69,13 @@ begin
       input_1 => rs1, 
       input_2 => rs2, 
       output_1 => orOutput
+    );
+
+  XOR_operator : xorer 
+    port map(
+      input_1 => rs1, 
+      input_2 => rs2, 
+      output_1 => xorOutput
     );
  
   -- Process(es)
