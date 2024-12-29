@@ -1,19 +1,19 @@
 v 4
-file . "XOR.vhdl" "7fa1c86e47ae74c493d50c28160089d35ccaddbd" "20241229065802.003":
-  entity xorer at 16( 549) + 0 on 23;
-  architecture xor_architecture of xorer at 29( 929) + 0 on 24;
-file . "OR.vhdl" "4155727ad7ac99078a7c63a95f36ae7cbf23ecdd" "20241229063703.766":
-  entity orer at 16( 542) + 0 on 19;
-  architecture or_architecture of orer at 29( 920) + 0 on 20;
-file . "AND.vhdl" "57b46a4abf89676a11ae1107a6a75b0c73dab220" "20241229062329.972":
-  entity ander at 16( 549) + 0 on 15;
-  architecture and_architecture of ander at 29( 929) + 0 on 16;
-file . "and2_32bit.vhdl" "2f529da71d75b96a7e5765bab3908dc7622f4256" "20241228194934.421":
-  entity and2_32bit at 19( 557) + 0 on 11;
-  architecture alu of and2_32bit at 32( 871) + 0 on 12;
+file . "ALU.vhdl" "8cd0f093907307e523ff4c472ee4c25105286cc2" "20241229070314.616":
+  entity alu at 19( 652) + 0 on 29;
+  architecture alu_architecture of alu at 27( 779) + 0 on 30;
 file . "alu_32bit.vhdl" "ec02acbf4d23687a3f3e5768488921da4665591d" "20241228194959.424":
   entity alu_32bit at 19( 576) + 0 on 13;
   architecture alu of alu_32bit at 27( 715) + 0 on 14;
-file . "ALU.vhdl" "8cd0f093907307e523ff4c472ee4c25105286cc2" "20241229070129.100":
-  entity alu at 19( 652) + 0 on 27;
-  architecture alu_architecture of alu at 27( 779) + 0 on 28;
+file . "and2_32bit.vhdl" "2f529da71d75b96a7e5765bab3908dc7622f4256" "20241228194934.421":
+  entity and2_32bit at 19( 557) + 0 on 11;
+  architecture alu of and2_32bit at 32( 871) + 0 on 12;
+file . "AND.vhdl" "57b46a4abf89676a11ae1107a6a75b0c73dab220" "20241229062329.972":
+  entity ander at 16( 549) + 0 on 15;
+  architecture and_architecture of ander at 29( 929) + 0 on 16;
+file . "OR.vhdl" "4155727ad7ac99078a7c63a95f36ae7cbf23ecdd" "20241229063703.766":
+  entity orer at 16( 542) + 0 on 19;
+  architecture or_architecture of orer at 29( 920) + 0 on 20;
+file . "XOR.vhdl" "7fa1c86e47ae74c493d50c28160089d35ccaddbd" "20241229065802.003":
+  entity xorer at 16( 549) + 0 on 23;
+  architecture xor_architecture of xorer at 29( 929) + 0 on 24;
