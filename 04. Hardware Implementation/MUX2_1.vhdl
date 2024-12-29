@@ -9,6 +9,7 @@
 --------------------------------------------------------------
 -- A MUXLTIPLEXER with 2 input streams and 1 output stream. --
 -- Each input and output stream is 32 bit wide.             --
+-- There is a selector to switch between the input streams. --
 --------------------------------------------------------------
 
 
