@@ -5,7 +5,7 @@
 
 
 -----------------------------------------------------------
---              32-bit 2-input AND Gate                  --
+--               32-bit 2-input AND Gate                 --
 -----------------------------------------------------------
 -- An AND Gate with 2 input streams and 1 output stream. --
 -- Each input and output stream is 32 bit wide.          --
