@@ -30,33 +30,33 @@ architecture ALU_Architecture of ALU is
   -- Components
   component ander
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component orer
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component xorer
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component adder
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
   
@@ -69,30 +69,30 @@ begin
   ------------------- Port Mapping -------------------
   AND_operator : ander 
     port map(
-      input_1 => rs1, 
-      input_2 => rs2, 
-      output_1 => anderOutput
+      DATA1 => rs1, 
+      DATA2 => rs2, 
+      RESULT => anderOutput
     );
 
   OR_operator : orer 
     port map(
-      input_1 => rs1, 
-      input_2 => rs2, 
-      output_1 => orOutput
+      DATA1 => rs1, 
+      DATA2 => rs2, 
+      RESULT => orOutput
     );
 
   XOR_operator : xorer 
     port map(
-      input_1 => rs1, 
-      input_2 => rs2, 
-      output_1 => xorOutput
+      DATA1 => rs1, 
+      DATA2 => rs2, 
+      RESULT => xorOutput
     );
 
   ADD_operator : adder
     port map(
-      input_1 => rs1, 
-      input_2 => rs2, 
-      output_1 => adderOutput
+      DATA1 => rs1, 
+      DATA2 => rs2, 
+      RESULT => adderOutput
     );
  
   -- Process(es)
