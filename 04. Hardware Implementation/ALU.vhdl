@@ -11,6 +11,7 @@
 -- Each input and output stream is 32 bit wide.     --
 -- Containing Modules:                              --
 -- 1. AND           2. OR           3. XOR          --
+-- 4. ADDER                                         --
 ------------------------------------------------------
 
 
@@ -51,8 +52,17 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
+  component adder
+    port(
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
+  
+
   -- signals
-  signal rs1, rs2, anderOutput, orOutput, xorOutput : std_logic_vector (31 downto 0);
+  signal rs1, rs2, anderOutput, orOutput, xorOutput, adderOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -76,6 +86,13 @@ begin
       input_1 => rs1, 
       input_2 => rs2, 
       output_1 => xorOutput
+    );
+
+  ADD_operator : adder
+    port map(
+      input_1 => rs1, 
+      input_2 => rs2, 
+      output_1 => adderOutput
     );
  
   -- Process(es)
@@ -104,6 +121,28 @@ begin
     -- Test case 5: Random patterns
     rs1 <= "11001100110011001100110011001100";
     rs2 <= "10101010101010101010101010101010";
+    wait for 10 ns;
+
+    -- Test cases for adder testing
+    
+    -- Test Case 1: Add two small numbers
+    rs1 <= x"00000005";
+    rs2 <= x"00000003";
+    wait for 10 ns;
+
+    -- Test Case 2: Add two large numbers (overflow case)
+    rs1 <= x"FFFFFFFF";
+    rs2 <= x"00000001";
+    wait for 10 ns;
+
+    -- Test Case 3: Add zero and a number
+    rs1 <= x"00000000";
+    rs2 <= x"12345678";
+    wait for 10 ns;
+
+    -- Test Case 4: Add two random numbers
+    rs1 <= x"ABCDEF01";
+    rs2 <= x"12345678";
     wait for 10 ns;
 
     -- End simulation
