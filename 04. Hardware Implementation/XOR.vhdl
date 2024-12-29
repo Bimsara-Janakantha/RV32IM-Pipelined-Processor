@@ -19,14 +19,14 @@ use ieee.std_logic_1164.all;
 -- Entity (module)
 entity xorer is
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
     );
 end xorer;
 
 -- Architecture of the entity (module) - This implies how it would be working
 architecture XOR_Architecture of xorer is
 begin 
-    output_1 <= input_1 xor input_2;
+    RESULT <= DATA1 xor DATA2;
 end architecture;
