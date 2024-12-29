@@ -1,5 +1,5 @@
 $date
-  Sun Dec 29 01:19:59 2024
+  Sun Dec 29 11:53:59 2024
 $end
 $version
   GHDL v0
@@ -11,14 +11,14 @@ $scope module standard $end
 $upscope $end
 $scope module std_logic_1164 $end
 $upscope $end
-$scope module alu_32bit $end
-$var reg 32 ! regout1[31:0] $end
-$var reg 32 " regout2[31:0] $end
-$var reg 32 # aluresult[31:0] $end
-$scope module and_gate $end
-$var reg 32 $ data1[31:0] $end
-$var reg 32 % data2[31:0] $end
-$var reg 32 & result[31:0] $end
+$scope module alu $end
+$var reg 32 ! rs1[31:0] $end
+$var reg 32 " rs2[31:0] $end
+$var reg 32 # anderoutput[31:0] $end
+$scope module and_operator $end
+$var reg 32 $ input_1[31:0] $end
+$var reg 32 % input_2[31:0] $end
+$var reg 32 & output_1[31:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
