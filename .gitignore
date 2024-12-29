@@ -2,7 +2,7 @@
 **/Samples/
 
 # Complied testbench file
-work-obj93.cf
+**/work-obj93.cf
 
 # cpu_wavedata.vcd file
-cpu_wavedata.vcd
+**/cpu_wavedata.vcd
