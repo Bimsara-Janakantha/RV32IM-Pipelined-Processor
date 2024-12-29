@@ -28,5 +28,6 @@ end ander;
 -- Architecture of the entity (module) - This implies how it would be working
 architecture AND_Architecture of ander is
 begin 
+    -- We can't add delays here. They ara vaild in processes only
     output_1 <= input_1 and input_2;
 end architecture;
