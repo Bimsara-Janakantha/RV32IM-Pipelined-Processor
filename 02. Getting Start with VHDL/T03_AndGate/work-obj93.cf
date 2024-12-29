@@ -1,7 +1,0 @@
-v 4
-file . "cpuTb.vhdl" "e9e6d63ad99ea081e27ce1583b05e80d83926f4c" "20241228181206.112":
-  entity cputb at 1( 0) + 0 on 13;
-  architecture test of cputb at 7( 78) + 0 on 14;
-file . "and2.vhdl" "7d2e9a156b3efa9a300dafbc74342b780122ade7" "20241228181135.174":
-  entity and2 at 1( 0) + 0 on 11;
-  architecture temp of and2 at 14( 169) + 0 on 12;
