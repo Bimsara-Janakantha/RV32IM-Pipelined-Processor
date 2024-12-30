@@ -31,42 +31,42 @@ architecture ALU_Architecture of ALU is
   -- Components
   component ander
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component orer
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component xorer
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component adder
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
 
   component shifter
     port(
-        DATA1     : in std_logic_vector (31 downto 0);
-        DATA2     : in std_logic_vector (31 downto 0);
-        SHIFTTYPE : in std_logic_vector (1 downto 0);
-        RESULT    : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        shiftType : in std_logic_vector (1 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
   
@@ -79,38 +79,38 @@ begin
   ------------------- Port Mapping -------------------
   AND_operator : ander 
     port map(
-      DATA1 => rs1, 
-      DATA2 => rs2, 
-      RESULT => anderOutput
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => anderOutput
     );
 
   OR_operator : orer 
     port map(
-      DATA1 => rs1, 
-      DATA2 => rs2, 
-      RESULT => orOutput
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => orOutput
     );
 
   XOR_operator : xorer 
     port map(
-      DATA1 => rs1, 
-      DATA2 => rs2, 
-      RESULT => xorOutput
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => xorOutput
     );
 
   ADD_operator : adder
     port map(
-      DATA1 => rs1, 
-      DATA2 => rs2, 
-      RESULT => adderOutput
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => adderOutput
     );
 
   SHIFT_operator : shifter
     port map(
-      DATA1 => rs1, 
-      DATA2 => rs2, 
-      SHIFTTYPE => "00",
-      RESULT => shiftOutput
+      input_1   => rs1, 
+      input_2   => rs2, 
+      shiftType => "00",
+      output_1  => shiftOutput
     );
  
   -- Process(es)

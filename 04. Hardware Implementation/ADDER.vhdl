@@ -22,14 +22,14 @@ use IEEE.NUMERIC_STD.ALL;
 -- Entity (module)
 entity adder is
     port(
-        DATA1   : in  std_logic_vector(31 downto 0);  -- First 32-bit signed input
-        DATA2   : in  std_logic_vector(31 downto 0);  -- Second 32-bit signed input
-        RESULT  : out std_logic_vector(31 downto 0)   -- 32-bit signed output
+        input_1  : in  std_logic_vector(31 downto 0);  -- First 32-bit signed input
+        input_2  : in  std_logic_vector(31 downto 0);  -- Second 32-bit signed input
+        output_1 : out std_logic_vector(31 downto 0)   -- 32-bit signed output
     );
 end adder;
 
 -- Architecture of the entity (module) - Defines its behavior
 architecture ADDER_Architecture of adder is
 begin
-    RESULT <= std_logic_vector(unsigned(DATA1) + unsigned(DATA2));
+    output_1 <= std_logic_vector(unsigned(input_1) + unsigned(input_2));
 end ADDER_Architecture;

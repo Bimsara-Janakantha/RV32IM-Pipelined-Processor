@@ -19,15 +19,15 @@ use ieee.std_logic_1164.all;
 -- Entity (module)
 entity ander is
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1 : in std_logic_vector (31 downto 0);
+        input_2 : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
     );
 end ander;
 
 -- Architecture of the entity (module) - This implies how it would be working
 architecture AND_Architecture of ander is
 begin 
-    -- We can't add delays here. They ara vaild in processes only
-    RESULT <= DATA1 and DATA2;
+    -- We can't add delays here. ey ara vaild in processes only
+    output_1 <= input_1 and input_2;
 end architecture;

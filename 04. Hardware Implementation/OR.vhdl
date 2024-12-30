@@ -19,14 +19,14 @@ use ieee.std_logic_1164.all;
 -- Entity (module)
 entity orer is
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)    -- No ; here
     );
 end orer;
 
 -- Architecture of the entity (module) - This implies how it would be working
 architecture OR_Architecture of orer is
 begin 
-    RESULT <= DATA1 or DATA2;
+    output_1 <= input_1 or input_2;
 end architecture;
