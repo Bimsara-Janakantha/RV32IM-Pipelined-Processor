@@ -46,9 +46,9 @@ architecture Shifter_Architecture of shifter is
 
   component adder
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2 : in std_logic_vector (31 downto 0);
-        output_1  : out std_logic_vector (31 downto 0)
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        output_1 : out std_logic_vector (31 downto 0)
     );
   end component;
 
@@ -75,9 +75,9 @@ begin
   ------------------- Port Mapping For Each Component -------------------
   Mux0 : mux4_1
     port map(
-      input_1  => input_1,    -- Original data for shift left
+      input_1  => input_1,  -- Original data for shift left
       input_2  => shift_L1, -- Shift left by 1 bit
-      input_3  => input_1,    -- Original data for shift right
+      input_3  => input_1,  -- Original data for shift right
       input_4  => shift_R1, -- Shift right by 1 bit
       selector => mux0Sel,
       output_1 => mux0Out
