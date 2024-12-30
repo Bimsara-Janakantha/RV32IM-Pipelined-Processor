@@ -41,13 +41,9 @@
 
 **Note:** Use lynux base terminal _(ex: Git Bash, WSL)_. Also, keep the **ghdl_run.sh** file is in the same working directory.
 
-- **Step 1:** Analyze all single component files
-  > ghdl -a <file_name> <br> ex: _ghdl -a and2.vhdl_
+- **Step 1:** Add **all newly created** .vhdl files to the **ghdl_run.sh** file.
   
-- **Step 2:** Enable execution of ghdl_run.sh file
-  > chmod +x ghdl_run.sh
-
-- **Step 3:** Run the ghdl_run.sh file
-  > ./ghdl_run.sh <file_name> <br> ex: _./ghdl_run.sh cpuTb_
+- **Step 2:** Run the ghdl_run.sh file
+  > ./ghdl_run.sh
 
 ---
