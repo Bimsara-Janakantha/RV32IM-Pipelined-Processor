@@ -1,6 +1,6 @@
 -- Create by BG
--- Created on Sun, 29 Dec 2024 at 10:00 PM
--- Last modified on Sun, 30 Dec 2024 at 02:30 PM
+-- Created on Sun, 29 Dec 2024 at 11:00 PM
+-- Last modified on Sun, 30 Dec 2024 at 07:30 PM
 -- This is the module for 32 bit Shift register unit
 
 
@@ -9,7 +9,7 @@
 ----------------------------------------------------------
 -- An Shifter with 2 input streams and 1 output stream. --
 -- Each input and output stream is 32 bit wide.         --
--- Currently work for the SLL instruction only.         --
+-- Currently work for the SLL, SRL, SRA instruction.    --
 ----------------------------------------------------------
 
 
@@ -21,9 +21,10 @@ use ieee.std_logic_1164.all ;
 -- Entity (for now it is empty)
 entity shifter is
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)
+        DATA1     : in std_logic_vector (31 downto 0); -- Data to shift
+        DATA2     : in std_logic_vector (31 downto 0); -- Shifting amount
+        SHIFTTYPE : in std_logic_vector (1 downto 0);  -- Shifting type (sll-00, srl-10, sra-11)
+        RESULT    : out std_logic_vector (31 downto 0) -- Final result
     );
 end shifter; 
 
@@ -31,87 +32,123 @@ end shifter;
 architecture Shifter_Architecture of shifter is
 
   -- Components
-  component mux2_1
+  component mux4_1
     port(
-        input_1   : in std_logic_vector (31 downto 0);
-        input_2   : in std_logic_vector (31 downto 0);
-        selector  : in std_logic;
-        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+      input_1  : in std_logic_vector (31 downto 0); -- 1st input stream of the mux
+      input_2  : in std_logic_vector (31 downto 0); -- 2nd input stream of the mux
+      input_3  : in std_logic_vector (31 downto 0); -- 3rd input stream of the mux
+      input_4  : in std_logic_vector (31 downto 0); -- 4th input stream of the mux
+      selector : in std_logic_vector (1 downto 0);  -- Selector switches (stream)
+      output_1 : out std_logic_vector (31 downto 0) -- Output stream of the mux
     );
   end component;
 
   -- Add OR gate component here to handle shifts more than 32
 
   -- signals
-  signal mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out : std_logic_vector (31 downto 0);
-  signal shift1, shift2, shift4, shift8, shift16, shift32 : std_logic_vector(31 downto 0);
-  signal LSBExtender : std_logic_vector(31 downto 0);
-
+  signal mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out : std_logic_vector (31 downto 0);        -- Output signals of Muxes
+  signal mux0Sel, mux1Sel, mux2Sel, mux3Sel, mux4Sel, mux5Sel : std_logic_vector (1 downto 0);         -- Selector signals of Muxes
+  signal shift_L1, shift_L2, shift_L4, shift_L8, shift_L16, shift_L32 : std_logic_vector(31 downto 0); -- Input signals for shift left
+  signal shift_R1, shift_R2, shift_R4, shift_R8, shift_R16, shift_R32 : std_logic_vector(31 downto 0); -- Input signals for shift right
+  
+  -- Extender Signals
+  signal Extender : std_logic_vector(31 downto 0);
   
 begin
-  LSBExtender <= (others => '0');
+  -- Assigning extender values
+  Extender <= (others => SHIFTTYPE(0));
 
+  -- Defining selector signals
+  mux0Sel <= SHIFTTYPE(1) & DATA2(0);
+  mux1Sel <= SHIFTTYPE(1) & DATA2(1);
+  mux2Sel <= SHIFTTYPE(1) & DATA2(2);
+  mux3Sel <= SHIFTTYPE(1) & DATA2(3);
+  mux4Sel <= SHIFTTYPE(1) & DATA2(4);
+  mux5Sel <= SHIFTTYPE(1) & DATA2(5); -- Update this later
+  
   ------------------- Port Mapping For Each Component -------------------
-  Mux0 : mux2_1
+  Mux0 : mux4_1
     port map(
-      input_1  => DATA1, 
-      input_2  => shift1, -- shift by 1 bit
-      selector => DATA2(0),
+      input_1  => DATA1,    -- Original data for shift left
+      input_2  => shift_L1, -- Shift left by 1 bit
+      input_3  => DATA1,    -- Original data for shift right
+      input_4  => shift_R1, -- Shift right by 1 bit
+      selector => mux0Sel,
       output_1 => mux0Out
     );
 
-  Mux1 : mux2_1
+  Mux1 : mux4_1
     port map(
-      input_1  => mux0Out, 
-      input_2  => shift2, -- shift by 2 bits
-      selector => DATA2(1),
+      input_1  => mux0Out,  -- Original data for shift left
+      input_2  => shift_L2, -- Shift left by 2 bit
+      input_3  => mux0Out,  -- Original data for shift right
+      input_4  => shift_R2, -- Shift right by 2 bit
+      selector => mux1Sel,
       output_1 => mux1Out
     );
-
-  Mux2 : mux2_1
+    
+  Mux2 : mux4_1
     port map(
-      input_1  => mux1Out, 
-      input_2  => shift4, -- shift by 4 bits
-      selector => DATA2(2),
+      input_1  => mux1Out,  -- Original data for shift left
+      input_2  => shift_L4, -- Shift left by 4 bit
+      input_3  => mux1Out,  -- Original data for shift right
+      input_4  => shift_R4, -- Shift right by 4 bit
+      selector => mux2Sel,
       output_1 => mux2Out
     );
-  
-  Mux3 : mux2_1
+    
+  Mux3 : mux4_1
     port map(
-      input_1  => mux2Out, 
-      input_2  => shift8, -- shift by 8 bits
-      selector => DATA2(3),
+      input_1  => mux2Out,  -- Original data for shift left
+      input_2  => shift_L8, -- Shift left by 8 bit
+      input_3  => mux2Out,  -- Original data for shift right
+      input_4  => shift_R8, -- Shift right by 8 bit
+      selector => mux3Sel,
       output_1 => mux3Out
     );
-
-  Mux4 : mux2_1
+  
+  Mux4 : mux4_1
     port map(
-      input_1  => mux3Out, 
-      input_2  => shift16, -- shift by 16 bits
-      selector => DATA2(4),
+      input_1  => mux3Out,   -- Original data for shift left
+      input_2  => shift_L16, -- Shift left by 16 bit
+      input_3  => mux3Out,   -- Original data for shift right
+      input_4  => shift_R16, -- Shift right by 16 bit
+      selector => mux4Sel,
       output_1 => mux4Out
     );
-
-  Mux5 : mux2_1
+    
+  Mux5 : mux4_1
     port map(
-      input_1  => mux4Out, 
-      input_2  => shift32, 
-      selector => DATA2(5),
+      input_1  => mux4Out,   -- Original data for shift left
+      input_2  => shift_L32, -- Shift left by 32 bit
+      input_3  => mux4Out,   -- Original data for shift right
+      input_4  => shift_R32, -- Shift right by 32 bit
+      selector => mux5Sel,
       output_1 => RESULT
     );
+ 
 
   -- One Mapping is remaining for the OR gate
 
   -- Process
-  process(DATA1, DATA2, mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out)
+  process(DATA1, mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out)
   begin
-    shift1  <= std_logic_vector(DATA1(30 downto 0) & LSBExtender(0));
-    shift2  <= std_logic_vector(mux0Out(29 downto 0) & LSBExtender(1 downto 0));
-    shift4  <= std_logic_vector(mux1Out(27 downto 0) & LSBExtender(3 downto 0));
-    shift8  <= std_logic_vector(mux2Out(23 downto 0) & LSBExtender(7 downto 0));
-    shift16 <= std_logic_vector(mux3Out(15 downto 0) & LSBExtender(15 downto 0));
-    shift32 <= LSBExtender;
-  end process;
+    -- Shift Left Updates
+    shift_L1  <= std_logic_vector(DATA1(30 downto 0) & Extender(0));
+    shift_L2  <= std_logic_vector(mux0Out(29 downto 0) & Extender(1 downto 0));
+    shift_L4  <= std_logic_vector(mux1Out(27 downto 0) & Extender(3 downto 0));
+    shift_L8  <= std_logic_vector(mux2Out(23 downto 0) & Extender(7 downto 0));
+    shift_L16 <= std_logic_vector(mux3Out(15 downto 0) & Extender(15 downto 0));
+    shift_L32 <= Extender;
 
+    -- Shift Right Updates
+    shift_R1  <= std_logic_vector(Extender(0) & DATA1(31 downto 1));
+    shift_R2  <= std_logic_vector(Extender(1 downto 0) & mux0Out(31 downto 2));
+    shift_R4  <= std_logic_vector(Extender(3 downto 0) & mux1Out(31 downto 4));
+    shift_R8  <= std_logic_vector(Extender(7 downto 0) & mux2Out(31 downto 8));
+    shift_R16 <= std_logic_vector(Extender(15 downto 0) & mux3Out(31 downto 16));
+    shift_R32 <= Extender;
+
+  end process;
 
 end architecture ;

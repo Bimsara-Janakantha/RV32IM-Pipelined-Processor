@@ -11,7 +11,8 @@
 -- Each input and output stream is 32 bit wide.     --
 -- Containing Modules:                              --
 -- 1. AND           2. OR           3. XOR          --
--- 4. ADDER         5. SLL                          --
+-- 4. ADDER         5. SLL          6. SRL          --
+-- 7. SRA                                           --
 ------------------------------------------------------
 
 
@@ -62,9 +63,10 @@ architecture ALU_Architecture of ALU is
 
   component shifter
     port(
-        DATA1   : in std_logic_vector (31 downto 0);
-        DATA2   : in std_logic_vector (31 downto 0);
-        RESULT  : out std_logic_vector (31 downto 0)    -- No ; here
+        DATA1     : in std_logic_vector (31 downto 0);
+        DATA2     : in std_logic_vector (31 downto 0);
+        SHIFTTYPE : in std_logic_vector (1 downto 0);
+        RESULT    : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
   
@@ -107,6 +109,7 @@ begin
     port map(
       DATA1 => rs1, 
       DATA2 => rs2, 
+      SHIFTTYPE => "11",
       RESULT => shiftOutput
     );
  
@@ -114,27 +117,27 @@ begin
   process 
   begin
     -- Test case 1 : All bits zero
-    rs1 <= "00000000000001000000000000000001";
+    rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000001";
     wait for 10 ns;
 
     -- Test case 2: All bits one
-    rs1 <= "00000000000001000000000000000001";
+    rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000010";
     wait for 10 ns;
 
     -- Test case 3: Alternating bits
-    rs1 <= "00000000000001000000000000000001";
+    rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000011";
     wait for 10 ns;
 
     -- Test case 4: Mixed patterns
-    rs1 <= "00000000000001000000000000000001";
+    rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000100";
     wait for 10 ns;
 
     -- Test case 5: Random patterns
-    rs1 <= "00000000000001000000000000000001";
+    rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000101";
     wait for 10 ns;
 
