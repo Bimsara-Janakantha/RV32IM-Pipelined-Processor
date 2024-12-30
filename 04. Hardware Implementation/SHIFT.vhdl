@@ -69,7 +69,7 @@ begin
   Extender <= (others => SHIFTTYPE(0));
 
   -- Fixed value for adder
-  fixed <= "11111111111111111111111111100001"; -- -31 value in binary
+  fixed <= "11111111111111111111111111100000"; -- -32 value in binary
 
   
   ------------------- Port Mapping For Each Component -------------------
