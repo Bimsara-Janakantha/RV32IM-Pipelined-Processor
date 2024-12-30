@@ -3,34 +3,31 @@
 # Ensure the script exits if any command fails
 set -e
 
-# Step 1: Check for required arguments
-if [ "$#" -ne 1 ]; then
-  echo "Usage: $0 <filename>"
-  exit 1
-fi
+# Step 1: Assign Testbench to the variable
+FILENAME="ALU"
 
-# Assign arguments to variables
-FILENAME=$1
+# Step 2: Analyze all VHDL files
+echo "Analyzing all VHDL files."
+VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT")
 
-# Step 2: Analyze the file
-if [ ! -f "${FILENAME}.vhdl" ]; then
-  echo "Error: File '${FILENAME}.vhdl' does not exist."
-  exit 1
-fi
+for file in "${VHDL_FILES[@]}"; do
+    ghdl -a "${file}.vhdl"
+    echo "Successfully Analyzed ${file}.vhdl"
+done
 
-# Step 3: Analyze the VHDL file
+# Step 3: Analyze the TestBench file
 echo "Analyzing VHDL file: ${FILENAME}.vhdl"
 ghdl -a "${FILENAME}.vhdl"
 
-# Step 4: Execute the program
+# Step 4: Build the entity
 echo "Building the entity: ${FILENAME}"
-ghdl -e "$FILENAME"
+ghdl -e "${FILENAME}"
 
-# Step 5: Run the program and generate the VCD file
+# Step 5: Run the entity and generate the VCD file
 echo "Running the entity: ${FILENAME}"
 echo -e "\nResult:"
 ghdl -r "${FILENAME}" --vcd=cpu_wavedata.vcd
 
-# Step 6: Open the GTKWave
-echo "Openning the GTKWave: cpu_wavedata.vcd"
+# Step 6: Open the VCD file in GTKWave
+echo "Opening the GTKWave: cpu_wavedata.vcd"
 gtkwave cpu_wavedata.vcd
