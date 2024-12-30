@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Sun, 29 Dec 2024 at 10:00 PM
--- Last modified on Sun, 29 Dec 2024 at 11:00 PM
+-- Last modified on Sun, 30 Dec 2024 at 02:30 PM
 -- This is the module for 32 bit Shift register unit
 
 
@@ -45,9 +45,12 @@ architecture Shifter_Architecture of shifter is
   -- signals
   signal mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out : std_logic_vector (31 downto 0);
   signal shift1, shift2, shift4, shift8, shift16, shift32 : std_logic_vector(31 downto 0);
+  signal LSBExtender : std_logic_vector(31 downto 0);
 
   
 begin
+  LSBExtender <= (others => '0');
+
   ------------------- Port Mapping For Each Component -------------------
   Mux0 : mux2_1
     port map(
@@ -102,12 +105,13 @@ begin
   -- Process
   process(DATA1, DATA2, mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out)
   begin
-    shift1  <= std_logic_vector(DATA1(30 downto 0) & "0");
-    shift2  <= std_logic_vector(mux0Out(29 downto 0) & "00");
-    shift4  <= std_logic_vector(mux1Out(27 downto 0) & "0000");
-    shift8  <= std_logic_vector(mux2Out(23 downto 0) & "00000000");
-    shift16 <= std_logic_vector(mux3Out(15 downto 0) & "0000000000000000");
-    shift32 <= (others => '0');
+    shift1  <= std_logic_vector(DATA1(30 downto 0) & LSBExtender(0));
+    shift2  <= std_logic_vector(mux0Out(29 downto 0) & LSBExtender(1 downto 0));
+    shift4  <= std_logic_vector(mux1Out(27 downto 0) & LSBExtender(3 downto 0));
+    shift8  <= std_logic_vector(mux2Out(23 downto 0) & LSBExtender(7 downto 0));
+    shift16 <= std_logic_vector(mux3Out(15 downto 0) & LSBExtender(15 downto 0));
+    shift32 <= LSBExtender;
   end process;
+
 
 end architecture ;
