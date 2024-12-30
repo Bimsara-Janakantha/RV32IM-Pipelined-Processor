@@ -109,7 +109,7 @@ begin
     port map(
       DATA1 => rs1, 
       DATA2 => rs2, 
-      SHIFTTYPE => "11",
+      SHIFTTYPE => "00",
       RESULT => shiftOutput
     );
  
@@ -138,10 +138,20 @@ begin
 
     -- Test case 5: Random patterns
     rs1 <= "10000000000001000000000000000001";
-    rs2 <= "00000000000000000000000000000101";
+    rs2 <= "00000000000000000000000000011110";
+    wait for 10 ns;
+    
+    -- Test case 5: Random patterns
+    rs1 <= "10000000000001000000000000000001";
+    rs2 <= "00000000000000000000000000011111";
     wait for 10 ns;
 
-    -- Test case 5: Random patterns
+    -- Test case 6: Random patterns
+    rs1 <= "10000000000001000000000000000001";
+    rs2 <= "00000000000000000000000000100000";
+    wait for 10 ns;
+
+    -- Test case 7: Random patterns
     rs1 <= "10000000000001000000000000000001";
     rs2 <= "00010000000000000000000000000101";
     wait for 10 ns;
