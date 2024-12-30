@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Sun, 29 Dec 2024 at 11:00 PM
--- Last modified on Sun, 30 Dec 2024 at 07:30 PM
+-- Last modified on Sun, 30 Dec 2024 at 10:00 PM
 -- This is the module for 32 bit Shift register unit
 
 
@@ -16,7 +16,8 @@
 
 -- Libraries (IEEE)
 library ieee ;
-use ieee.std_logic_1164.all ;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 -- Entity (for now it is empty)
 entity shifter is
@@ -43,7 +44,13 @@ architecture Shifter_Architecture of shifter is
     );
   end component;
 
-  -- Add OR gate component here to handle shifts more than 32
+  component adder
+    port(
+        DATA1   : in std_logic_vector (31 downto 0);
+        DATA2   : in std_logic_vector (31 downto 0);
+        RESULT  : out std_logic_vector (31 downto 0)
+    );
+  end component;
 
   -- signals
   signal mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out : std_logic_vector (31 downto 0);        -- Output signals of Muxes
@@ -53,18 +60,17 @@ architecture Shifter_Architecture of shifter is
   
   -- Extender Signals
   signal Extender : std_logic_vector(31 downto 0);
+
+  -- Signals for ADDER
+  signal fixed, adderOut : std_logic_vector(31 downto 0);
   
 begin
   -- Assigning extender values
   Extender <= (others => SHIFTTYPE(0));
 
-  -- Defining selector signals
-  mux0Sel <= SHIFTTYPE(1) & DATA2(0);
-  mux1Sel <= SHIFTTYPE(1) & DATA2(1);
-  mux2Sel <= SHIFTTYPE(1) & DATA2(2);
-  mux3Sel <= SHIFTTYPE(1) & DATA2(3);
-  mux4Sel <= SHIFTTYPE(1) & DATA2(4);
-  mux5Sel <= SHIFTTYPE(1) & DATA2(5); -- Update this later
+  -- Fixed value for adder
+  fixed <= "11111111111111111111111111100001"; -- -31 value in binary
+
   
   ------------------- Port Mapping For Each Component -------------------
   Mux0 : mux4_1
@@ -117,21 +123,31 @@ begin
       output_1 => mux4Out
     );
     
+  -- Note here we change the input configuration only for Mux5
+  -- Selector = "00" -> Left Direction Shift
+  -- Selector = "01" -> Left Direction No Shift
+  -- Selector = "10" -> Right Direction Shift
+  -- Selector = "11" -> Right Direction No Shift
   Mux5 : mux4_1
     port map(
-      input_1  => mux4Out,   -- Original data for shift left
-      input_2  => shift_L32, -- Shift left by 32 bit
-      input_3  => mux4Out,   -- Original data for shift right
-      input_4  => shift_R32, -- Shift right by 32 bit
+      input_1  => shift_L32, -- Shift left by 32 bit
+      input_2  => mux4Out,   -- Original data for shift left
+      input_3  => shift_R32, -- Shift right by 32 bit
+      input_4  => mux4Out,   -- Original data for shift right
       selector => mux5Sel,
       output_1 => RESULT
     );
  
 
-  -- One Mapping is remaining for the OR gate
+  ShiftAdder : adder
+    port map(
+      DATA1  => DATA2,    -- shift amount
+      DATA2  => fixed,    -- (-31)
+      RESULT => adderOut  -- shift_amount + (-31) => MSB > 0 ? totally_shift : partially_shift
+    );
 
   -- Process
-  process(DATA1, mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out)
+  process(DATA1, DATA2, mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, adderOut, SHIFTTYPE)
   begin
     -- Shift Left Updates
     shift_L1  <= std_logic_vector(DATA1(30 downto 0) & Extender(0));
@@ -149,6 +165,13 @@ begin
     shift_R16 <= std_logic_vector(Extender(15 downto 0) & mux3Out(31 downto 16));
     shift_R32 <= Extender;
 
+    -- Defining selector signals
+    mux0Sel <= SHIFTTYPE(1) & DATA2(0);
+    mux1Sel <= SHIFTTYPE(1) & DATA2(1);
+    mux2Sel <= SHIFTTYPE(1) & DATA2(2);
+    mux3Sel <= SHIFTTYPE(1) & DATA2(3);
+    mux4Sel <= SHIFTTYPE(1) & DATA2(4);    
+    mux5Sel <= SHIFTTYPE(1) & adderOut(31); -- Checking the MSB of the adderOut
   end process;
 
 end architecture ;

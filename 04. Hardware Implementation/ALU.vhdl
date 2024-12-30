@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Sun, 29 Dec 2024 at 01:00 AM
--- Last modified on Sun, 29 Dec 2024 at 12:30 PM
+-- Last modified on Sun, 30 Dec 2024 at 10:00 PM
 -- This is the module for 32 bit Arithmetic Logic Unit (ALU)
 
 
@@ -139,6 +139,11 @@ begin
     -- Test case 5: Random patterns
     rs1 <= "10000000000001000000000000000001";
     rs2 <= "00000000000000000000000000000101";
+    wait for 10 ns;
+
+    -- Test case 5: Random patterns
+    rs1 <= "10000000000001000000000000000001";
+    rs2 <= "00010000000000000000000000000101";
     wait for 10 ns;
 
     -- End simulation
