@@ -12,7 +12,7 @@
 -- Containing Modules:                              --
 -- 1. AND           2. OR           3. XOR          --
 -- 4. ADDER         5. SLL          6. SRL          --
--- 7. SRA           8. SLT                          --
+-- 7. SRA           8. SLT          9. SLTU         --
 ------------------------------------------------------
 
 
