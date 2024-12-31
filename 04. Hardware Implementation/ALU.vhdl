@@ -77,11 +77,19 @@ architecture ALU_Architecture of ALU is
         output_1  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
+
+  component SetLessThanUnsigned
+    port(
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
   
 
   -- signals
   signal rs1, rs2 : std_logic_vector(31 downto 0) := (others => '0');
-  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput : std_logic_vector (31 downto 0);
+  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -127,6 +135,13 @@ begin
       input_1  => rs1, 
       input_2  => rs2, 
       output_1 => sltOutput
+    );
+
+  SLTU_operator : SetLessThanUnsigned
+    port map(
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => sltuOutput
     );
  
   -- Process(es)
