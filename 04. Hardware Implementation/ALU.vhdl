@@ -85,11 +85,18 @@ architecture ALU_Architecture of ALU is
         output_1  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
+
+  component Complementer2s
+    port(
+        input_data   : in std_logic_vector (31 downto 0);
+        output_data  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
   
 
   -- signals
   signal rs1, rs2 : std_logic_vector(31 downto 0) := (others => '0');
-  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput : std_logic_vector (31 downto 0);
+  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -142,6 +149,12 @@ begin
       input_1  => rs1, 
       input_2  => rs2, 
       output_1 => sltuOutput
+    );
+
+  Compl_operator : Complementer2s
+    port map(
+      input_data  => rs1, 
+      output_data => compOutput
     );
  
   -- Process(es)
