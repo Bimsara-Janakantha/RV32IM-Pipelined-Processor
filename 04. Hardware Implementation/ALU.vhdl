@@ -12,7 +12,7 @@
 -- Containing Modules:                              --
 -- 1. AND           2. OR           3. XOR          --
 -- 4. ADDER         5. SLL          6. SRL          --
--- 7. SRA                                           --
+-- 7. SRA           8. SLT                          --
 ------------------------------------------------------
 
 
@@ -69,10 +69,19 @@ architecture ALU_Architecture of ALU is
         output_1  : out std_logic_vector (31 downto 0)    -- No ; here
     );
   end component;
+
+  component SetLessThan
+    port(
+        input_1   : in std_logic_vector (31 downto 0);
+        input_2   : in std_logic_vector (31 downto 0);
+        output_1  : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
   
 
   -- signals
-  signal rs1, rs2, anderOutput, orOutput, xorOutput, adderOutput, shiftOutput : std_logic_vector (31 downto 0);
+  signal rs1, rs2 : std_logic_vector(31 downto 0) := (others => '0');
+  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -111,6 +120,13 @@ begin
       input_2   => rs2, 
       shiftType => "00",
       output_1  => shiftOutput
+    );
+
+  SLT_operator : SetLessThan
+    port map(
+      input_1  => rs1, 
+      input_2  => rs2, 
+      output_1 => sltOutput
     );
  
   -- Process(es)
