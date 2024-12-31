@@ -13,7 +13,6 @@
 -- 1. AND           2. OR           3. XOR          --
 -- 4. ADDER         5. SLL          6. SRL          --
 -- 7. SRA           8. SLT          9. SLTU         --
---10. SUB          11. FWD                          --
 ------------------------------------------------------
 
 
@@ -94,16 +93,10 @@ architecture ALU_Architecture of ALU is
     );
   end component;
   
-  component forwarder
-    port(
-        input_data   : in std_logic_vector (31 downto 0);
-        output_data  : out std_logic_vector (31 downto 0)    -- No ; here
-    );
-  end component;
 
   -- signals
   signal rs1, rs2 : std_logic_vector(31 downto 0) := (others => '0');
-  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput, fwdOutput : std_logic_vector (31 downto 0);
+  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput : std_logic_vector (31 downto 0);
 
   
 begin
@@ -162,12 +155,6 @@ begin
     port map(
       input_data  => rs1, 
       output_data => compOutput
-    );
-
-    Fwd_operator : forwarder
-    port map(
-      input_data  => rs1, 
-      output_data => fwdOutput
     );
  
   -- Process(es)
