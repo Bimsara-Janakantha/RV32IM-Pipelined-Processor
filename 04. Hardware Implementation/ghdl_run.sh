@@ -9,7 +9,7 @@ FILENAME="ALUTB"
 
 # Step 2: Analyze all VHDL files
 echo "Analyzing all VHDL files."
-VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT" "SLT" "SLTU" "ALU")
+VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT" "SLT" "SLTU" "ALU" "FORWARD" "2sCOMPLEMENTER" "REG_FILE")
 
 for file in "${VHDL_FILES[@]}"; do
     ghdl -a "${file}.vhdl"
