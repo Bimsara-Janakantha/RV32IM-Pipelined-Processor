@@ -44,33 +44,31 @@ architecture Reg_File_Architecture of Reg_File is
     type reg_array is array(0 to 31) of std_logic_vector(31 downto 0); 
 
     -- Initialize registers to zero
-    -- register registers : reg_array := (others => (others => '0'));      
+    signal registers : reg_array := (others => (others => '0'));      
     
 begin
     -- Read Operation - Asynchronous
-    --process(ReadRegister_1, ReadRegister_2)
-    --begin
+    process(ReadRegister_1, ReadRegister_2)
+    begin
         -- Read data from specified registers
         -- Add delay here
-    --end process;
-    
-    -- Write Operation - Synchronous
-    process(Clock, ReadRegister_1, ReadRegister_2)
-        variable registers : reg_array := (others => (others => '0'));
-    begin
         ReadData_1 <= registers(to_integer(unsigned(ReadRegister_1)));
         ReadData_2 <= registers(to_integer(unsigned(ReadRegister_2)));
+    end process;
 
+    -- Write Operation - Synchronous
+    process(Clock)
+    begin
         if rising_edge(Clock) then
             -- Reset all registers
             if (Reset = '1') then
                 -- Add delay here
-                registers := (others => (others => '0'));
+                registers <= (others => (others => '0'));
 
             -- Write data to the register
             elsif (WriteEnable = '1') then 
                 -- Add a delay here
-                registers(to_integer(Unsigned(WriteRegister))) := WriteData;
+                registers(to_integer(Unsigned(WriteRegister))) <= WriteData;
             end if;
         end if;
     end process;
