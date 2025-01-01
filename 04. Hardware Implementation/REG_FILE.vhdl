@@ -48,18 +48,19 @@ architecture Reg_File_Architecture of Reg_File is
     
 begin
     -- Read Operation - Asynchronous
-    process(ReadRegister_1, ReadRegister_2)
-    begin
+    --process(ReadRegister_1, ReadRegister_2)
+    --begin
         -- Read data from specified registers
         -- Add delay here
-        ReadData_1 <= registers(to_integer(unsigned(ReadRegister_1)));
-        ReadData_2 <= registers(to_integer(unsigned(ReadRegister_2)));
-    end process;
-
+    --end process;
+    
     -- Write Operation - Synchronous
     process(Clock)
-        variable registers : reg_array := (others => (others => '0'));
+    variable registers : reg_array := (others => (others => '0'));
     begin
+        ReadData_1 <= registers(to_integer(unsigned(ReadRegister_1)));
+        ReadData_2 <= registers(to_integer(unsigned(ReadRegister_2)));
+
         if rising_edge(Clock) then
             -- Reset all registers
             if (Reset = '1') then
