@@ -28,7 +28,7 @@ entity ALU is
   port(
     DATA1     : in std_logic_vector (31 downto 0);
     DATA2     : in std_logic_vector (31 downto 0);
-    ALUOP     : in std_logic_vector (2 downto 0);
+    ALUOP     : in std_logic_vector (3 downto 0);
     ALURESULT : out std_logic_vector (31 downto 0);
     ZERO      : out std_logic
   );
@@ -159,39 +159,46 @@ begin
   begin
     case( ALUOP ) is
       
-      when "000" => -- ADD/SUB Instructions
+      when "0000" => -- ADD/SUB Instructions
         -- Add delay here
         ALURESULT <= adderOutput;
       
-      when "001" => -- SLL Instruction
+      when "0001" => -- SLL Instruction
         -- Add delay here
         shiftType <= "00";       -- Direction = left , extender = 0 => 00
         ALURESULT <= shiftOutput;
       
-      when "010" => -- SLT Instructions
+      when "0010" => -- SLT Instructions
         -- Add delay here
         ALURESULT <= sltOutput;
 
-      when "011" => -- SLTU Instructions
+      when "0011" => -- SLTU Instructions
         -- Add delay here
         ALURESULT <= sltuOutput;
 
-      when "100" => -- XOR Instructions
+      when "0100" => -- XOR Instructions
         -- Add delay here
         ALURESULT <= xorOutput;
       
-      when "101" => -- SRL/SRA Instructions
+      when "0101" => -- SRL Instructions
         -- Add delay here
         shiftType <= "10";       -- Direction = right , extender = 0 => 10
         ALURESULT <= shiftOutput;
+      
+      when "0110" => -- SRA Instructions
+        -- Add delay here
+        shiftType <= "11";       -- Direction = right , extender = 1 => 11
+        ALURESULT <= shiftOutput;
 
-      when "110" => -- OR Instructions
+      when "0111" => -- OR Instructions
         -- Add delay here
         ALURESULT <= orOutput;
       
-      when "111" => -- AND Instructions
+      when "1000" => -- AND Instructions
         -- Add delay here
         ALURESULT <= andOutput;
+
+      -- Add more instructions here later
 
       when others =>
         -- Unexpected Behaviour
