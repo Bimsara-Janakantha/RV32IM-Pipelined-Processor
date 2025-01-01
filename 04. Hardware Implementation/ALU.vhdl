@@ -160,11 +160,11 @@ begin
     case( ALUOP ) is
       
       when "0000" => -- ADD/SUB Instructions
-        -- Add delay here
+        wait for 1 ns;
         ALURESULT <= adderOutput;
       
       when "0001" => -- SLL Instruction
-        -- Add delay here
+        wait for 2 ns;
         shiftType <= "00";       -- Direction = left , extender = 0 => 00
         ALURESULT <= shiftOutput;
       
