@@ -44,7 +44,7 @@ architecture Reg_File_Architecture of Reg_File is
     type reg_array is array(0 to 31) of std_logic_vector(31 downto 0); 
 
     -- Initialize registers to zero
-    signal registers : reg_array := (others => (others => '0'));      
+    -- register registers : reg_array := (others => (others => '0'));      
     
 begin
     -- Read Operation - Asynchronous
@@ -58,6 +58,7 @@ begin
 
     -- Write Operation - Synchronous
     process(Clock)
+        variable registers : reg_array := (others => (others => '0'));
     begin
         if rising_edge(Clock) then
             -- Reset all registers
