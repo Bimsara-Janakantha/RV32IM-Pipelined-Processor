@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Sun, 29 Dec 2024 at 01:00 AM
--- Last modified on Tue, 31 Dec 2024 at 10:00 PM
+-- Last modified on Tue, 31 Dec 2024 at 11:30 PM
 -- This is the module for 32 bit Arithmetic Logic Unit (ALU)
 
 
@@ -20,16 +20,24 @@
 
 -- Libraries (IEEE)
 library ieee ;
-use ieee.std_logic_1164.all ;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
--- Entity (for now it is empty)
+-- ALU Entity 
 entity ALU is
+  port(
+    DATA1     : in std_logic_vector (31 downto 0);
+    DATA2     : in std_logic_vector (31 downto 0);
+    ALUOP     : in std_logic_vector (2 downto 0);
+    ALURESULT : out std_logic_vector (31 downto 0);
+    ZERO      : out std_logic
+  );
 end ALU; 
 
--- Architecture
+-- Architecture of the ALU
 architecture ALU_Architecture of ALU is
 
-  -- Components
+  -- Components of the ALU
   component ander
     port(
         input_1  : in std_logic_vector (31 downto 0);
@@ -87,142 +95,112 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
-  component Complementer2s
-    port(
-        input_data   : in std_logic_vector (31 downto 0);
-        output_data  : out std_logic_vector (31 downto 0)    -- No ; here
-    );
-  end component;
-  
-  component forwarder
-    port(
-        input_data   : in std_logic_vector (31 downto 0);
-        output_data  : out std_logic_vector (31 downto 0)    -- No ; here
-    );
-  end component;
 
-  -- signals
-  signal rs1, rs2 : std_logic_vector(31 downto 0) := (others => '0');
-  signal anderOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput, fwdOutput : std_logic_vector (31 downto 0);
-
+  -- Signals 
+  signal andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput : std_logic_vector (31 downto 0);
+  signal shiftType : std_logic_vector (1 downto 0);
   
 begin
   ------------------- Port Mapping -------------------
   AND_operator : ander 
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
-      output_1 => anderOutput
+      input_1  => DATA1, 
+      input_2  => DATA2, 
+      output_1 => andOutput
     );
 
   OR_operator : orer 
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
+      input_1  => DATA1, 
+      input_2  => DATA2, 
       output_1 => orOutput
     );
 
   XOR_operator : xorer 
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
+      input_1  => DATA1, 
+      input_2  => DATA2, 
       output_1 => xorOutput
     );
 
   ADD_operator : adder
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
+      input_1  => DATA1, 
+      input_2  => DATA2, 
       output_1 => adderOutput
     );
 
   SHIFT_operator : shifter
     port map(
-      input_1   => rs1, 
-      input_2   => rs2, 
-      shiftType => "00",
+      input_1   => DATA1, 
+      input_2   => DATA2, 
+      shiftType => shiftType,
       output_1  => shiftOutput
     );
 
   SLT_operator : SetLessThan
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
+      input_1  => DATA1, 
+      input_2  => DATA2, 
       output_1 => sltOutput
     );
 
   SLTU_operator : SetLessThanUnsigned
     port map(
-      input_1  => rs1, 
-      input_2  => rs2, 
+      input_1  => DATA1, 
+      input_2  => DATA2, 
       output_1 => sltuOutput
     );
 
-  Compl_operator : Complementer2s
-    port map(
-      input_data  => rs1, 
-      output_data => compOutput
-    );
-
-    Fwd_operator : forwarder
-    port map(
-      input_data  => rs1, 
-      output_data => fwdOutput
-    );
  
+  
   -- Process(es)
-  process 
+  process( ALUOP, andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput )
   begin
-    -- Test Case 1: AND , OR , XOR Operations
-    rs1 <= "00000000000000000000000000000000";
-    rs2 <= "00000000000000000000000000000000";
-    wait for 10 ns;
+    case( ALUOP ) is
+      
+      when "000" => -- ADD/SUB Instructions
+        -- Add delay here
+        ALURESULT <= adderOutput;
+      
+      when "001" => -- SLL Instruction
+        -- Add delay here
+        shiftType <= "00";       -- Direction = left , extender = 0 => 00
+        ALURESULT <= shiftOutput;
+      
+      when "010" => -- SLT Instructions
+        -- Add delay here
+        ALURESULT <= sltOutput;
 
-    rs1 <= "11111111111111111111111111111111";
-    rs2 <= "00000000000000000000000000000000";
-    wait for 10 ns;
+      when "011" => -- SLTU Instructions
+        -- Add delay here
+        ALURESULT <= sltuOutput;
 
-    rs1 <= "10101010101010101010101010101010";
-    rs2 <= "01010101010101010101010101010101";
-    wait for 10 ns;
+      when "100" => -- XOR Instructions
+        -- Add delay here
+        ALURESULT <= xorOutput;
+      
+      when "101" => -- SRL/SRA Instructions
+        -- Add delay here
+        shiftType <= "10";       -- Direction = right , extender = 0 => 10
+        ALURESULT <= shiftOutput;
 
-    rs1 <= "11111111111111111111111111111111";
-    rs2 <= "11111111111111111111111111111111";
-    wait for 10 ns;
+      when "110" => -- OR Instructions
+        -- Add delay here
+        ALURESULT <= orOutput;
+      
+      when "111" => -- AND Instructions
+        -- Add delay here
+        ALURESULT <= andOutput;
 
-    -- Test Case 4: ADD Operation
-    rs1 <= "00000000000000000000000000000000";
-    rs2 <= "00000000000000000000000000000000";
-    wait for 10 ns;
-
-    rs1 <= "00000000000000000000000000000001";
-    rs2 <= "00000000000000000000000000000001";
-    wait for 10 ns;
-
-    rs1 <= "11111111111111111111111111111111";
-    rs2 <= "00000000000000000000000000000001";
-    wait for 10 ns;
-
-    -- Test Case 5: SLT Operation
-    rs1 <= "00000000000000000000000000000001";
-    rs2 <= "00000000000000000000000000000010";
-    wait for 10 ns;
-
-    rs1 <= "00000000000000000000000000000010";
-    rs2 <= "00000000000000000000000000000001";
-    wait for 10 ns;
-
-    rs1 <= "11111111111111111111111111111111"; -- -1 in signed
-    rs2 <= "00000000000000000000000000000000"; -- 0 in signed
-    wait for 10 ns;
-
-    rs1 <= "10000000000000000000000000000000"; -- -2147483648
-    rs2 <= "01111111111111111111111111111111"; -- 2147483647
-    wait for 10 ns;
-
+      when others =>
+        -- Unexpected Behaviour
+        ALURESULT <= (others => 'X');
+        
+    end case ;
 
     -- End simulation
-    wait;
+    --wait;
   end process;
 
 end architecture ;
