@@ -160,43 +160,34 @@ begin
     case( ALUOP ) is
       
       when "0000" => -- ADD/SUB Instructions
-        wait for 2 ns;
-        ALURESULT <= adderOutput;
+        ALURESULT <= adderOutput after 1 ns;
       
       when "0001" => -- SLL Instruction
-        wait for 2 ns;
         shiftType <= "00";       -- Direction = left , extender = 0 => 00
-        ALURESULT <= shiftOutput;
+        ALURESULT <= shiftOutput after 2 ns;
       
       when "0010" => -- SLT Instructions
-        wait for 2 ns;
-        ALURESULT <= sltOutput;
+        ALURESULT <= sltOutput after 2 ns;
 
       when "0011" => -- SLTU Instructions
-        wait for 2 ns;
-        ALURESULT <= sltuOutput;
+        ALURESULT <= sltuOutput after 2 ns;
 
       when "0100" => -- XOR Instructions
-        wait for 1 ns;
-        ALURESULT <= xorOutput;
+        ALURESULT <= xorOutput after 1 ns;
       
       when "0101" => -- SRL Instructions
-        wait for 2 ns;
         shiftType <= "10";       -- Direction = right , extender = 0 => 10
-        ALURESULT <= shiftOutput;
+        ALURESULT <= shiftOutput after 2 ns;
       
       when "0110" => -- SRA Instructions
-        wait for 2 ns;
         shiftType <= "11";       -- Direction = right , extender = 1 => 11
-        ALURESULT <= shiftOutput;
+        ALURESULT <= shiftOutput after 2 ns;
 
       when "0111" => -- OR Instructions
-        wait for 1 ns;
-        ALURESULT <= orOutput;
+        ALURESULT <= orOutput after 1 ns;
       
       when "1000" => -- AND Instructions
-        wait for 1 ns;
-        ALURESULT <= andOutput;
+        ALURESULT <= andOutput after 1 ns;
 
       -- Add more instructions here later
 
