@@ -25,7 +25,7 @@ architecture ALUTB_Architecture of ALUTB is
         port(
           DATA1     : in std_logic_vector (31 downto 0);
           DATA2     : in std_logic_vector (31 downto 0);
-          ALUOP     : in std_logic_vector (2 downto 0);
+          ALUOP     : in std_logic_vector (3 downto 0);
           ALURESULT : out std_logic_vector (31 downto 0);
           ZERO      : out std_logic
         );
@@ -33,7 +33,7 @@ architecture ALUTB_Architecture of ALUTB is
     
     -- signals
     signal DATA1, DATA2, ALURESULT : std_logic_vector(31 downto 0) := (others => '0');
-    signal ALUOP : std_logic_vector(2 downto 0);
+    signal ALUOP : std_logic_vector(3 downto 0);
     signal ZERO : std_logic;
     
 begin
@@ -51,7 +51,7 @@ begin
   process 
   begin
     -- Test Case 1: AND Operation
-    ALUOP <= "111";
+    ALUOP <= "1000";
     DATA1 <= "00000000000000000000000000000000";
     DATA2 <= "00000000000000000000000000000000";
     wait for 10 ns;
@@ -69,7 +69,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 2: OR Operation
-    ALUOP <= "110";
+    ALUOP <= "0111";
     DATA1 <= "00000000000000000000000000000000";
     DATA2 <= "00000000000000000000000000000000";
     wait for 10 ns;
@@ -87,7 +87,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 3: XOR Operation
-    ALUOP <= "100";
+    ALUOP <= "0100";
     DATA1 <= "00000000000000000000000000000000";
     DATA2 <= "00000000000000000000000000000000";
     wait for 10 ns;
@@ -105,7 +105,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 4: ADD Operation
-    ALUOP <= "000";
+    ALUOP <= "0000";
     DATA1 <= "00000000000000000000000000000000";
     DATA2 <= "00000000000000000000000000000000";
     wait for 10 ns;
@@ -119,7 +119,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 5: SLT Operation
-    ALUOP <= "010";
+    ALUOP <= "0010";
     DATA1 <= "00000000000000000000000000000001";
     DATA2 <= "00000000000000000000000000000010";
     wait for 10 ns;
@@ -137,7 +137,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 6: SLTU Operation
-    ALUOP <= "011";
+    ALUOP <= "0011";
     DATA1 <= "00000000000000000000000000000001";
     DATA2 <= "00000000000000000000000000000010";
     wait for 10 ns;
@@ -155,7 +155,7 @@ begin
     wait for 10 ns;
 
     -- Test Case 7: SLL Operation
-    ALUOP <= "001";
+    ALUOP <= "0001";
     DATA1 <= "00000000000000000000000000000001";
     DATA2 <= "00000000000000000000000000000010";
     wait for 10 ns;
