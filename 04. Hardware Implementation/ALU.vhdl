@@ -17,6 +17,22 @@
 ------------------------------------------------------
 
 
+-----------------
+-- ALUOP CODES --
+-----------------
+-- 0000 - ADD  --
+-- 0001 - SUB  --
+-- 0010 - SLL  --
+-- 0011 - SLT  --
+-- 0100 - SLTU --
+-- 0101 - XOR  --
+-- 0110 - SRL  --
+-- 0111 - SRA  --
+-- 1000 - OR   --
+-- 1001 - AND  --
+-----------------
+
+-- NOTE: Time Unit = 10 ns
 
 -- Libraries (IEEE)
 library ieee ;
@@ -95,10 +111,27 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
+  component Complementer2s is
+    port(
+        input_data  : in std_logic_vector (31 downto 0);
+        output_data : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
+
+  component mux2_1 is
+    port(
+        input_1  : in std_logic_vector (31 downto 0);
+        input_2  : in std_logic_vector (31 downto 0);
+        selector : in std_logic;
+        output_1 : out std_logic_vector (31 downto 0) -- No ; here
+    );
+  end component;
+
 
   -- Signals 
-  signal andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput : std_logic_vector (31 downto 0);
+  signal andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput, muxOutput : std_logic_vector (31 downto 0);
   signal shiftType : std_logic_vector (1 downto 0);
+  signal muxSelect : std_logic;
   
 begin
   ------------------- Port Mapping -------------------
@@ -123,10 +156,24 @@ begin
       output_1 => xorOutput
     );
 
+  Complementor : Complementer2s
+    port map(
+      input_data  => DATA2,
+      output_data => compOutput
+    );
+
+  MUX : mux2_1
+    port map(
+      input_1  => DATA2,
+      input_2  => compOutput,
+      selector => muxSelect,
+      output_1 => muxOutput
+    );
+
   ADD_operator : adder
     port map(
       input_1  => DATA1, 
-      input_2  => DATA2, 
+      input_2  => muxOutput, 
       output_1 => adderOutput
     );
 
@@ -152,42 +199,46 @@ begin
       output_1 => sltuOutput
     );
 
- 
   
   -- Process(es)
   process( ALUOP, andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput )
   begin
     case( ALUOP ) is
       
-      when "0000" => -- ADD/SUB Instructions
-        ALURESULT <= adderOutput after 1 ns;
+      when "0000" => -- ADD Instructions
+        muxSelect <= '0';
+        ALURESULT <= adderOutput after 20 ns;
+
+      when "0001" => -- SUB Instructions
+        muxSelect <= '1';
+        ALURESULT <= adderOutput after 30 ns;
       
-      when "0001" => -- SLL Instruction
+      when "0010" => -- SLL Instruction
         shiftType <= "00";       -- Direction = left , extender = 0 => 00
-        ALURESULT <= shiftOutput after 2 ns;
+        ALURESULT <= shiftOutput after 20 ns;
       
-      when "0010" => -- SLT Instructions
-        ALURESULT <= sltOutput after 2 ns;
+      when "0011" => -- SLT Instructions
+        ALURESULT <= sltOutput after 20 ns;
 
-      when "0011" => -- SLTU Instructions
-        ALURESULT <= sltuOutput after 2 ns;
+      when "0100" => -- SLTU Instructions
+        ALURESULT <= sltuOutput after 20 ns;
 
-      when "0100" => -- XOR Instructions
-        ALURESULT <= xorOutput after 1 ns;
+      when "0101" => -- XOR Instructions
+        ALURESULT <= xorOutput after 10 ns;
       
-      when "0101" => -- SRL Instructions
+      when "0110" => -- SRL Instructions
         shiftType <= "10";       -- Direction = right , extender = 0 => 10
-        ALURESULT <= shiftOutput after 2 ns;
+        ALURESULT <= shiftOutput after 20 ns;
       
-      when "0110" => -- SRA Instructions
+      when "0111" => -- SRA Instructions
         shiftType <= "11";       -- Direction = right , extender = 1 => 11
-        ALURESULT <= shiftOutput after 2 ns;
+        ALURESULT <= shiftOutput after 20 ns;
 
-      when "0111" => -- OR Instructions
-        ALURESULT <= orOutput after 1 ns;
+      when "1000" => -- OR Instructions
+        ALURESULT <= orOutput after 10 ns;
       
-      when "1000" => -- AND Instructions
-        ALURESULT <= andOutput after 1 ns;
+      when "1001" => -- AND Instructions
+        ALURESULT <= andOutput after 10 ns;
 
       -- Add more instructions here later
 
