@@ -5,11 +5,12 @@ set -e
 
 # Step 1: Assign Testbench to the variable
 #FILENAME="Reg_File_tb"
-FILENAME="ALUTB"
+#FILENAME="ALUTB"
+FILENAME="PCTB"
 
 # Step 2: Analyze all VHDL files
 echo "Analyzing all VHDL files."
-VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT" "SLT" "SLTU" "ALU" "FORWARD" "2sCOMPLEMENTER" "REG_FILE")
+VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT" "SLT" "SLTU" "ALU" "FORWARD" "2sCOMPLEMENTER" "REG_FILE" "PC")
 
 for file in "${VHDL_FILES[@]}"; do
     ghdl -a "${file}.vhdl"
