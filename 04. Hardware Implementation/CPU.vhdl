@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Wed, 01 Jan 2025 at 11:37 PM
--- Last modified on Thu, 02 Jan 2025 at 00:37 PM
+-- Last modified on Thu, 02 Jan 2025 at 09:37 PM
 -- This is the central processing unit for RMV-32IM Pipelined processor
 
 -------------------------------------
@@ -10,8 +10,8 @@
 -- Containing Modules:             --
 -- 1. ALU                          --                   
 -- 2. Register Files               --
--- 3. PC (This module)             -- 
--- 4. Controll Unit (This module)  --
+-- 3. PC                           -- 
+-- 4. Controll Unit                --
 -------------------------------------
 
 -- Note: 1 time unit = 1ns/100ps = 10ns
@@ -43,13 +43,6 @@ architecture CPU_Architecture of CPU is
       );
     end component;
 
-    component Complementer2s is
-      port(
-          input_data  : in std_logic_vector (31 downto 0);
-          output_data : out std_logic_vector (31 downto 0)  
-      );
-    end component;
-
     component Reg_File
       port(
         ReadRegister_1 : in std_logic_vector(31 downto 0);
@@ -73,9 +66,9 @@ architecture CPU_Architecture of CPU is
     end component;
 
     -- Internal Signals
-    Signal REGOUT1, REGOUT2, ALURESULT, COMPLEMENT_DATA, SubMuxOut : std_logic_vector (31 downto 0);
+    Signal REGOUT1, REGOUT2, ALURESULT, COMPLEMENT_DATA : std_logic_vector (31 downto 0);
     Signal ALUOP : std_logic_vector (3 downto 0);
-    Signal ZERO, WriteEnable, SubMuxSelect : std_logic;
+    Signal ZERO, WriteEnable : std_logic;
 
     -- Instruction Decording Formats
     Signal FUNC7, OPCODE : std_logic_vector (6 downto 0);
