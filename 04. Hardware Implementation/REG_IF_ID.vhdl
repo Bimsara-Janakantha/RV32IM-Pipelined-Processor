@@ -1,12 +1,12 @@
 -- Create by BG
 -- Created on Fri, 03 Jan 2025 at 07:54 AM
 -- Last modified on Fri, 03 Jan 2025 at 08:37 AM
--- This is the Pipelined Register (IF/DF) module for RV32IM Piplined Processor
+-- This is the Pipelined Register (IF/ID) module for RV32IM Piplined Processor
 
 ------------------------------------------------------------------
 --                        REGISTER IF/ID                        --
 ------------------------------------------------------------------
--- The IF/DF register with 3 input streams and 3 output stream. --
+-- The IF/ID register with 3 input streams and 3 output stream. --
 -- Inputs : INSTRUCTION, PC+4, PC                               --
 -- Outputs: INSTRUCTION, PC+4, PC                               --
 ------------------------------------------------------------------
