@@ -1,0 +1,88 @@
+-- Libraries (IEEE)
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-- Testbench entity
+entity Pipeline_Reg_TB is
+end Pipeline_Reg_TB;
+
+-- Architecture of the testbench
+architecture behavior of Pipeline_Reg_TB is
+    -- Component Declaration for the Unit Under Test (UUT)
+    component REG_IF_ID
+        port(
+            INSTRUCTION_I, PC_I, PC4_I : in std_logic_vector (31 downto 0);
+            RESET, CLK                 : in std_logic;
+            INSTRUCTION_O, PC_O, PC4_O : out std_logic_vector (31 downto 0)
+        );
+    end component;
+
+    -- Internal Signals
+    signal INSTRUCTION_I, PC_I, PC4_I : std_logic_vector (31 downto 0);
+    SIGNAL RESET, CLK                 : std_logic;
+    SIGNAL INSTRUCTION_O, PC_O, PC4_O : std_logic_vector (31 downto 0);
+
+    -- Clock period
+    constant clk_period : time := 40 ns;
+
+begin
+    -- Instantiate the Unit Under Test (UUT)
+    test_IFID: REG_IF_ID
+        port map(
+            INSTRUCTION_I => INSTRUCTION_I,
+            PC_I          => PC_I,
+            PC4_I         => PC4_I,
+
+            INSTRUCTION_O => INSTRUCTION_O,
+            PC_O          => PC_O,
+            PC4_O         => PC4_O,
+
+            CLK           => CLK,
+            RESET         => Reset
+        );
+
+    -- Clock Process
+    Clock_Process : process
+    begin
+        for index in 1 to 10 loop
+            -- Sequential statements
+            CLK <= '0';
+            wait for clk_period / 2;
+            CLK <= '1';
+            wait for clk_period / 2;
+
+            report "Cycle: " & integer'image(index) severity note;
+        end loop;
+        wait;
+    end process;
+
+    -- Stimulus Process
+    process
+    begin
+        -- Test Case 1: Reset operation
+        Reset <= '1';
+        wait for clk_period;
+        Reset <= '0';
+
+        -- Test Case 2
+        INSTRUCTION_I <= std_logic_vector(to_unsigned(5, 32));
+        PC_I          <= std_logic_vector(to_unsigned(0, 32));
+        PC4_I         <= std_logic_vector(to_unsigned(4, 32));
+        wait for clk_period;
+
+        -- Test Case 3
+        --INSTRUCTION_I <= std_logic_vector(to_unsigned(5, 32));
+        PC_I          <= std_logic_vector(to_unsigned(4, 32));
+        PC4_I         <= std_logic_vector(to_unsigned(8, 32));
+        wait for clk_period;
+
+        -- Test Case 4
+        INSTRUCTION_I <= std_logic_vector(to_unsigned(10, 32));
+        PC_I          <= std_logic_vector(to_unsigned(8, 32));
+        PC4_I         <= std_logic_vector(to_unsigned(12, 32));
+        wait for clk_period;         
+        
+        --assert false report "Simulation finished" severity failure;
+    end process;
+end behavior;
