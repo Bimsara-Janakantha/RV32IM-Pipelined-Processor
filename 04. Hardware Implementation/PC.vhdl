@@ -27,7 +27,7 @@ end ProgramCounter ;
 architecture PC_Architecture of ProgramCounter is
 begin
     -- Program Counter Function
-    process (CLK, RESET)
+    process (CLK)
         variable nextPC : unsigned(31 downto 0) := (others => '0'); -- Internal variable
     begin
         if rising_edge(CLK) then
@@ -46,6 +46,5 @@ begin
             end if;
         end if;
     end process;
-
 
 end architecture ;
