@@ -7,7 +7,7 @@
 --                        REGISTER EX/MEM                        --
 -------------------------------------------------------------------
 -- The EX/MEM register with 5 input streams and 3 output stream. --
--- Registers: CONTROLS, IMM, DATA1, DATA2, PC4, PC               --
+-- Registers: CONTROLS, ALURESULT                                --
 -- Completed for R-Type Instructions                             --
 -------------------------------------------------------------------
 
