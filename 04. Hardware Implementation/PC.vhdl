@@ -19,33 +19,33 @@ library ieee ;
 entity ProgramCounter is
   port (
     CLK, RESET : in std_logic;
-    PC : out std_logic_vector (31 downto 0)
+    PC, PC4 : out std_logic_vector (31 downto 0)
   ) ;
 end ProgramCounter ; 
 
 -- PC Architecture
 architecture PC_Architecture of ProgramCounter is
-    Signal nextPC : unsigned(31 downto 0) := (others => '0');
 begin
     -- Program Counter Function
-    process (CLK, RESET, nextPC)
+    process (CLK, RESET)
+        variable nextPC : unsigned(31 downto 0) := (others => '0'); -- Internal variable
     begin
         if rising_edge(CLK) then
             if (RESET = '1') then
-                -- Add wait here
-                nextPC <= to_unsigned(4, nextPC'length);
-                PC <= (others => '0');
-                report "RESET PC!";
-
-            else 
-                nextPC <= nextPC + 4;
-                PC <= std_logic_vector(nextPC);
-                report "PC Updated to: " & integer'image(to_integer(nextPC));
-            
+                -- Reset Logic
+                nextPC := to_unsigned(4, 32);    -- Reset nextPC to 4
+                PC  <= (others => '0');          -- Reset output PC
+                PC4 <= std_logic_vector(nextPC); -- Reset output PC4
+                report "RESET PC!" severity note;
+            else
+                -- Normal Operation
+                PC     <= std_logic_vector(nextPC);
+                nextPC := nextPC + 4;
+                PC4    <= std_logic_vector(nextPC);
+                report "PC Updated to: " & integer'image(to_integer(nextPC)) severity note;
             end if;
-
         end if;
-            
     end process;
+
 
 end architecture ;

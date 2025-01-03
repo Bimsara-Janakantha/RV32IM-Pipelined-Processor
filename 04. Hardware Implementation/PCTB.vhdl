@@ -13,14 +13,14 @@ architecture behavior of PCTB is
     component ProgramCounter is
         port (
           CLK, RESET : in std_logic;
-          PC : out std_logic_vector (31 downto 0)
+          PC, PC4 : out std_logic_vector (31 downto 0)
         ) ;
       end component;
 
     -- Internal Signals
-    signal Clock : std_logic := '0';
-    signal Reset : std_logic := '0';
-    signal PC    : std_logic_vector(31 downto 0);
+    signal Clock   : std_logic := '0';
+    signal Reset   : std_logic := '0';
+    signal PC, PC4 : std_logic_vector(31 downto 0);
 
     -- Clock period
     constant clk_period : time := 40 ns;
@@ -28,9 +28,10 @@ architecture behavior of PCTB is
 begin
     testPC : ProgramCounter 
         port map(
-            CLK => Clock,
+            CLK   => Clock,
             RESET => Reset,
-            PC => PC
+            PC    => PC,
+            PC4   => PC4
         );
 
     -- Clock Process
