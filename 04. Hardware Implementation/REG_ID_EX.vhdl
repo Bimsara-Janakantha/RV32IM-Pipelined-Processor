@@ -16,7 +16,7 @@ library ieee ;
     use ieee.std_logic_1164.all ;
     use ieee.numeric_std.all ;
 
--- IF/ID Entity
+-- ID/EX Entity
 entity REG_ID_EX is
   port (
     -- Signal Ports
