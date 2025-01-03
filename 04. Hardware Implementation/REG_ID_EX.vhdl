@@ -7,8 +7,7 @@
 --                        REGISTER ID/EX                        --
 ------------------------------------------------------------------
 -- The ID/EX register with 3 input streams and 3 output stream. --
--- Inputs : INSTRUCTION, PC+4, PC                               --
--- Outputs: INSTRUCTION, PC+4, PC                               --
+-- Registers: RD, FUNC3, IMM, DATA1, DATA2, PC+4, PC            --
 ------------------------------------------------------------------
 
 -- Libraries (IEEE)
