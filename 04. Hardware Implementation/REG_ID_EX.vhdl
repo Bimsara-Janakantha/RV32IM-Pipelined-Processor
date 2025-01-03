@@ -3,13 +3,13 @@
 -- Last modified on Fri, 03 Jan 2025 at 09:37 AM
 -- This is the Pipelined Register (ID/EX) module for RV32IM Piplined Processor
 
-------------------------------------------------------------------
---                        REGISTER ID/EX                        --
-------------------------------------------------------------------
--- The ID/EX register with 3 input streams and 3 output stream. --
--- Registers: CONTROLS, IMM, DATA1, DATA2, PC4, PC              --
--- Completed for R-Type Instructions                            --
-------------------------------------------------------------------
+-------------------------------------------------------------------
+--                        REGISTER ID/EX                         --
+-------------------------------------------------------------------
+-- The ID/EX register with 11 input streams and 9 output stream. --
+-- Registers: CONTROLS, IMM, DATA1, DATA2, PC4, PC               --
+-- Completed for R-Type Instructions                             --
+-------------------------------------------------------------------
 
 -- Libraries (IEEE)
 library ieee ;
