@@ -38,7 +38,7 @@ entity REG_ID_EX is
   );
 end REG_ID_EX ; 
 
--- IF/ID Architecture
+-- ID/EX Architecture
 architecture ID_EX_Architecture of REG_ID_EX is
     -- Internal Registers
     Signal IMM, PC, PC4, DATA1, DATA2, CONTROLS : std_logic_vector (31 downto 0);
