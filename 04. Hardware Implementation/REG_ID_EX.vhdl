@@ -7,7 +7,7 @@
 --                        REGISTER ID/EX                        --
 ------------------------------------------------------------------
 -- The ID/EX register with 3 input streams and 3 output stream. --
--- Registers: CONTROLS, IMM, DATA1, DATA2, PC+4, PC             --
+-- Registers: CONTROLS, IMM, DATA1, DATA2, PC4, PC              --
 -- Completed for R-Type Instructions                            --
 ------------------------------------------------------------------
 
@@ -31,9 +31,9 @@ entity REG_ID_EX is
 
     -- Output Ports
     WriteEnable_O : out std_logic;
-    FUNC3_O     : out std_logic_vector (2 downto 0);
-    ALUOP_O       : out std_logic;
-    RD_O        : out std_logic_vector (4 downto 0);
+    FUNC3_O       : out std_logic_vector (2 downto 0);
+    ALUOP_O       : out std_logic_vector (3 downto 0);
+    RD_O          : out std_logic_vector (4 downto 0);
     IMM_O, PC_O, PC4_O, DATA1_O, DATA2_O : out std_logic_vector (31 downto 0)
   );
 end REG_ID_EX ; 
