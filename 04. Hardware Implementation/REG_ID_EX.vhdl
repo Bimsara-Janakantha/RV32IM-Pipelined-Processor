@@ -7,7 +7,8 @@
 --                        REGISTER ID/EX                        --
 ------------------------------------------------------------------
 -- The ID/EX register with 3 input streams and 3 output stream. --
--- Registers: RD, FUNC3, IMM, DATA1, DATA2, PC+4, PC            --
+-- Registers: CONTROLS, IMM, DATA1, DATA2, PC+4, PC             --
+-- Completed for R-Type Instructions                            --
 ------------------------------------------------------------------
 
 -- Libraries (IEEE)
@@ -22,13 +23,17 @@ entity REG_ID_EX is
     RESET, CLK  : in std_logic;
 
     -- Input Ports
-    RD_I        : in std_logic_vector (4 downto 0);
-    FUNC3_I     : in std_logic_vector (2 downto 0);
+    WriteEnable_I : in std_logic;
+    FUNC3_I       : in std_logic_vector (2 downto 0);
+    ALUOP_I       : in std_logic_vector (3 downto 0);
+    RD_I          : in std_logic_vector (4 downto 0);
     IMM_I, PC_I, PC4_I, DATA1_I, DATA2_I : in std_logic_vector (31 downto 0);
 
     -- Output Ports
-    RD_O        : out std_logic_vector (4 downto 0);
+    WriteEnable_O : out std_logic;
     FUNC3_O     : out std_logic_vector (2 downto 0);
+    ALUOP_O       : out std_logic;
+    RD_O        : out std_logic_vector (4 downto 0);
     IMM_O, PC_O, PC4_O, DATA1_O, DATA2_O : out std_logic_vector (31 downto 0)
   );
 end REG_ID_EX ; 
@@ -36,7 +41,7 @@ end REG_ID_EX ;
 -- IF/ID Architecture
 architecture ID_EX_Architecture of REG_ID_EX is
     -- Internal Registers
-    Signal RD_FUNC3, IMM, PC, PC4, DATA1, DATA2 : std_logic_vector (31 downto 0);
+    Signal IMM, PC, PC4, DATA1, DATA2, CONTROLS : std_logic_vector (31 downto 0);
     begin
         process (CLK)
         begin
@@ -44,7 +49,7 @@ architecture ID_EX_Architecture of REG_ID_EX is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     -- RESET MEMORY
-                    RD_FUNC3 <= (others => '0');
+                    CONTROLS <= (others => '0');
                     IMM      <= (others => '0');
                     PC       <= (others => '0');
                     PC4      <= (others => '0');
@@ -52,26 +57,30 @@ architecture ID_EX_Architecture of REG_ID_EX is
                     DATA2    <= (others => '0');
 
                     -- RESET OUTPUTS
-                    RD_O       <= (others => '0');
-                    FUNC3_O    <= (others => '0');
-                    IMM_O      <= (others => '0');
-                    PC_O       <= (others => '0');
-                    PC4_O      <= (others => '0');
-                    DATA1_O    <= (others => '0');
-                    DATA2_O    <= (others => '0');
+                    RD_O          <= (others => '0');
+                    FUNC3_O       <= (others => '0');
+                    ALUOP_O       <= (others => '0');
+                    WriteEnable_O <= '0';
+                    IMM_O         <= (others => '0');
+                    PC_O          <= (others => '0');
+                    PC4_O         <= (others => '0');
+                    DATA1_O       <= (others => '0');
+                    DATA2_O       <= (others => '0');
                 
                 else
                     -- Memory send to the outputs
-                    RD_O       <= RD_FUNC3(31 downto 27);
-                    FUNC3_O    <= RD_FUNC3(26 downto 24);
-                    IMM_O      <= IMM;
-                    PC_O       <= PC;
-                    PC4_O      <= PC4;
-                    DATA1_O    <= DATA1;
-                    DATA2_O    <= DATA2;
+                    RD_O          <= CONTROLS(31 downto 27);
+                    FUNC3_O       <= CONTROLS(26 downto 24);
+                    ALUOP_O       <= CONTROLS(3 downto 0);
+                    WriteEnable_O <= CONTROLS(4);
+                    IMM_O         <= IMM;
+                    PC_O          <= PC;
+                    PC4_O         <= PC4;
+                    DATA1_O       <= DATA1;
+                    DATA2_O       <= DATA2;
 
                     -- Memory update with new inputs
-                    RD_FUNC3 <= std_logic_vector(RD_I & FUNC3_I & "000000000000000000000000");
+                    CONTROLS <= std_logic_vector(RD_I & FUNC3_I & "0000000000000000000" & WriteEnable_I & ALUOP_I);
                     IMM      <= IMM_I;
                     PC       <= PC_I;
                     PC4      <= PC4_I;
