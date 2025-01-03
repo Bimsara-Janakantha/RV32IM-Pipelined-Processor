@@ -7,13 +7,14 @@
 --                        REGISTER IF/ID                        --
 ------------------------------------------------------------------
 -- The IF/ID register with 3 input streams and 3 output stream. --
--- Registers: INSTRUCTION, PC+4, PC                             --
+-- Registers: INSTRUCTION, PC4, PC                              --
+-- Completed For R-Type                                         --
 ------------------------------------------------------------------
 
 -- Libraries (IEEE)
-library ieee ;
-    use ieee.std_logic_1164.all ;
-    use ieee.numeric_std.all ;
+library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
 
 -- IF/ID Entity
 entity REG_IF_ID is
