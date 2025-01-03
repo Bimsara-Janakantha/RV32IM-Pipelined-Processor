@@ -1,3 +1,5 @@
+-- This TB working for R-Type only
+
 -- Libraries (IEEE)
 library ieee;
 use ieee.std_logic_1164.all;
@@ -24,13 +26,17 @@ architecture behavior of Pipeline_Reg_TB is
           RESET, CLK  : in std_logic;
       
           -- Input Ports
-          RD_I        : in std_logic_vector (4 downto 0);
-          FUNC3_I     : in std_logic_vector (2 downto 0);
+          WriteEnable_I : in std_logic;
+          FUNC3_I       : in std_logic_vector (2 downto 0);
+          ALUOP_I       : in std_logic_vector (3 downto 0);
+          RD_I          : in std_logic_vector (4 downto 0);
           IMM_I, PC_I, PC4_I, DATA1_I, DATA2_I : in std_logic_vector (31 downto 0);
       
           -- Output Ports
-          RD_O        : out std_logic_vector (4 downto 0);
-          FUNC3_O     : out std_logic_vector (2 downto 0);
+          WriteEnable_O : out std_logic;
+          FUNC3_O       : out std_logic_vector (2 downto 0);
+          ALUOP_O       : out std_logic_vector (3 downto 0);
+          RD_O          : out std_logic_vector (4 downto 0);
           IMM_O, PC_O, PC4_O, DATA1_O, DATA2_O : out std_logic_vector (31 downto 0)
         );
     end component;
@@ -40,8 +46,10 @@ architecture behavior of Pipeline_Reg_TB is
     SIGNAL RESET, CLK                 : std_logic;
     SIGNAL INSTRUCTION_O, PC_O, PC4_O : std_logic_vector (31 downto 0);
 
-    SIGNAL RD_I, RD_O       : std_logic_vector (4 downto 0);
+    SIGNAL WriteEnable_I, WriteEnable_O : std_logic;
     SIGNAL FUNC3_I, FUNC3_O : std_logic_vector (2 downto 0);
+    SIGNAL ALUOP_I, ALUOP_O : std_logic_vector (3 downto 0);
+    SIGNAL RD_I, RD_O       : std_logic_vector (4 downto 0);
     SIGNAL IMM_I, DATA1_I, DATA2_I, IMM_O, DATA1_O, DATA2_O : std_logic_vector (31 downto 0);
 
     -- Clock period
@@ -65,16 +73,20 @@ begin
 
     test_IDEX: REG_ID_EX
         port map(
-            RD_I    => RD_I,
+            WriteEnable_I => WriteEnable_I,
             FUNC3_I => FUNC3_I,
+            ALUOP_I => ALUOP_I,
+            RD_I    => RD_I,
             IMM_I   => IMM_I,
             PC_I    => PC_I,
             PC4_I   => PC4_I,
             DATA1_I => DATA1_I,
             DATA2_I => DATA2_I,
 
-            RD_O    => RD_O,
+            WriteEnable_O => WriteEnable_O,
             FUNC3_O => FUNC3_O,
+            ALUOP_O => ALUOP_O,
+            RD_O    => RD_O,
             IMM_O   => IMM_O,
             PC_O    => PC_O,
             PC4_O   => PC4_O,
