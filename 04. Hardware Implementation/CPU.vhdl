@@ -176,6 +176,12 @@ architecture CPU_Architecture of CPU is
     Signal RD_WB : std_logic_vector (4 downto 0);
     Signal WriteEnable_WB : std_logic;
 
+    -- Instruction decording signals
+    Signal FUNC3         : std_logic_vector(2 downto 0);
+    Signal RS1, RS2, RD  : std_logic_vector(4 downto 0);
+    Signal OPCODE, FUNC7 : std_logic_vector(6 downto 0);
+
+
     -- Some Fileds Are Not Completed Yet.
 
 begin
@@ -188,6 +194,21 @@ begin
     PC4   => PC4_IF
   );
 
-  
+  --------------------------------------- CPU Processes ---------------------------------------
+  PC_UPDATING : process (PC_IF)
+  begin
+    PC <= PC_IF;
+  end process;
+
+  INSTUCTION_DECORDING : process (INSTRUCTION_ID)
+  begin
+    -- Current decording is for R-Type
+    FUNC7  <= INSTRUCTION_ID(31 downto 25);
+    RS2    <= INSTRUCTION_ID(24 downto 20);
+    RS1    <= INSTRUCTION_ID(19 downto 15);
+    FUNC3  <= INSTRUCTION_ID(14 downto 12);
+    RD     <= INSTRUCTION_ID(11 downto 7);
+    OPCODE <= INSTRUCTION_ID(6 downto 0);
+  end process;
 
 end architecture;
