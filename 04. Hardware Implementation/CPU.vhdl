@@ -154,7 +154,7 @@ architecture CPU_Architecture of CPU is
     Signal PC_IF, PC4_IF, INSTRUCTION_IF  : std_logic_vector (31 downto 0);
 
     -- Signals in ID part
-    Signal PC_ID, PC4_ID, INSTRUCTION_ID, ReadData_1_ID, ReadData_2_ID : std_logic_vector (31 downto 0);
+    Signal PC_ID, PC4_ID, INSTRUCTION_ID, ReadData_1_ID, ReadData_2_ID, IMM_ID : std_logic_vector (31 downto 0);
     Signal ALUOP_ID : std_logic_vector (3 downto 0);
     Signal WriteEnable_ID, MemRead_ID, MemWrite_ID, Jump_ID, Branch_ID, MUX1_I_Type_ID, MUX2_I_Type_ID, MUX3_RI_Type_ID, MUX4_I_Type_ID, MUX5_U_Type_ID : std_logic; -- Some of them are not connected
 
@@ -238,6 +238,34 @@ begin
     Clock          => CLK, 
     Reset          => RESET,
     WriteEnable    => WriteEnable_WB
+  );
+
+  RV_ID_EX : REG_ID_EX
+  port map(
+    RESET         => RESET,
+    CLK           => CLK,
+
+    -- INPUT PORTS
+    WriteEnable_I => WriteEnable_ID,
+    FUNC3_I       => FUNC3,
+    ALUOP_I       => ALUOP_ID,
+    RD_I          => RD,
+    IMM_I         => IMM_ID, 
+    PC_I          => PC_ID, 
+    PC4_I         => PC4_ID, 
+    DATA1_I       => ReadData_1_ID, 
+    DATA2_I       => ReadData_2_ID,
+
+    -- OUTPUT PORTS
+    WriteEnable_O => WriteEnable_EX, 
+    FUNC3_O       => FUNC3_EX, 
+    ALUOP_O       => ALUOP_EX, 
+    RD_O          => RD_EX, 
+    IMM_O         => IMM_EX, 
+    PC_O          => PC_EX, 
+    PC4_O         => PC4_EX, 
+    DATA1_O       => ReadData_1_EX, 
+    DATA2_O       => ReadData_2_EX
   );
 
   --------------------------------------- CPU Processes ---------------------------------------
