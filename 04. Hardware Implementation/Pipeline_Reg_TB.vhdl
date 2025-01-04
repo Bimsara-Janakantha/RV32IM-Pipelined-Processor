@@ -41,6 +41,42 @@ architecture behavior of Pipeline_Reg_TB is
         );
     end component;
 
+    component REG_EX_MEM is
+        port (
+          -- Signal Ports
+          RESET, CLK  : in std_logic;
+      
+          -- Input Ports
+          WriteEnable_I : in std_logic;
+          RD_I          : in std_logic_vector (4 downto 0);
+          FUNC3_I       : in std_logic_vector (2 downto 0);
+          ALURESULT_I   : in std_logic_vector (31 downto 0);
+      
+          -- Output Ports
+          WriteEnable_O : out std_logic;
+          RD_O          : out std_logic_vector (4 downto 0);
+          FUNC3_O       : out std_logic_vector (2 downto 0);
+          ALURESULT_O   : out std_logic_vector (31 downto 0)
+        );
+    end component ; 
+
+    component REG_MEM_WB is
+        port (
+          -- Signal Ports
+          RESET, CLK  : in std_logic;
+      
+          -- Input Ports
+          WriteEnable_I : in std_logic;
+          RD_I          : in std_logic_vector (4 downto 0);
+          ALURESULT_I   : in std_logic_vector (31 downto 0);
+      
+          -- Output Ports
+          WriteEnable_O : out std_logic;
+          RD_O          : out std_logic_vector (4 downto 0);
+          ALURESULT_O   : out std_logic_vector (31 downto 0)
+        );
+    end component;
+
     -- Internal Signals
     signal INSTRUCTION_I, PC_I, PC4_I : std_logic_vector (31 downto 0);
     SIGNAL RESET, CLK                 : std_logic;
@@ -51,6 +87,8 @@ architecture behavior of Pipeline_Reg_TB is
     SIGNAL ALUOP_I, ALUOP_O : std_logic_vector (3 downto 0);
     SIGNAL RD_I, RD_O       : std_logic_vector (4 downto 0);
     SIGNAL IMM_I, DATA1_I, DATA2_I, IMM_O, DATA1_O, DATA2_O : std_logic_vector (31 downto 0);
+
+    SIGNAL ALURESULT_I, ALURESULT_O : std_logic_vector(31 downto 0);
 
     -- Clock period
     constant clk_period : time := 40 ns;
@@ -97,6 +135,36 @@ begin
             RESET   => Reset            
         );
 
+    test_EXMEM: REG_EX_MEM
+        port map(
+            WriteEnable_I => WriteEnable_I,
+            FUNC3_I       => FUNC3_I,
+            ALURESULT_I   => ALURESULT_I,
+            RD_I          => RD_I,
+
+            WriteEnable_O => WriteEnable_O,
+            FUNC3_O       => FUNC3_O,
+            ALURESULT_O   => ALURESULT_O,
+            RD_O          => RD_O,
+
+            CLK     => CLK,
+            RESET   => Reset            
+        );
+
+    test_MEMWB: REG_MEM_WB
+        port map(
+            WriteEnable_I => WriteEnable_I,
+            ALURESULT_I   => ALURESULT_I,
+            RD_I          => RD_I,
+
+            WriteEnable_O => WriteEnable_O,
+            ALURESULT_O   => ALURESULT_O,
+            RD_O          => RD_O,
+
+            CLK     => CLK,
+            RESET   => Reset            
+        );
+
     -- Clock Process
     Clock_Process : process
     begin
@@ -129,6 +197,7 @@ begin
         IMM_I         <= std_logic_vector(to_unsigned(12, 32));
         DATA1_I       <= std_logic_vector(to_unsigned(5, 32));
         DATA2_I       <= std_logic_vector(to_unsigned(6, 32));
+        ALURESULT_I   <= std_logic_vector(to_unsigned(16, 32));
         wait for clk_period;
 
         -- Test Case 3
@@ -140,6 +209,7 @@ begin
         IMM_I         <= std_logic_vector(to_unsigned(5, 32));
         DATA1_I       <= std_logic_vector(to_unsigned(10, 32));
         DATA2_I       <= std_logic_vector(to_unsigned(12, 32));
+        ALURESULT_I   <= std_logic_vector(to_unsigned(8, 32));
         wait for clk_period;
 
         -- Test Case 4
@@ -151,6 +221,7 @@ begin
         IMM_I         <= std_logic_vector(to_unsigned(11, 32));
         DATA1_I       <= std_logic_vector(to_unsigned(15, 32));
         DATA2_I       <= std_logic_vector(to_unsigned(10, 32));
+        ALURESULT_I   <= std_logic_vector(to_unsigned(255, 32));
         wait for clk_period;         
         wait;
     end process;
