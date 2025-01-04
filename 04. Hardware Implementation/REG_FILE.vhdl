@@ -8,9 +8,9 @@
 ----------------------------------------------------------------
 -- A Register File with 5 input streams and 2 output streams. --
 -- Input output streams                                       --
--- ReadRegister_1 : input : 32-bits wide                      --
--- ReadRegister_2 : input : 32-bits wide                      --
--- WriteRegister  : input : 32-bits wide                      --
+-- ReadRegister_1 : input : 5-bits wide                      --
+-- ReadRegister_2 : input : 5-bits wide                      --
+-- WriteRegister  : input : 5-bits wide                      --
 -- WriteData      : input : 32-bits wide                      --
 -- WriteEnable    : input : 1-bit wide                        --
 -- ReadData_1     : input : 32-bits wide                      --
@@ -26,9 +26,9 @@ use ieee.numeric_std.all;
 entity Reg_File is
     port(
         -- Data Inputs and Output Streams
-        ReadRegister_1 : in std_logic_vector (31 downto 0);
-        ReadRegister_2 : in std_logic_vector (31 downto 0);
-        WriteRegister  : in std_logic_vector (31 downto 0);
+        ReadRegister_1 : in std_logic_vector (4 downto 0);
+        ReadRegister_2 : in std_logic_vector (4 downto 0);
+        WriteRegister  : in std_logic_vector (4 downto 0);
         WriteData      : in std_logic_vector (31 downto 0);
         ReadData_1     : out std_logic_vector (31 downto 0);
         ReadData_2     : out std_logic_vector (31 downto 0);
