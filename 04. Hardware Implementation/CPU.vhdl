@@ -276,7 +276,25 @@ begin
     ALURESULT => ALURESULT_EX,
     ZERO      => ZERO_EX
   );
-  
+
+  RV_EX_MEM : REG_EX_MEM
+  port map(
+    RESET => RESET,
+    CLK   => CLK,
+
+    -- INPUT PORTS
+    WriteEnable_I => WriteEnable_EX,
+    RD_I          => RD_EX,
+    FUNC3_I       => FUNC3_EX,
+    ALURESULT_I   => ALURESULT_EX,
+
+    -- OUTPUT PORTS    
+    WriteEnable_O => WriteEnable_MEM,
+    RD_O          => RD_MEM,
+    FUNC3_O       => FUNC3_MEM,
+    ALURESULT_O   => ALURESULT_MEM
+  );
+
   --------------------------------------- CPU Processes ---------------------------------------
   PC_UPDATING : process (PC_IF)
   begin
