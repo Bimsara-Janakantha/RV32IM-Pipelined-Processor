@@ -60,7 +60,7 @@ begin
 
     case (PC) is  
       when x"00000000" =>
-        INSTRUCTION <= x"00000033" after 20 ns;
+        INSTRUCTION <= x"00110033" after 20 ns;
         report "Instruction No: 1";
 
       when x"00000004" =>

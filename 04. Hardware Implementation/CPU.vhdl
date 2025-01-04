@@ -62,13 +62,13 @@ architecture CPU_Architecture of CPU is
 
     component Reg_File
       port(
-        ReadRegister_1 : in std_logic_vector(5 downto 0);
-        ReadRegister_2 : in std_logic_vector(5 downto 0);
-        WriteRegister  : in std_logic_vector(5 downto 0);
+        ReadRegister_1 : in std_logic_vector(4 downto 0);
+        ReadRegister_2 : in std_logic_vector(4 downto 0);
+        WriteRegister  : in std_logic_vector(4 downto 0);
         WriteData      : in std_logic_vector(31 downto 0);
         ReadData_1     : out std_logic_vector(31 downto 0);
         ReadData_2     : out std_logic_vector(31 downto 0);
-        Clk, Reset     : in std_logic;
+        Clock, Reset   : in std_logic;
         WriteEnable    : in std_logic
       );
     end component;
@@ -225,6 +225,19 @@ begin
     MUX3_RI_Type => MUX3_RI_Type_ID, 
     MUX4_I_Type  => MUX4_I_Type_ID, 
     MUX5_U_Type  => MUX5_U_Type_ID
+  );
+
+  RV_REGFILE : Reg_File
+  port map(
+    ReadRegister_1 => RS1,
+    ReadRegister_2 => RS2,
+    WriteRegister  => RD_WB,
+    WriteData      => ALURESULT_WB,
+    ReadData_1     => ReadData_1_ID,
+    ReadData_2     => ReadData_2_ID,
+    Clock          => CLK, 
+    Reset          => RESET,
+    WriteEnable    => WriteEnable_WB
   );
 
   --------------------------------------- CPU Processes ---------------------------------------
