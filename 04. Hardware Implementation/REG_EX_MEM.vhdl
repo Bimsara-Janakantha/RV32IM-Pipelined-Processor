@@ -39,7 +39,7 @@ end REG_EX_MEM ;
 -- EX/MEM Architecture
 architecture EX_MEM_Architecture of REG_EX_MEM is
     -- Internal Registers
-    Signal CONTROLS, ALURESULT : std_logic_vector (31 downto 0);
+    --Signal CONTROLS, ALURESULT : std_logic_vector (31 downto 0);
     begin
         process (CLK)
         begin
@@ -47,8 +47,8 @@ architecture EX_MEM_Architecture of REG_EX_MEM is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     -- RESET MEMORY
-                    CONTROLS  <= (others => '0');
-                    ALURESULT <= (others => '0');
+                    --CONTROLS  <= (others => '0');
+                    --ALURESULT <= (others => '0');
 
                     -- RESET OUTPUTS
                     WriteEnable_O <= '0';
@@ -58,14 +58,17 @@ architecture EX_MEM_Architecture of REG_EX_MEM is
                 
                 else
                     -- Memory send to the outputs
-                    WriteEnable_O <= CONTROLS(4);
-                    RD_O          <= CONTROLS(31 downto 27);
-                    FUNC3_O       <= CONTROLS(26 downto 24);
-                    ALURESULT_O   <= ALURESULT;
+                    --WriteEnable_O <= CONTROLS(4);
+                    --RD_O          <= CONTROLS(31 downto 27);
+                    --FUNC3_O       <= CONTROLS(26 downto 24);
+                    WriteEnable_O <= WriteEnable_I;
+                    RD_O          <= RD_I;
+                    FUNC3_O       <= FUNC3_I;
+                    ALURESULT_O   <= ALURESULT_I;
 
                     -- Memory update with new inputs
-                    CONTROLS  <= std_logic_vector(RD_I & FUNC3_I & "0000000000000000000" & WriteEnable_I & "0000");
-                    ALURESULT <= ALURESULT_I;
+                    --CONTROLS  <= std_logic_vector(RD_I & FUNC3_I & "0000000000000000000" & WriteEnable_I & "0000");
+                    --ALURESULT <= ALURESULT_I;
                 end if;
                                
             end if;

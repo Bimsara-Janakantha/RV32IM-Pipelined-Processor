@@ -79,6 +79,8 @@ begin
                 when others => -- Unexpected Behaviour
                     ALUOP <= (others => 'X');
             end case ;
+
+            WriteEnable <= '1';
         else
             
         end if;

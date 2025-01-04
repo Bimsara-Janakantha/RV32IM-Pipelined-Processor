@@ -37,7 +37,7 @@ end REG_MEM_WB ;
 -- MEM/WB Architecture
 architecture MEM_WB_Architecture of REG_MEM_WB is
     -- Internal Registers
-    Signal CONTROLS, ALURESULT : std_logic_vector (31 downto 0);
+    --Signal CONTROLS, ALURESULT : std_logic_vector (31 downto 0);
     begin
         process (CLK)
         begin
@@ -45,8 +45,8 @@ architecture MEM_WB_Architecture of REG_MEM_WB is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     -- RESET MEMORY
-                    CONTROLS  <= (others => '0');
-                    ALURESULT <= (others => '0');
+                    --CONTROLS  <= (others => '0');
+                    --ALURESULT <= (others => '0');
 
                     -- RESET OUTPUTS
                     WriteEnable_O <= '0';
@@ -55,13 +55,15 @@ architecture MEM_WB_Architecture of REG_MEM_WB is
                 
                 else
                     -- Memory send to the outputs
-                    WriteEnable_O <= CONTROLS(4);
-                    RD_O          <= CONTROLS(31 downto 27);
-                    ALURESULT_O   <= ALURESULT;
+                    --WriteEnable_O <= CONTROLS(4);
+                    --RD_O          <= CONTROLS(31 downto 27);
+                    WriteEnable_O <= WriteEnable_I;
+                    RD_O          <= RD_I;
+                    ALURESULT_O   <= ALURESULT_I;
 
                     -- Memory update with new inputs
-                    CONTROLS  <= std_logic_vector(RD_I & "0000000000000000000000" & WriteEnable_I & "0000");
-                    ALURESULT <= ALURESULT_I;
+                    --CONTROLS  <= std_logic_vector(RD_I & "0000000000000000000000" & WriteEnable_I & "0000");
+                    --ALURESULT <= ALURESULT_I;
                 end if;
                                
             end if;

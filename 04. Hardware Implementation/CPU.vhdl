@@ -268,6 +268,49 @@ begin
     DATA2_O       => ReadData_2_EX
   );
 
+  RV_ALU : ALU
+  port map(
+    DATA1     => ReadData_1_EX,
+    DATA2     => ReadData_2_Ex,
+    ALUOP     => ALUOP_EX,
+    ALURESULT => ALURESULT_EX,
+    ZERO      => ZERO_EX
+  );
+
+  RV_EX_MEM : REG_EX_MEM
+  port map(
+    RESET => RESET,
+    CLK   => CLK,
+
+    -- INPUT PORTS
+    WriteEnable_I => WriteEnable_EX,
+    RD_I          => RD_EX,
+    FUNC3_I       => FUNC3_EX,
+    ALURESULT_I   => ALURESULT_EX,
+
+    -- OUTPUT PORTS    
+    WriteEnable_O => WriteEnable_MEM,
+    RD_O          => RD_MEM,
+    FUNC3_O       => FUNC3_MEM,
+    ALURESULT_O   => ALURESULT_MEM
+  );
+
+  RV_MEM_WB : REG_MEM_WB
+  port map(
+    RESET => RESET,
+    CLK   => CLK,
+
+    -- INPUT PORTS
+    WriteEnable_I => WriteEnable_MEM,
+    RD_I          => RD_MEM,
+    ALURESULT_I   => ALURESULT_MEM,
+
+    -- OUTPUT PORTS  
+    WriteEnable_O => WriteEnable_WB,
+    RD_O          => RD_WB,
+    ALURESULT_O   => ALURESULT_WB
+  );
+
   --------------------------------------- CPU Processes ---------------------------------------
   PC_UPDATING : process (PC_IF)
   begin
