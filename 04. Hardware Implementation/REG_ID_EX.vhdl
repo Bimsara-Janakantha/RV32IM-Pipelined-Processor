@@ -41,7 +41,7 @@ end REG_ID_EX ;
 -- ID/EX Architecture
 architecture ID_EX_Architecture of REG_ID_EX is
     -- Internal Registers
-    Signal IMM, PC, PC4, DATA1, DATA2, CONTROLS : std_logic_vector (31 downto 0);
+    --Signal IMM, PC, PC4, DATA1, DATA2, CONTROLS : std_logic_vector (31 downto 0);
     begin
         process (CLK)
         begin
@@ -49,12 +49,12 @@ architecture ID_EX_Architecture of REG_ID_EX is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     -- RESET MEMORY
-                    CONTROLS <= (others => '0');
-                    IMM      <= (others => '0');
-                    PC       <= (others => '0');
-                    PC4      <= (others => '0');
-                    DATA1    <= (others => '0');
-                    DATA2    <= (others => '0');
+                    --CONTROLS <= (others => '0');
+                    --IMM      <= (others => '0');
+                    --PC       <= (others => '0');
+                    --PC4      <= (others => '0');
+                    --DATA1    <= (others => '0');
+                    --DATA2    <= (others => '0');
 
                     -- RESET OUTPUTS
                     RD_O          <= (others => '0');
@@ -69,23 +69,28 @@ architecture ID_EX_Architecture of REG_ID_EX is
                 
                 else
                     -- Memory send to the outputs
-                    RD_O          <= CONTROLS(31 downto 27);
-                    FUNC3_O       <= CONTROLS(26 downto 24);
-                    ALUOP_O       <= CONTROLS(3 downto 0);
-                    WriteEnable_O <= CONTROLS(4);
-                    IMM_O         <= IMM;
-                    PC_O          <= PC;
-                    PC4_O         <= PC4;
-                    DATA1_O       <= DATA1;
-                    DATA2_O       <= DATA2;
+                    --RD_O          <= CONTROLS(31 downto 27);
+                    --FUNC3_O       <= CONTROLS(26 downto 24);
+                    --ALUOP_O       <= CONTROLS(3 downto 0);
+                    --WriteEnable_O <= CONTROLS(4);
+                    RD_O          <= RD_I;
+                    FUNC3_O       <= FUNC3_I;
+                    ALUOP_O       <= ALUOP_I;
+                    WriteEnable_O <= WriteEnable_I;
+                    IMM_O         <= IMM_I;
+                    PC_O          <= PC_I;
+                    PC4_O         <= PC4_I;
+                    DATA1_O       <= DATA1_I;
+                    DATA2_O       <= DATA2_I;
 
+                    -- Delete this later
                     -- Memory update with new inputs
-                    CONTROLS <= std_logic_vector(RD_I & FUNC3_I & "0000000000000000000" & WriteEnable_I & ALUOP_I);
-                    IMM      <= IMM_I;
-                    PC       <= PC_I;
-                    PC4      <= PC4_I;
-                    DATA1    <= DATA1_I;
-                    DATA2    <= DATA2_I;
+                    --CONTROLS <= std_logic_vector(RD_I & FUNC3_I & "0000000000000000000" & WriteEnable_I & ALUOP_I);
+                    --IMM      <= IMM_I;
+                    --PC       <= PC_I;
+                    --PC4      <= PC4_I;
+                    --DATA1    <= DATA1_I;
+                    --DATA2    <= DATA2_I;
                 end if;
                                
             end if;
