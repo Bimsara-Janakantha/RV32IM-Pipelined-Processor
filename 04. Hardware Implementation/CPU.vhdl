@@ -194,10 +194,27 @@ begin
     PC4   => PC4_IF
   );
 
+  RV_IF_ID : REG_IF_ID
+  port map(
+    INSTRUCTION_I => INSTRUCTION_IF,
+    PC_I          => PC_IF,
+    PC4_I         => PC4_IF,
+    RESET         => RESET,
+    CLK           => CLK,
+    INSTRUCTION_O => INSTRUCTION_ID,
+    PC_O          => PC_ID,
+    PC4_O         => PC4_ID
+  );
+
   --------------------------------------- CPU Processes ---------------------------------------
   PC_UPDATING : process (PC_IF)
   begin
     PC <= PC_IF;
+  end process;
+
+  INSTRUCTION_FETCHING : process (INSTRUCTION)
+  begin
+    INSTRUCTION_IF <= INSTRUCTION;
   end process;
 
   INSTUCTION_DECORDING : process (INSTRUCTION_ID)
