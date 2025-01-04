@@ -19,7 +19,7 @@ architecture testbench of CPUTB is
   Signal PC, INSTRUCTION : std_logic_vector (31 downto 0);
 
   -- Clock period
-  constant clk_period : time := 40 ns;
+  constant clk_period : time := 80 ns;
 begin
   CPU_TEST : CPU
   port map (
@@ -60,48 +60,48 @@ begin
 
     case (PC) is  
       when x"00000000" =>
-        INSTRUCTION <= x"00000001";
+        INSTRUCTION <= x"00000001" after 20 ns;
         report "Instruction No: 1";
 
       when x"00000004" =>
-        INSTRUCTION <= x"00000002";
+        INSTRUCTION <= x"00000002" after 20 ns;
         report "Instruction No: 2";
 
       when x"00000008" =>
-        INSTRUCTION <= x"00000003";
+        INSTRUCTION <= x"00000003" after 20 ns;
         report "Instruction No: 3";
 
       when x"0000000C" =>
-        INSTRUCTION <= x"00000004";
+        INSTRUCTION <= x"00000004" after 20 ns;
         report "Instruction No: 4";
 
       when x"00000010" =>
-        INSTRUCTION <= x"00000005";
+        INSTRUCTION <= x"00000005" after 20 ns;
         report "Instruction No: 5";
 
       when x"00000014" =>
-        INSTRUCTION <= x"00000006";
+        INSTRUCTION <= x"00000006" after 20 ns;
         report "Instruction No: 6";
       
       when x"00000018" =>
-        INSTRUCTION <= x"00000007";
+        INSTRUCTION <= x"00000007" after 20 ns;
         report "Instruction No: 7";
 
       when x"0000001C" =>
-        INSTRUCTION <= x"00000008";
+        INSTRUCTION <= x"00000008" after 20 ns;
         report "Instruction No: 8";
 
       when x"00000020" =>
-        INSTRUCTION <= x"00000009";
+        INSTRUCTION <= x"00000009" after 20 ns;
         report "Instruction No: 9";
 
       when x"00000024" =>
-        INSTRUCTION <= x"0000000A";
+        INSTRUCTION <= x"0000000A" after 20 ns;
         report "Instruction No: 10";
     
       when others =>
         report "Invalid PC";
-        INSTRUCTION <= (others => 'X');
+        INSTRUCTION <= (others => 'X') after 20 ns;
     end case ;
   end process;
 
