@@ -288,6 +288,6 @@ begin
     FUNC3  <= INSTRUCTION_ID(14 downto 12);
     RD     <= INSTRUCTION_ID(11 downto 7);
     OPCODE <= INSTRUCTION_ID(6 downto 0);
-  end process;
+  end process; 
 
 end architecture;
