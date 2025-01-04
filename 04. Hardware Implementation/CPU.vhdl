@@ -268,6 +268,15 @@ begin
     DATA2_O       => ReadData_2_EX
   );
 
+  RV_ALU : ALU
+  port map(
+    DATA1     => ReadData_1_EX,
+    DATA2     => ReadData_2_Ex,
+    ALUOP     => ALUOP_EX,
+    ALURESULT => ALURESULT_EX,
+    ZERO      => ZERO_EX
+  );
+  
   --------------------------------------- CPU Processes ---------------------------------------
   PC_UPDATING : process (PC_IF)
   begin
