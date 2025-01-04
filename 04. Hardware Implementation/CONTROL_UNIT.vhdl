@@ -32,7 +32,7 @@ entity CONTROL_UNIT is
     FUNC3         : in std_logic_vector (2 downto 0);
 
     -- Output Ports
-    WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Typ, MUX4_I_Type, MUX5_U_Type : out std_logic;
+    WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Type, MUX4_I_Type, MUX5_U_Type : out std_logic;
     ALUOP : out std_logic_vector (3 downto 0)      
   ) ;
 end CONTROL_UNIT ; 
