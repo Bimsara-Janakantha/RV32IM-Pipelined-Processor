@@ -180,7 +180,7 @@ architecture CPU_Architecture of CPU is
 
 begin
     ------------------------------- Component Mapping (Wiring) -------------------------------
-  PC_Unit : ProgramCounter
+  RV_PC : ProgramCounter
   port map(
     CLK   => CLK,
     RESET => RESET,
