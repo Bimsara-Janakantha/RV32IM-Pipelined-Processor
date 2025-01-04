@@ -295,6 +295,22 @@ begin
     ALURESULT_O   => ALURESULT_MEM
   );
 
+  RV_MEM_WB : REG_MEM_WB
+  port map(
+    RESET => RESET,
+    CLK   => CLK,
+
+    -- INPUT PORTS
+    WriteEnable_I => WriteEnable_MEM,
+    RD_I          => RD_MEM,
+    ALURESULT_I   => ALURESULT_MEM,
+
+    -- OUTPUT PORTS  
+    WriteEnable_O => WriteEnable_WB,
+    RD_O          => RD_WB,
+    ALURESULT_O   => ALURESULT_WB
+  );
+
   --------------------------------------- CPU Processes ---------------------------------------
   PC_UPDATING : process (PC_IF)
   begin

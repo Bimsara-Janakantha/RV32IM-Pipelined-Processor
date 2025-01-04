@@ -12,7 +12,7 @@ FILENAME="CPUTB"
 
 # Step 2: Analyze all VHDL files
 echo "Analyzing all VHDL files."
-VHDL_FILES=("AND" "OR" "XOR" "ADDER" "MUX2_1" "MUX4_1" "SHIFT" "SLT" "SLTU" "ALU" "FORWARD" "2sCOMPLEMENTER" "REG_FILE" "PC" "REG_IF_ID" "REG_ID_EX" "REG_EX_MEM" "REG_MEM_WB" "CPU")
+VHDL_FILES=("2sCOMPLEMENTER" "ADDER" "ALU" "AND" "CONTROL_UNIT" "CPU" "FORWARD" "MUX2_1" "MUX4_1" "OR" "PC" "REG_EX_MEM" "REG_FILE" "REG_ID_EX" "REG_IF_ID" "REG_MEM_WB" "SHIFT" "SLT" "SLTU" "XOR")
 
 for file in "${VHDL_FILES[@]}"; do
     ghdl -a "${file}.vhdl"
