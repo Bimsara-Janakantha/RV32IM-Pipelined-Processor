@@ -55,7 +55,7 @@ architecture CPU_Architecture of CPU is
         FUNC3         : in std_logic_vector (2 downto 0);
     
         -- Output Ports
-        WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Typ, MUX4_I_Type, MUX5_U_Type : out std_logic;
+        WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Type, MUX4_I_Type, MUX5_U_Type : out std_logic;
         ALUOP : out std_logic_vector (3 downto 0)      
       ) ;
     end component;
@@ -204,6 +204,27 @@ begin
     INSTRUCTION_O => INSTRUCTION_ID,
     PC_O          => PC_ID,
     PC4_O         => PC4_ID
+  );
+
+  RV_CONTROLER : CONTROL_UNIT
+  port map(
+    -- INPUT PORTS
+    FUNC3       => FUNC3,
+    FUNC7       => FUNC7,
+    OPCODE      => OPCODE,
+
+    -- OUTPUT PORTS
+    ALUOP        => ALUOP_ID,
+    WriteEnable  => WriteEnable_ID, 
+    MemRead      => MemRead_ID, 
+    MemWrite     => MemWrite_ID, 
+    Jump         => Jump_ID, 
+    Branch       => Branch_ID, 
+    MUX1_I_Type  => MUX1_I_Type_ID, 
+    MUX2_I_Type  => MUX2_I_Type_ID, 
+    MUX3_RI_Type => MUX3_RI_Type_ID, 
+    MUX4_I_Type  => MUX4_I_Type_ID, 
+    MUX5_U_Type  => MUX5_U_Type_ID
   );
 
   --------------------------------------- CPU Processes ---------------------------------------

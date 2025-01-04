@@ -60,15 +60,15 @@ begin
 
     case (PC) is  
       when x"00000000" =>
-        INSTRUCTION <= x"00000001" after 20 ns;
+        INSTRUCTION <= x"00000033" after 20 ns;
         report "Instruction No: 1";
 
       when x"00000004" =>
-        INSTRUCTION <= x"00000002" after 20 ns;
+        INSTRUCTION <= x"00000233" after 20 ns;
         report "Instruction No: 2";
 
       when x"00000008" =>
-        INSTRUCTION <= x"00000003" after 20 ns;
+        INSTRUCTION <= x"00002033" after 20 ns;
         report "Instruction No: 3";
 
       when x"0000000C" =>
