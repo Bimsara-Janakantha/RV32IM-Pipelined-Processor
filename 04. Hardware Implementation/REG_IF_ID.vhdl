@@ -8,7 +8,7 @@
 ------------------------------------------------------------------
 -- The IF/ID register with 3 input streams and 3 output stream. --
 -- Registers: INSTRUCTION, PC4, PC                              --
--- Completed For R-Type                                         --
+-- Completed For R-Type, I-Type                                 --
 ------------------------------------------------------------------
 
 -- Libraries (IEEE)
