@@ -21,7 +21,7 @@ library ieee ;
 entity IMM_DECORDER is
   port (
     INSTRUCTION : in std_logic_vector(31 downto 0);
-    IMM_OUTPUT  : out std_logic_vector(31 downto 0);
+    IMM_OUTPUT  : out std_logic_vector(31 downto 0)
   ) ;
 end IMM_DECORDER ; 
 
@@ -34,6 +34,7 @@ begin
     process(INSTRUCTION)
         variable EXTENSION : std_logic_vector(31 downto 0);
     begin
+
         -- I Type Instruction - Category 1
         if (INSTRUCTION(6 downto 0) = "0000011") then
             EXTENSION := (others => INSTRUCTION(31));
@@ -55,18 +56,26 @@ begin
             IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(31 downto 25) & INSTRUCTION(11 downto 7);
 
         -- B Type Instruction
-        elsif (INSTRUCTION(6 downto 0) = "1100111") then 
+        elsif (INSTRUCTION(6 downto 0) = "1100011") then 
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(31 downto 25) & INSTRUCTION(11 downto 7);
+            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(7) & INSTRUCTION(30 downto 25) & INSTRUCTION(11 downto 8) & '0';
         
+        -- U Type Instruction - Category 1
+        elsif (INSTRUCTION(6 downto 0) = "0010111") then 
+            EXTENSION := (others => '0');
+            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0);
+
+        -- U Type Instruction - Category 2
+        elsif (INSTRUCTION(6 downto 0) = "0110111") then 
+            EXTENSION := (others => '0');
+            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0);
+
+        -- J Type Instruction
+        elsif (INSTRUCTION(6 downto 0) = "1101111") then 
+            EXTENSION := (others => INSTRUCTION(31));
+            IMM_OUTPUT <= EXTENSION(31 downto 20) & INSTRUCTION(19 downto 12) & INSTRUCTION(20) & INSTRUCTION(30 downto 21) & '0';
 
         end if ;
-
-
-
-
-
-
 
     end process;
 
