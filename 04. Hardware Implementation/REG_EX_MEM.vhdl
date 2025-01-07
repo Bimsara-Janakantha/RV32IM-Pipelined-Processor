@@ -25,13 +25,13 @@ entity REG_EX_MEM is
     -- Input Ports
     WriteEnable_I : in std_logic;
     RD_I          : in std_logic_vector (4 downto 0);
-    FUNC3_I       : in std_logic_vector (2 downto 0);
+    DMEMOP_I      : in std_logic_vector (2 downto 0);
     ALURESULT_I   : in std_logic_vector (31 downto 0);
 
     -- Output Ports
     WriteEnable_O : out std_logic;
     RD_O          : out std_logic_vector (4 downto 0);
-    FUNC3_O       : out std_logic_vector (2 downto 0);
+    DMEMOP_O      : out std_logic_vector (2 downto 0);
     ALURESULT_O   : out std_logic_vector (31 downto 0)
   );
 end REG_EX_MEM ; 
@@ -46,14 +46,14 @@ architecture EX_MEM_Architecture of REG_EX_MEM is
                 if (RESET = '1') then
                     WriteEnable_O <= '0';
                     RD_O          <= (others => '0');
-                    FUNC3_O       <= (others => '0');
+                    DMEMOP_O      <= (others => '0');
                     ALURESULT_O   <= (others => '0');
                 
                 -- Memory send to the outputs
                 else
                     WriteEnable_O <= WriteEnable_I;
                     RD_O          <= RD_I;
-                    FUNC3_O       <= FUNC3_I;
+                    DMEMOP_O      <= DMEMOP_I;
                     ALURESULT_O   <= ALURESULT_I;
 
                 end if;

@@ -24,14 +24,14 @@ entity REG_ID_EX is
 
     -- Input Ports
     WriteEnable_I, MUX1_I : in std_logic;
-    FUNC3_I       : in std_logic_vector (2 downto 0);
+    DMEMOP_I      : in std_logic_vector (2 downto 0);
     ALUOP_I       : in std_logic_vector (3 downto 0);
     RD_I          : in std_logic_vector (4 downto 0);
     IMM_I, PC_I, PC4_I, DATA1_I, DATA2_I : in std_logic_vector (31 downto 0);
 
     -- Output Ports
     WriteEnable_O, MUX1_O : out std_logic;
-    FUNC3_O       : out std_logic_vector (2 downto 0);
+    DMEMOP_O      : out std_logic_vector (2 downto 0);
     ALUOP_O       : out std_logic_vector (3 downto 0);
     RD_O          : out std_logic_vector (4 downto 0);
     IMM_O, PC_O, PC4_O, DATA1_O, DATA2_O : out std_logic_vector (31 downto 0)
@@ -47,7 +47,7 @@ architecture ID_EX_Architecture of REG_ID_EX is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     RD_O          <= (others => '0');
-                    FUNC3_O       <= (others => '0');
+                    DMEMOP_O      <= (others => '0');
                     ALUOP_O       <= (others => '0');
                     WriteEnable_O <= '0';
                     MUX1_O        <= '0';
@@ -60,7 +60,7 @@ architecture ID_EX_Architecture of REG_ID_EX is
                 -- Memory send to the outputs
                 else
                     RD_O          <= RD_I;
-                    FUNC3_O       <= FUNC3_I;
+                    DMEMOP_O      <= DMEMOP_I;
                     ALUOP_O       <= ALUOP_I;
                     WriteEnable_O <= WriteEnable_I;
                     MUX1_O        <= MUX1_I;

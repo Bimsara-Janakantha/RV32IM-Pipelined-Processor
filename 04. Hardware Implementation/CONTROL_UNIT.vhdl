@@ -12,13 +12,14 @@
 -- 2. MemRead       - 1 bit wide                             --
 -- 3. MemWrite      - 1 bit wide                             --
 -- 4. ALUOP         - 4 bit wide                             --
--- 5. Jump          - 1 bit wide                             --
--- 6. Branch        - 1 bit wide                             --
--- 7. MUX1_I_Type   - 1 bit wide                             --
--- 8. MUX2_I_Type   - 1 bit wide                             --
--- 9. MUX3_RI_Type  - 1 bit wide                             --
---10. MUX4_I_Type   - 1 bit wide                             --
---11. MUX5_U_Type   - 1 bit wide                             --
+-- 5. DMEMOP        - 3 bit wide
+-- 6. Jump          - 1 bit wide                             --
+-- 7. Branch        - 1 bit wide                             --
+-- 8. MUX1_I_Type   - 1 bit wide                             --
+-- 9. MUX2_I_Type   - 1 bit wide                             --
+--10. MUX3_RI_Type  - 1 bit wide                             --
+--11. MUX4_I_Type   - 1 bit wide                             --
+--12. MUX5_U_Type   - 1 bit wide                             --
 ---------------------------------------------------------------
 
 library ieee ;
@@ -33,6 +34,7 @@ entity CONTROL_UNIT is
 
     -- Output Ports
     WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Type, MUX4_I_Type, MUX5_U_Type : out std_logic;
+    DMEMOP: out std_logic_vector (2 downto 0);
     ALUOP : out std_logic_vector (3 downto 0)      
   ) ;
 end CONTROL_UNIT ; 
@@ -41,6 +43,20 @@ architecture Control_Unit_Architecture of CONTROL_UNIT is
 begin
     process (FUNC7, FUNC3, OPCODE)
     begin
+        -- SET ALL CONTROL SIGNALS TO 0
+        WriteEnable  <= '0'; 
+        MemRead      <= '0'; 
+        MemWrite     <= '0'; 
+        Jump         <= '0'; 
+        Branch       <= '0'; 
+        MUX1_I_Type  <= '0'; 
+        MUX2_I_Type  <= '0'; 
+        MUX3_RI_Type <= '0'; 
+        MUX4_I_Type  <= '0'; 
+        MUX5_U_Type  <= '0';
+        DMEMOP       <= "000";
+        ALUOP        <= "0000";
+
         -- R-Type Instructions
         if (OPCODE = "0110011") then
             case( FUNC3 ) is
@@ -81,17 +97,31 @@ begin
             end case ;
 
             WriteEnable <= '1';
-            MUX1_I_Type <= '0';
 
         -- I-Type Load Instructions
         elsif (OPCODE = "0000011") then
             case( FUNC3 ) is            
                 when "000" =>   -- LB Instruction
-                    -- todo
+                    DMEMOP <= "000";
+
+                when "001" =>   -- LH Instruction
+                    DMEMOP <= "001";
+
+                when "010" =>   -- LW Instruction
+                    DMEMOP <= "010";
+
+                when "100" =>   -- LBU Instruction
+                    DMEMOP <= "011";
+
+                when "101" =>   -- LHU Instruction
+                    DMEMOP <= "100";
             
                 when others =>
             
             end case ;
+
+            WriteEnable <= '1';
+            MUX1_I_Type <= '1';
 
         -- I-Type Arithmetic Instructions
         elsif (OPCODE = "0010011") then
@@ -132,6 +162,11 @@ begin
             WriteEnable <= '1';
             MUX1_I_Type <= '1';
 
+        -- I-Type JALR Instruction
+        elsif (OPCODE = "1100111") then
+            -- TODO
+        
+        -- Add more later
         else
             
         end if;
