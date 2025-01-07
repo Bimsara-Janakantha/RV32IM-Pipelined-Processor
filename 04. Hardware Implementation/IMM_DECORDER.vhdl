@@ -43,7 +43,14 @@ begin
         -- I Type Instruction - Category 2
         elsif (INSTRUCTION(6 downto 0) = "0010011") then 
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
+
+            if (INSTRUCTION(14 downto 12) = "101") then
+                IMM_OUTPUT <= EXTENSION(31 downto 5) & INSTRUCTION(24 downto 20);
+                
+            else
+                IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
+
+            end if ;
 
         -- I Type Instruction - Category 3
         elsif (INSTRUCTION(6 downto 0) = "1100111") then 
