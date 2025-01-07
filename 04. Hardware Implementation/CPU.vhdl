@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Wed, 01 Jan 2025 at 11:37 PM
--- Last modified on Sat, 04 Jan 2025 at 08:37 PM
+-- Last modified on Tue, 07 Jan 2025 at 04:37 AM
 -- This is the central processing unit for RMV-32IM Pipelined processor
 
 -------------------------------------
@@ -12,6 +12,8 @@
 -- 2. Register Files               --
 -- 3. PC                           -- 
 -- 4. Controll Unit                --
+-- 5. Pipeline Registers           --
+-- 6. Immidiate Decorder           --
 -------------------------------------
 
 -- Note: 1 time unit = 1ns/100ps = 10ns
@@ -56,6 +58,7 @@ architecture CPU_Architecture of CPU is
     
         -- Output Ports
         WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Type, MUX4_I_Type, MUX5_U_Type : out std_logic;
+        DMEMOP: out std_logic_vector (2 downto 0);
         ALUOP : out std_logic_vector (3 downto 0)      
       ) ;
     end component;
@@ -73,21 +76,28 @@ architecture CPU_Architecture of CPU is
       );
     end component;
 
+    component IMM_DECORDER is
+      port (
+        INSTRUCTION : in std_logic_vector(31 downto 0);
+        IMM_OUTPUT  : out std_logic_vector(31 downto 0)
+      ) ;
+    end component;
+
     component REG_ID_EX is
       port (
         -- Signal Ports
         RESET, CLK  : in std_logic;
     
         -- Input Ports
-        WriteEnable_I : in std_logic;
-        FUNC3_I       : in std_logic_vector (2 downto 0);
+        WriteEnable_I, MUX1_I : in std_logic;
+        DMEMOP_I      : in std_logic_vector (2 downto 0);
         ALUOP_I       : in std_logic_vector (3 downto 0);
         RD_I          : in std_logic_vector (4 downto 0);
         IMM_I, PC_I, PC4_I, DATA1_I, DATA2_I : in std_logic_vector (31 downto 0);
     
         -- Output Ports
-        WriteEnable_O : out std_logic;
-        FUNC3_O       : out std_logic_vector (2 downto 0);
+        WriteEnable_O, MUX1_O : out std_logic;
+        DMEMOP_O      : out std_logic_vector (2 downto 0);
         ALUOP_O       : out std_logic_vector (3 downto 0);
         RD_O          : out std_logic_vector (4 downto 0);
         IMM_O, PC_O, PC4_O, DATA1_O, DATA2_O : out std_logic_vector (31 downto 0)
@@ -121,13 +131,13 @@ architecture CPU_Architecture of CPU is
         -- Input Ports
         WriteEnable_I : in std_logic;
         RD_I          : in std_logic_vector (4 downto 0);
-        FUNC3_I       : in std_logic_vector (2 downto 0);
+        DMEMOP_I      : in std_logic_vector (2 downto 0);
         ALURESULT_I   : in std_logic_vector (31 downto 0);
     
         -- Output Ports
         WriteEnable_O : out std_logic;
         RD_O          : out std_logic_vector (4 downto 0);
-        FUNC3_O       : out std_logic_vector (2 downto 0);
+        DMEMOP_O      : out std_logic_vector (2 downto 0);
         ALURESULT_O   : out std_logic_vector (31 downto 0)
       );
     end component ;
@@ -155,20 +165,21 @@ architecture CPU_Architecture of CPU is
 
     -- Signals in ID part
     Signal PC_ID, PC4_ID, INSTRUCTION_ID, ReadData_1_ID, ReadData_2_ID, IMM_ID : std_logic_vector (31 downto 0);
-    Signal ALUOP_ID : std_logic_vector (3 downto 0);
-    Signal WriteEnable_ID, MemRead_ID, MemWrite_ID, Jump_ID, Branch_ID, MUX1_I_Type_ID, MUX2_I_Type_ID, MUX3_RI_Type_ID, MUX4_I_Type_ID, MUX5_U_Type_ID : std_logic; -- Some of them are not connected
+    Signal ALUOP_ID  : std_logic_vector (3 downto 0);
+    Signal DMEMOP_ID : std_logic_vector (2 downto 0);
+    Signal WriteEnable_ID, MemRead_ID, MemWrite_ID, Jump_ID, Branch_ID, MUX1_ID, MUX2_ID, MUX3_ID, MUX4_ID, MUX5_ID : std_logic; -- Some of them are not connected
 
     -- Signals in EX part
-    Signal PC_EX, PC4_EX, IMM_EX, ReadData_1_EX, ReadData_2_Ex, ALURESULT_EX : std_logic_vector (31 downto 0);
+    Signal PC_EX, PC4_EX, IMM_EX, ReadData_1_EX, ReadData_2_Ex, DATA2_EX, ALURESULT_EX : std_logic_vector (31 downto 0);
     Signal RD_EX : std_logic_vector (4 downto 0);
-    Signal ALUOP_EX : std_logic_vector (3 downto 0);
-    Signal FUNC3_EX : std_logic_vector (2 downto 0);
-    Signal WriteEnable_EX, ZERO_EX : std_logic;
+    Signal ALUOP_EX  : std_logic_vector (3 downto 0);
+    Signal DMEMOP_EX : std_logic_vector (2 downto 0);
+    Signal WriteEnable_EX, MUX1_EX, ZERO_EX : std_logic;
 
     -- Signals in MEM part
     Signal ALURESULT_MEM : std_logic_vector (31 downto 0);
     Signal RD_MEM : std_logic_vector (4 downto 0);
-    Signal FUNC3_MEM : std_logic_vector (2 downto 0);
+    Signal DMEMOP_MEM : std_logic_vector (2 downto 0);
     Signal WriteEnable_MEM : std_logic;
 
     -- Signals in WB part
@@ -215,16 +226,17 @@ begin
 
     -- OUTPUT PORTS
     ALUOP        => ALUOP_ID,
+    DMEMOP       => DMEMOP_ID,
     WriteEnable  => WriteEnable_ID, 
     MemRead      => MemRead_ID, 
     MemWrite     => MemWrite_ID, 
     Jump         => Jump_ID, 
     Branch       => Branch_ID, 
-    MUX1_I_Type  => MUX1_I_Type_ID, 
-    MUX2_I_Type  => MUX2_I_Type_ID, 
-    MUX3_RI_Type => MUX3_RI_Type_ID, 
-    MUX4_I_Type  => MUX4_I_Type_ID, 
-    MUX5_U_Type  => MUX5_U_Type_ID
+    MUX1_I_Type  => MUX1_ID, 
+    MUX2_I_Type  => MUX2_ID, 
+    MUX3_RI_Type => MUX3_ID, 
+    MUX4_I_Type  => MUX4_ID, 
+    MUX5_U_Type  => MUX5_ID
   );
 
   RV_REGFILE : Reg_File
@@ -240,6 +252,12 @@ begin
     WriteEnable    => WriteEnable_WB
   );
 
+  RV_IMM_DECORDER : IMM_DECORDER
+  port map(
+    INSTRUCTION => INSTRUCTION_ID,
+    IMM_OUTPUT  => IMM_ID
+  );
+
   RV_ID_EX : REG_ID_EX
   port map(
     RESET         => RESET,
@@ -247,7 +265,8 @@ begin
 
     -- INPUT PORTS
     WriteEnable_I => WriteEnable_ID,
-    FUNC3_I       => FUNC3,
+    MUX1_I        => MUX1_ID,
+    DMEMOP_I      => DMEMOP_ID,
     ALUOP_I       => ALUOP_ID,
     RD_I          => RD,
     IMM_I         => IMM_ID, 
@@ -258,7 +277,8 @@ begin
 
     -- OUTPUT PORTS
     WriteEnable_O => WriteEnable_EX, 
-    FUNC3_O       => FUNC3_EX, 
+    MUX1_O        => MUX1_EX,
+    DMEMOP_O      => DMEMOP_EX, 
     ALUOP_O       => ALUOP_EX, 
     RD_O          => RD_EX, 
     IMM_O         => IMM_EX, 
@@ -266,6 +286,14 @@ begin
     PC4_O         => PC4_EX, 
     DATA1_O       => ReadData_1_EX, 
     DATA2_O       => ReadData_2_EX
+  );
+
+  RV_MUX_1 : mux2_1
+  port map(
+    input_1  => ReadData_2_Ex,
+    input_2  => IMM_EX,
+    selector => MUX1_EX,
+    output_1 => DATA2_EX
   );
 
   RV_ALU : ALU
@@ -285,13 +313,13 @@ begin
     -- INPUT PORTS
     WriteEnable_I => WriteEnable_EX,
     RD_I          => RD_EX,
-    FUNC3_I       => FUNC3_EX,
+    DMEMOP_I      => DMEMOP_EX,
     ALURESULT_I   => ALURESULT_EX,
 
     -- OUTPUT PORTS    
     WriteEnable_O => WriteEnable_MEM,
     RD_O          => RD_MEM,
-    FUNC3_O       => FUNC3_MEM,
+    DMEMOP_O      => DMEMOP_MEM,
     ALURESULT_O   => ALURESULT_MEM
   );
 
