@@ -33,29 +33,11 @@ begin
 
     process(INSTRUCTION)
         variable EXTENSION : std_logic_vector(31 downto 0);
-    begin
-
-        -- I Type Instruction - Category 1
-        if (INSTRUCTION(6 downto 0) = "0000011") then
-            EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
-
-        -- I Type Instruction - Category 2
-        elsif (INSTRUCTION(6 downto 0) = "0010011") then 
-            EXTENSION := (others => INSTRUCTION(31));
-
-            if (INSTRUCTION(14 downto 12) = "101") then
-                IMM_OUTPUT <= EXTENSION(31 downto 5) & INSTRUCTION(24 downto 20);
-                
-            else
-                IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
-
-            end if ;
-
-        -- I Type Instruction - Category 3
-        elsif (INSTRUCTION(6 downto 0) = "1100111") then 
-            EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
+    begin            
+        -- I Type Instruction - Shift Category
+        if (INSTRUCTION(6 downto 0) = "0010011" and INSTRUCTION(14 downto 12) = "101") then 
+            EXTENSION := (others => '0');
+            IMM_OUTPUT <= EXTENSION(31 downto 5) & INSTRUCTION(24 downto 20);
 
         -- S Type Instruction
         elsif (INSTRUCTION(6 downto 0) = "0100011") then 
@@ -82,9 +64,11 @@ begin
             EXTENSION := (others => INSTRUCTION(31));
             IMM_OUTPUT <= EXTENSION(31 downto 20) & INSTRUCTION(19 downto 12) & INSTRUCTION(20) & INSTRUCTION(30 downto 21) & '0';
 
-        -- Dump 
+        -- Other Instructions (I type load and Jalr) 
         else
-            IMM_OUTPUT <= (others => 'X');
+            EXTENSION := (others => INSTRUCTION(31));
+            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
+            
         end if ;
 
     end process;
