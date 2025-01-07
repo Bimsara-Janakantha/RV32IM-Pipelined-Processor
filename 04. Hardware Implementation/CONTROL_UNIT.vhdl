@@ -73,14 +73,65 @@ begin
                 when "110" =>   -- OR Instruction
                     ALUOP <= "1000";
 
-                when "111" =>   -- XOR Instruction
+                when "111" =>   -- AND Instruction
                     ALUOP <= "1001";
 
-                when others => -- Unexpected Behaviour
+                when others =>  -- Unexpected Behaviour
                     ALUOP <= (others => 'X');
             end case ;
 
             WriteEnable <= '1';
+            MUX1_I_Type <= '0';
+
+        -- I-Type Load Instructions
+        elsif (OPCODE = "0000011") then
+            case( FUNC3 ) is            
+                when "000" =>   -- LB Instruction
+                    -- todo
+            
+                when others =>
+            
+            end case ;
+
+        -- I-Type Arithmetic Instructions
+        elsif (OPCODE = "0010011") then
+            case( FUNC3 ) is            
+                when "000" =>   -- ADDI Instruction
+                    ALUOP <= "0000";
+
+                when "001" =>   -- SLLI Instruction
+                    ALUOP <= "0010";
+
+                when "010" =>   -- SLTI Instruction
+                    ALUOP <= "0011";
+
+                when "011" =>   -- SLTIU Instruction
+                    ALUOP <= "0100";
+
+                when "100" =>   -- XORI Instruction
+                    ALUOP <= "0101";
+
+                when "101" =>   -- SRLI/SRAI Instruction
+                    if (FUNC7 = "0000000") then
+                        ALUOP <= "0110";  -- SRL 
+                    elsif (FUNC7 = "0100000") then
+                        ALUOP <= "0111";  -- SRA
+                    end if;
+                
+                when "110" =>   -- ORI Instruction
+                    ALUOP <= "1000";
+
+                when "111" =>   -- ANDI Instruction
+                    ALUOP <= "1001";
+
+                when others =>  -- Unexpected Behaviour
+                    ALUOP <= (others => 'X');
+                            
+            end case ;
+
+            WriteEnable <= '1';
+            MUX1_I_Type <= '1';
+
         else
             
         end if;

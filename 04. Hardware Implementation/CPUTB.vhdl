@@ -64,7 +64,7 @@ begin
         report "Instruction No: 1";
 
       when x"00000004" =>
-        INSTRUCTION <= x"00000233" after 20 ns;
+        INSTRUCTION <= x"00000213" after 20 ns;
         report "Instruction No: 2";
 
       when x"00000008" =>

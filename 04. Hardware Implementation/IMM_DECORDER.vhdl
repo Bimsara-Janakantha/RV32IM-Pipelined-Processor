@@ -75,6 +75,9 @@ begin
             EXTENSION := (others => INSTRUCTION(31));
             IMM_OUTPUT <= EXTENSION(31 downto 20) & INSTRUCTION(19 downto 12) & INSTRUCTION(20) & INSTRUCTION(30 downto 21) & '0';
 
+        -- Dump 
+        else
+            IMM_OUTPUT <= (others => 'X');
         end if ;
 
     end process;
