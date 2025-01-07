@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Fri, 03 Jan 2025 at 08:54 PM
--- Last modified on Tue, 07 Jan 2025 at 04:37 AM
+-- Last modified on Wed, 08 Jan 2025 at 00:37 AM
 -- This is the Pipelined Register (EX/MEM) module for RV32IM Piplined Processor
 
 -------------------------------------------------------------------
@@ -23,15 +23,15 @@ entity REG_EX_MEM is
     RESET, CLK  : in std_logic;
 
     -- Input Ports
-    WriteEnable_I : in std_logic;
-    RD_I          : in std_logic_vector (4 downto 0);
-    DMEMOP_I      : in std_logic_vector (2 downto 0);
-    ALURESULT_I   : in std_logic_vector (31 downto 0);
+    WriteEnable_I, MUX2_I, MemRead_I, MemWrite_I : in std_logic;
+    RD_I         : in std_logic_vector (4 downto 0);
+    FUNC3_I      : in std_logic_vector (2 downto 0);
+    ALURESULT_I  : in std_logic_vector (31 downto 0);
 
     -- Output Ports
-    WriteEnable_O : out std_logic;
+    WriteEnable_O, MUX2_O, MemRead_O, MemWrite_O : out std_logic;
     RD_O          : out std_logic_vector (4 downto 0);
-    DMEMOP_O      : out std_logic_vector (2 downto 0);
+    FUNC3_O      : out std_logic_vector (2 downto 0);
     ALURESULT_O   : out std_logic_vector (31 downto 0)
   );
 end REG_EX_MEM ; 
@@ -45,15 +45,21 @@ architecture EX_MEM_Architecture of REG_EX_MEM is
                 -- RESET REGISTER
                 if (RESET = '1') then
                     WriteEnable_O <= '0';
+                    MUX2_O        <= '0'; 
+                    MemRead_O     <= '0';
+                    MemWrite_O    <= '0';
                     RD_O          <= (others => '0');
-                    DMEMOP_O      <= (others => '0');
+                    FUNC3_O       <= (others => '0');
                     ALURESULT_O   <= (others => '0');
                 
                 -- Memory send to the outputs
                 else
                     WriteEnable_O <= WriteEnable_I;
+                    MUX2_O        <= MUX2_I; 
+                    MemRead_O     <= MemRead_I;
+                    MemWrite_O    <= MemWrite_I;
                     RD_O          <= RD_I;
-                    DMEMOP_O      <= DMEMOP_I;
+                    FUNC3_O       <= FUNC3_I;
                     ALURESULT_O   <= ALURESULT_I;
 
                 end if;
