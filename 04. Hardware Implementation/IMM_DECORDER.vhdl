@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Mon, 06 Jan 2025 at 08:00 PM
--- Last modified on Mon, 06 Jan 2025 at 08:37 PM
+-- Last modified on Tue, 07 Jan 2025 at 06:37 AM
 -- This is the module for 32 bit immidiate instruction decorder
 
 
@@ -68,7 +68,7 @@ begin
         else
             EXTENSION := (others => INSTRUCTION(31));
             IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
-            
+
         end if ;
 
     end process;
