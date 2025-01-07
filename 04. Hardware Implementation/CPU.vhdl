@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Wed, 01 Jan 2025 at 11:37 PM
--- Last modified on Wed, 08 Jan 2025 at 00:37 AM
+-- Last modified on Wed, 08 Jan 2025 at 01:37 AM
 -- This is the central processing unit for RMV-32IM Pipelined processor
 
 -------------------------------------
@@ -142,6 +142,18 @@ architecture CPU_Architecture of CPU is
       );
     end component ;
 
+    component DMEM is
+      port(
+        MemAddress   : in std_logic_vector (31 downto 0);
+        MemDataInput : in std_logic_vector (31 downto 0);
+        FUNC3        : in std_logic_vector (2 downto 0);
+        CLK, RESET   : in std_logic;
+        MemRead      : in std_logic;
+        MemWrite     : in std_logic;
+        MemOut       : out std_logic_vector (31 downto 0)
+      );
+    end component;
+
     component REG_MEM_WB is
       port (
         -- Signal Ports
@@ -150,12 +162,12 @@ architecture CPU_Architecture of CPU is
         -- Input Ports
         WriteEnable_I, MUX2_I : in std_logic;
         RD_I          : in std_logic_vector (4 downto 0);
-        ALURESULT_I   : in std_logic_vector (31 downto 0);
+        ALURESULT_I, MEMOUT_I : in std_logic_vector (31 downto 0);
     
         -- Output Ports
         WriteEnable_O, MUX2_O : out std_logic;
         RD_O          : out std_logic_vector (4 downto 0);
-        ALURESULT_O   : out std_logic_vector (31 downto 0)
+        ALURESULT_O, MEMOUT_O : out std_logic_vector (31 downto 0)
       );
     end component;
 
@@ -176,13 +188,13 @@ architecture CPU_Architecture of CPU is
     Signal WriteEnable_EX, MUX1_EX, MUX2_EX, MemRead_EX, MemWrite_EX, ZERO_EX : std_logic;
 
     -- Signals in MEM part
-    Signal ALURESULT_MEM : std_logic_vector (31 downto 0);
+    Signal ALURESULT_MEM, MemDataInput_MEM, MemOut_Mem : std_logic_vector (31 downto 0);
     Signal RD_MEM        : std_logic_vector (4 downto 0);
     Signal FUNC3_MEM     : std_logic_vector (2 downto 0);
     Signal WriteEnable_MEM, MUX2_MEM, MemRead_MEM, MemWrite_MEM : std_logic;
 
     -- Signals in WB part
-    Signal ALURESULT_WB : std_logic_vector (31 downto 0);
+    Signal ALURESULT_WB, MemOut_WB, WriteData_WB : std_logic_vector (31 downto 0);
     Signal RD_WB        : std_logic_vector (4 downto 0);
     Signal WriteEnable_WB, MUX2_WB : std_logic;
 
@@ -242,7 +254,7 @@ begin
     ReadRegister_1 => RS1,
     ReadRegister_2 => RS2,
     WriteRegister  => RD_WB,
-    WriteData      => ALURESULT_WB,
+    WriteData      => WriteData_WB,
     ReadData_1     => ReadData_1_ID,
     ReadData_2     => ReadData_2_ID,
     Clock          => CLK, 
@@ -333,6 +345,18 @@ begin
     ALURESULT_O   => ALURESULT_MEM
   );
 
+  RV_DMEM : DMEM
+  port map(
+    CLK          => CLK, 
+    RESET        => RESET,
+    MemAddress   => ALURESULT_MEM,
+    MemDataInput => MemDataInput_MEM,
+    FUNC3        => FUNC3_MEM,
+    MemRead      => MemRead_MEM,
+    MemWrite     => MemWrite_MEM,
+    MemOut       => MemOut_Mem
+  );
+
   RV_MEM_WB : REG_MEM_WB
   port map(
     RESET => RESET,
@@ -343,12 +367,22 @@ begin
     MUX2_I        => MUX2_MEM,
     RD_I          => RD_MEM,
     ALURESULT_I   => ALURESULT_MEM,
+    MEMOUT_I      => MemOut_Mem,
 
     -- OUTPUT PORTS  
     WriteEnable_O => WriteEnable_WB,
     MUX2_O        => MUX2_WB,
     RD_O          => RD_WB,
-    ALURESULT_O   => ALURESULT_WB
+    ALURESULT_O   => ALURESULT_WB,
+    MEMOUT_O      => MemOut_WB
+  );
+
+  RV_MUX_2 : mux2_1
+  port map(
+    input_1  => ALURESULT_WB,
+    input_2  => MemOut_WB,
+    selector => MUX2_WB,
+    output_1 => WriteData_WB
   );
 
   --------------------------------------- CPU Processes ---------------------------------------
