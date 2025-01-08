@@ -143,7 +143,11 @@ begin
 
         -- I-Type JALR Instruction
         elsif (OPCODE = "1100111") then
-            -- TODO
+           MUX1_EN     <= '1';
+           MUX3_EN     <= '1';
+           MUX4_EN     <= '1';
+           WriteEnable <= '1';
+
         
         -- Add more later
         else
