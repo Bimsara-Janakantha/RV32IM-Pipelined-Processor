@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Fri, 03 Jan 2025 at 08:54 AM
--- Last modified on Wed, 08 Jan 2025 at 06:37 AM
+-- Last modified on Wed, 08 Jan 2025 at 10:37 PM
 -- This is the Pipelined Register (ID/EX) module for RV32IM Piplined Processor
 
 -------------------------------------------------------------------
@@ -23,14 +23,14 @@ entity REG_ID_EX is
     RESET, CLK  : in std_logic;
 
     -- Input Ports
-    WriteEnable_I, MUX1_I, MUX2_I, MUX3_I, MUX4_I, MemRead_I, MemWrite_I : in std_logic;
+    WriteEnable_I, MUX1_I, MUX2_I, MUX3_I, MUX4_I, Jump_I, Branch_I, MemRead_I, MemWrite_I : in std_logic;
     FUNC3_I  : in std_logic_vector (2 downto 0);
     ALUOP_I  : in std_logic_vector (3 downto 0);
     RD_I     : in std_logic_vector (4 downto 0);
     IMM_I, PC_I, PC4_I, DATA1_I, DATA2_I : in std_logic_vector (31 downto 0);
 
     -- Output Ports
-    WriteEnable_O, MUX1_O, MUX2_O, MUX3_O, MUX4_O, MemRead_O, MemWrite_O : out std_logic;
+    WriteEnable_O, MUX1_O, MUX2_O, MUX3_O, MUX4_O, Jump_O, Branch_O, MemRead_O, MemWrite_O : out std_logic;
     FUNC3_O  : out std_logic_vector (2 downto 0);
     ALUOP_O  : out std_logic_vector (3 downto 0);
     RD_O     : out std_logic_vector (4 downto 0);
@@ -56,6 +56,8 @@ architecture ID_EX_Architecture of REG_ID_EX is
                     MUX2_O        <= '0';
                     MUX3_O        <= '0';
                     MUX4_O        <= '0';
+                    Branch_O      <= '0';
+                    Jump_O        <= '0';
                     IMM_O         <= (others => '0');
                     PC_O          <= (others => '0');
                     PC4_O         <= (others => '0');
@@ -74,6 +76,8 @@ architecture ID_EX_Architecture of REG_ID_EX is
                     MUX2_O        <= MUX2_I;
                     MUX3_O        <= MUX3_I;
                     MUX4_O        <= MUX4_I;
+                    Branch_O      <= Branch_I;
+                    Jump_O        <= Jump_I;
                     IMM_O         <= IMM_I;
                     PC_O          <= PC_I;
                     PC4_O         <= PC4_I;

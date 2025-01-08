@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Thu, 02 Jan 2025 at 06:37 PM
--- Last modified on Wed, 07 Jan 2025 at 00:37 AM
+-- Last modified on Wed, 08 Jan 2025 at 10:37 PM
 -- This is the control unit module for RV32IM Pipelined Processor
 
 ---------------------------------------------------------------
@@ -141,11 +141,11 @@ begin
             WriteEnable <= '1';
             MUX1_EN     <= '1';
 
-        -- I-Type JALR Instruction
+        -- I-Type JALR Instruction -- Not completed
         elsif (OPCODE = "1100111") then
            MUX1_EN     <= '1';
            MUX3_EN     <= '1';
-           MUX4_EN     <= '1';
+           Jump        <= '1';
            WriteEnable <= '1';
 
         -- S-Type Instructions
@@ -153,6 +153,21 @@ begin
             MUX1_EN  <= '1';
             MemWrite <= '1';
         
+        -- B-Type Instructions -- Not completed
+        elsif (OPCODE = "1100011") then
+            Branch <= '1';
+
+        -- U-Type auipc Instructions
+        elsif (OPCODE = "0010111") then
+            WriteEnable <= '1';
+            MUX1_EN     <= '1';
+            MUX4_EN     <= '1'; 
+        
+        -- U-Type lui Instructions
+        elsif (OPCODE = "0110111") then
+            WriteEnable <= '1';
+            MUX1_EN     <= '1';
+            ALUOP       <= "1010";
         -- Add more later
         else
             

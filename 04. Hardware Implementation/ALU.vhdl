@@ -30,6 +30,7 @@
 -- 0111 - SRA  --
 -- 1000 - OR   --
 -- 1001 - AND  --
+-- 1010 - FWD  --
 -----------------
 
 -- NOTE: Time Unit = 10 ns
@@ -127,9 +128,16 @@ architecture ALU_Architecture of ALU is
     );
   end component;
 
+  component forwarder is
+    port(
+        input_data  : in std_logic_vector (31 downto 0);
+        output_data : out std_logic_vector (31 downto 0)    -- No ; here
+    );
+  end component;
+
 
   -- Signals 
-  signal andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput, muxOutput : std_logic_vector (31 downto 0);
+  signal andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput, compOutput, muxOutput, fwdOutput : std_logic_vector (31 downto 0);
   signal shiftType : std_logic_vector (1 downto 0);
   signal muxSelect : std_logic;
   
@@ -199,6 +207,11 @@ begin
       output_1 => sltuOutput
     );
 
+  FWD_oparator : forwarder
+    port map(
+      input_data  => DATA2,
+      output_data => fwdOutput
+    );
   
   -- Process(es)
   process( ALUOP, andOutput, orOutput, xorOutput, adderOutput, shiftOutput, sltOutput, sltuOutput )
@@ -239,6 +252,10 @@ begin
       
       when "1001" => -- AND Instructions
         ALURESULT <= andOutput after 10 ns;
+
+      when "1010" => -- FWD Instructions
+        ALURESULT <= fwdOutput after 10 ns;
+
 
       -- Add more instructions here later
 
