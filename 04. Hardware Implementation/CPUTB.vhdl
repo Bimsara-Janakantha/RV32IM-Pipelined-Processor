@@ -31,7 +31,7 @@ begin
 
   -- Clock Process
   Clocking : process
-    variable clk_cycles : integer := 10;
+    variable clk_cycles : integer := 20;
   begin
       for index in 1 to clk_cycles loop
           -- Sequential statements
@@ -68,7 +68,7 @@ begin
         report "Instruction No: 2";
 
       when x"00000008" =>
-        INSTRUCTION <= x"00002033" after 20 ns;
+        INSTRUCTION <= x"0000F197" after 20 ns;
         report "Instruction No: 3";
 
       when x"0000000C" =>
