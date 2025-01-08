@@ -8,7 +8,7 @@
 -------------------------------------------------------------------
 -- The ID/EX register with 11 input streams and 9 output stream. --
 -- Registers: CONTROLS, IMM, DATA1, DATA2, PC4, PC               --
--- Completed for R, I - Type Instructions                        --
+-- Completed for R, I, S, U - Type Instructions                  --
 -------------------------------------------------------------------
 
 -- Libraries (IEEE)
