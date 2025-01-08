@@ -59,12 +59,12 @@ begin
   begin
 
     case (PC) is  
-      when x"00000000" =>
-        INSTRUCTION <= x"00110033" after 20 ns;
+      when x"00000000" => -- SW x2, 0(x1)
+        INSTRUCTION <= x"00208023" after 20 ns;
         report "Instruction No: 1";
 
-      when x"00000004" =>
-        INSTRUCTION <= x"00000213" after 20 ns;
+      when x"00000004" => -- SB x2, 4(x1)
+        INSTRUCTION <= x"002073a3" after 20 ns;
         report "Instruction No: 2";
 
       when x"00000008" =>

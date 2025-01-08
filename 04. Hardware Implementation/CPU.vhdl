@@ -141,13 +141,13 @@ architecture CPU_Architecture of CPU is
         WriteEnable_I, MUX2_I, MemRead_I, MemWrite_I : in std_logic;
         RD_I          : in std_logic_vector (4 downto 0);
         FUNC3_I       : in std_logic_vector (2 downto 0);
-        ALURESULT_I   : in std_logic_vector (31 downto 0);
+        ALURESULT_I, MemDataInput_I  : in std_logic_vector (31 downto 0);
     
         -- Output Ports
         WriteEnable_O, MUX2_O, MemRead_O, MemWrite_O : out std_logic;
         RD_O          : out std_logic_vector (4 downto 0);
         FUNC3_O       : out std_logic_vector (2 downto 0);
-        ALURESULT_O   : out std_logic_vector (31 downto 0)
+        ALURESULT_O, MemDataInput_O  : out std_logic_vector (31 downto 0)
       );
     end component ;
 
@@ -328,7 +328,7 @@ begin
   RV_ALU : ALU
   port map(
     DATA1     => ReadData_1_EX,
-    DATA2     => ReadData_2_Ex,
+    DATA2     => DATA2_EX,
     ALUOP     => ALUOP_EX,
     ALURESULT => ALURESULT_EX,
     ZERO      => ZERO_EX
@@ -354,22 +354,24 @@ begin
     CLK   => CLK,
 
     -- INPUT PORTS
-    WriteEnable_I => WriteEnable_EX,
-    MUX2_I        => MUX2_EX,
-    MemRead_I     => MemRead_EX,
-    MemWrite_I    => MemWrite_EX,
-    RD_I          => RD_EX,
-    FUNC3_I       => FUNC3_EX,
-    ALURESULT_I   => MUX3_OUT,
+    WriteEnable_I  => WriteEnable_EX,
+    MUX2_I         => MUX2_EX,
+    MemRead_I      => MemRead_EX,
+    MemWrite_I     => MemWrite_EX,
+    RD_I           => RD_EX,
+    FUNC3_I        => FUNC3_EX,
+    ALURESULT_I    => MUX3_OUT,
+    MemDataInput_I => ReadData_2_Ex,
 
     -- OUTPUT PORTS    
-    WriteEnable_O => WriteEnable_MEM,
-    MUX2_O        => MUX2_MEM,
-    MemRead_O     => MemRead_MEM,
-    MemWrite_O    => MemWrite_MEM,
-    RD_O          => RD_MEM,
-    FUNC3_O       => FUNC3_MEM,
-    ALURESULT_O   => ALURESULT_MEM
+    WriteEnable_O  => WriteEnable_MEM,
+    MUX2_O         => MUX2_MEM,
+    MemRead_O      => MemRead_MEM,
+    MemWrite_O     => MemWrite_MEM,
+    RD_O           => RD_MEM,
+    FUNC3_O        => FUNC3_MEM,
+    ALURESULT_O    => ALURESULT_MEM,
+    MemDataInput_O => MemDataInput_MEM
   );
 
   RV_DMEM : DMEM

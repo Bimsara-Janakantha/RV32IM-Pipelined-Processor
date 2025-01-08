@@ -148,6 +148,10 @@ begin
            MUX4_EN     <= '1';
            WriteEnable <= '1';
 
+        -- S-Type Instructions
+        elsif (OPCODE = "0100011") then
+            MUX1_EN  <= '1';
+            MemWrite <= '1';
         
         -- Add more later
         else
