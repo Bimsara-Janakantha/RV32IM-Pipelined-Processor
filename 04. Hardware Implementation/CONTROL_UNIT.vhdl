@@ -1,6 +1,6 @@
 -- Create by BG
 -- Created on Thu, 02 Jan 2025 at 06:37 PM
--- Last modified on Thu, 02 Jan 2025 at 07:37 PM
+-- Last modified on Wed, 08 Jan 2025 at 10:37 PM
 -- This is the control unit module for RV32IM Pipelined Processor
 
 ---------------------------------------------------------------
@@ -8,18 +8,17 @@
 ---------------------------------------------------------------
 -- A Control Unit with 3 input streams and n output streams. --
 -- Containing Control Signals:                               --
--- 1. WriteEnable   - 1 bit wide                             --
--- 2. MemRead       - 1 bit wide                             --
--- 3. MemWrite      - 1 bit wide                             --
--- 4. ALUOP         - 4 bit wide                             --
--- 5. DMEMOP        - 3 bit wide
--- 6. Jump          - 1 bit wide                             --
--- 7. Branch        - 1 bit wide                             --
--- 8. MUX1_I_Type   - 1 bit wide                             --
--- 9. MUX2_I_Type   - 1 bit wide                             --
---10. MUX3_RI_Type  - 1 bit wide                             --
---11. MUX4_I_Type   - 1 bit wide                             --
---12. MUX5_U_Type   - 1 bit wide                             --
+-- 1. WriteEnable - 1 bit wide                               --
+-- 2. MemRead     - 1 bit wide                               --
+-- 3. MemWrite    - 1 bit wide                               --
+-- 4. ALUOP       - 4 bit wide                               --
+-- 5. Jump        - 1 bit wide                               --
+-- 6. Branch      - 1 bit wide                               --
+-- 7. MUX1_EN     - 1 bit wide  - MUX for IMM DECORDER       --
+-- 8. MUX2_EN     - 1 bit wide  - MUX for WriteData of Reg   --
+-- 9. MUX3_EN     - 1 bit wide                               --
+--10. MUX4_EN     - 1 bit wide                               --
+--11. MUX5_EN     - 1 bit wide                               --
 ---------------------------------------------------------------
 
 library ieee ;
@@ -33,8 +32,7 @@ entity CONTROL_UNIT is
     FUNC3         : in std_logic_vector (2 downto 0);
 
     -- Output Ports
-    WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_I_Type, MUX2_I_Type, MUX3_RI_Type, MUX4_I_Type, MUX5_U_Type : out std_logic;
-    DMEMOP: out std_logic_vector (2 downto 0);
+    WriteEnable, MemRead, MemWrite, Jump, Branch, MUX1_EN, MUX2_EN, MUX3_EN, MUX4_EN, MUX5_EN : out std_logic;
     ALUOP : out std_logic_vector (3 downto 0)      
   ) ;
 end CONTROL_UNIT ; 
@@ -44,18 +42,17 @@ begin
     process (FUNC7, FUNC3, OPCODE)
     begin
         -- SET ALL CONTROL SIGNALS TO 0
-        WriteEnable  <= '0'; 
-        MemRead      <= '0'; 
-        MemWrite     <= '0'; 
-        Jump         <= '0'; 
-        Branch       <= '0'; 
-        MUX1_I_Type  <= '0'; 
-        MUX2_I_Type  <= '0'; 
-        MUX3_RI_Type <= '0'; 
-        MUX4_I_Type  <= '0'; 
-        MUX5_U_Type  <= '0';
-        DMEMOP       <= "000";
-        ALUOP        <= "0000";
+        WriteEnable <= '0'; 
+        MemRead     <= '0'; 
+        MemWrite    <= '0'; 
+        Jump        <= '0'; 
+        Branch      <= '0'; 
+        MUX1_EN     <= '0'; 
+        MUX2_EN     <= '0'; 
+        MUX3_EN     <= '0';
+        MUX4_EN     <= '0'; 
+        MUX5_EN     <= '0';
+        ALUOP       <= "0000";
 
         -- R-Type Instructions
         if (OPCODE = "0110011") then
@@ -100,28 +97,10 @@ begin
 
         -- I-Type Load Instructions
         elsif (OPCODE = "0000011") then
-            case( FUNC3 ) is            
-                when "000" =>   -- LB Instruction
-                    DMEMOP <= "000";
-
-                when "001" =>   -- LH Instruction
-                    DMEMOP <= "001";
-
-                when "010" =>   -- LW Instruction
-                    DMEMOP <= "010";
-
-                when "100" =>   -- LBU Instruction
-                    DMEMOP <= "011";
-
-                when "101" =>   -- LHU Instruction
-                    DMEMOP <= "100";
-            
-                when others =>
-            
-            end case ;
-
             WriteEnable <= '1';
-            MUX1_I_Type <= '1';
+            MUX1_EN     <= '1'; -- IMM DECORDER
+            MUX2_EN     <= '1'; 
+            MemRead     <= '1';
 
         -- I-Type Arithmetic Instructions
         elsif (OPCODE = "0010011") then
@@ -160,12 +139,35 @@ begin
             end case ;
 
             WriteEnable <= '1';
-            MUX1_I_Type <= '1';
+            MUX1_EN     <= '1';
 
-        -- I-Type JALR Instruction
+        -- I-Type JALR Instruction -- Not completed
         elsif (OPCODE = "1100111") then
-            -- TODO
+           MUX1_EN     <= '1';
+           MUX3_EN     <= '1';
+           Jump        <= '1';
+           WriteEnable <= '1';
+
+        -- S-Type Instructions
+        elsif (OPCODE = "0100011") then
+            MUX1_EN  <= '1';
+            MemWrite <= '1';
         
+        -- B-Type Instructions -- Not completed
+        elsif (OPCODE = "1100011") then
+            Branch <= '1';
+
+        -- U-Type auipc Instructions
+        elsif (OPCODE = "0010111") then
+            WriteEnable <= '1';
+            MUX1_EN     <= '1';
+            MUX4_EN     <= '1'; 
+        
+        -- U-Type lui Instructions
+        elsif (OPCODE = "0110111") then
+            WriteEnable <= '1';
+            MUX1_EN     <= '1';
+            ALUOP       <= "1010";
         -- Add more later
         else
             
