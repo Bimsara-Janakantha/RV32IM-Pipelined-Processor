@@ -7,3 +7,9 @@
 # cpu_wavedata.vcd file
 **/cpu_wavedata.vcd
 **/cpu_wavedata.ghw
+
+# compiled machine code
+**/*.machine
+
+# complied assembler
+**/*.exe
