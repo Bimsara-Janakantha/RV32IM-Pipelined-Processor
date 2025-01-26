@@ -31,8 +31,8 @@ ghdl -e "${FILENAME}"
 # Step 5: Run the entity and generate the VCD file
 echo "Running the entity: ${FILENAME}"
 echo -e "\nResult:"
-ghdl -r "${FILENAME}" --vcd=cpu_wavedata.vcd
+ghdl -r "${FILENAME}" --wave=cpu_wavedata.ghw
 
 # Step 6: Open the VCD file in GTKWave
 echo "Opening the GTKWave: cpu_wavedata.vcd"
-gtkwave cpu_wavedata.vcd
+gtkwave cpu_wavedata.ghw
