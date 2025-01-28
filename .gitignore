@@ -9,7 +9,7 @@
 **/cpu_wavedata.ghw
 
 # compiled machine code
-**/*.machine
+**/*.mem
 
 # complied assembler
 **/*.exe
