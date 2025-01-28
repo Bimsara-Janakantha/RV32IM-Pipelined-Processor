@@ -62,14 +62,55 @@ char *clean_line(char *line, int length)
 }
 
 // This function is use to generate the instruction chunks and convert it into binary image
-char **generate_chunks(char *str, char *instruction_32_bit)
+char **generate_chunks(char *str)
 {
     // Printing the instruction
-    printf("Line: '%s'\n", str);
+    // printf("Line: '%s'\n", str);
 
     // Get the length of the line
     int len = strlen(str);
-    printf("number of elements: %d \n", len);
+    // printf("number of elements: %d \n", len);
+
+    /// Allocate memory for chunks
+    char **chunks = malloc(3 * sizeof(char *));
+    for (int i = 0; i < 3; i++)
+        chunks[i] = malloc(8 * sizeof(char));
+
+    int current_chunk = 0;
+    int current_position = 0;
+
+    for (int i = 0; i < len; i++)
+    {
+        // Neglect whitespaces and 'x' register symbol
+        if (isspace((unsigned)str[i]) || tolower(str[i]) == 'x')
+            continue;
+
+        // Stop chunking if a comment starts
+        if (str[i] == '#')
+        {
+            chunks[current_chunk][current_position] = '\0';
+            break;
+        }
+
+        // Break the chunk by a special character , or ( or )
+        if (str[i] == ',' || str[i] == '(' || str[i] == ')')
+        {
+            chunks[current_chunk++][current_position] = '\0';
+            current_position = 0;
+        }
+
+        else
+        {
+            // Otherwise insert the word into chunks
+            chunks[current_chunk][current_position++] = tolower(str[i]);
+        }
+
+        // Handling the edge case;
+        if (i + 1 == len)
+            chunks[current_chunk++][current_position] = '\0';
+    }
+
+    return chunks;
 };
 
 // This function use to convert given integer to binary value with given padding size
@@ -114,8 +155,39 @@ bool is_in_list(char *instr, char *list[], int list_size)
     return false; // Instruction not found
 }
 
+// This is the function to copy string to the 32 bit instruction
+void copy_string(char *string, char *instruction, int start, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        instruction[(31 - start) + i] = string[i];
+    }
+}
+
+// This function use to complete the instruction
+void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
+{
+    if (strcmp(instr, "add") == 0)
+    {
+        copy_string("0110011", instruction_32_bit, 6, 7);  // OPCODE
+        copy_string("111", instruction_32_bit, 14, 3);     // FUNC3
+        copy_string("0000000", instruction_32_bit, 31, 7); // FUNC7
+    }
+
+    else
+    {
+        copy_string("0000000", instruction_32_bit, 6, 7);
+    }
+
+    // printf("Instruction: %s \t OPCODE: %s\n", instr, opcode);
+
+    // copy_string(opcode, instruction_32_bit, 25);
+
+    instruction_32_bit[32] = '\n';
+}
+
 // This function use to get the opcode for the given instruction
-char get_opcode(char *instr, char *instruction_32_bit)
+/* char complete_instruction(char *instr, char *instruction_32_bit)
 {
     // Define the size of the opcode (7 characters)
     char *opcode = malloc(sizeof(char) * 7);
@@ -157,7 +229,7 @@ char get_opcode(char *instr, char *instruction_32_bit)
         instruction_32_bit[25 + i] = opcode[i];
     }
     instruction_32_bit[32] = '\n';
-}
+} */
 
 // This function is use to generate the instruction
 char *generate_instruction(char *line)
@@ -166,11 +238,11 @@ char *generate_instruction(char *line)
 
     // Find the length
     int length = strlen(line);
-    printf("Length: %d\n", length);
+    // printf("Length: %d\n", length);
 
     // Remove leading spaces
     char *cleaned_line = clean_line(line, length);
-    printf("%s", cleaned_line);
+    // printf("%s", cleaned_line);
 
     // If null line drop it
     if (cleaned_line == NULL)
@@ -194,11 +266,15 @@ char *generate_instruction(char *line)
     inst[idx++] = '\0'; // Null-terminate the extracted opcode
     printf("Instruction: '%s'\n", inst);
 
-    // Update the opcode in the instruction set
-    get_opcode(inst, instruction_32_bit);
-
     // Chunking
-    generate_chunks(cleaned_line + idx, instruction_32_bit);
+    char **chunks = generate_chunks(cleaned_line + idx);
+    for (int i = 0; i < 3; i++)
+    {
+        printf("Chunk %d: '%s'\n", i, chunks[i]);
+    }
+
+    // Update the opcode in the instruction set
+    complete_instruction(inst, chunks, instruction_32_bit);
 
     return instruction_32_bit;
 }
