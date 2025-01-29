@@ -579,18 +579,42 @@ void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
         int imm_s = atoi(chunks[1]);
         int rs1 = atoi(chunks[2]);
 
-        char *imm12 = convert_to_binary(imm_s, 5);
-        char imm5[5], imm7[7];
+        char *imm12 = convert_to_binary(imm_s, 12);
+        char imm5[6], imm7[8];
 
         strncpy(imm5, imm12 + 7, 5);
         strncpy(imm7, imm12, 7);
+        imm5[5] = '\0';
+        imm7[7] = '\0';
 
         copy_string(OPCODE_S, instruction_32_bit, 6, 7);                   // OPCODE
-        copy_string(imm5, instruction_32_bit, 11, 5);                      // RD
+        copy_string(imm5, instruction_32_bit, 11, 5);                      // IMM5
         copy_string("000", instruction_32_bit, 14, 3);                     // FUNC3
         copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5); // RS1
         copy_string(convert_to_binary(rs2, 5), instruction_32_bit, 24, 5); // RS2
-        copy_string(imm7, instruction_32_bit, 31, 7);                      // FUNC7
+        copy_string(imm7, instruction_32_bit, 31, 7);                      // IMM7
+    }
+
+    else if (strcmp(instr, "sh") == 0)
+    {
+        int rs2 = atoi(chunks[0]);
+        int imm_s = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+
+        char *imm12 = convert_to_binary(imm_s, 12);
+        char imm5[6], imm7[8];
+
+        strncpy(imm5, imm12 + 7, 5);
+        strncpy(imm7, imm12, 7);
+        imm5[5] = '\0';
+        imm7[7] = '\0';
+
+        copy_string(OPCODE_S, instruction_32_bit, 6, 7);                   // OPCODE
+        copy_string(imm5, instruction_32_bit, 11, 5);                      // IMM5
+        copy_string("001", instruction_32_bit, 14, 3);                     // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5); // RS1
+        copy_string(convert_to_binary(rs2, 5), instruction_32_bit, 24, 5); // RS2
+        copy_string(imm7, instruction_32_bit, 31, 7);                      // IMM7
     }
 
     else
