@@ -580,7 +580,7 @@ void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
         int rs1 = atoi(chunks[2]);
 
         char *imm12 = convert_to_binary(imm_s, 5);
-        char *imm5[5], imm7[7];
+        char imm5[5], imm7[7];
 
         strncpy(imm5, imm12 + 7, 5);
         strncpy(imm7, imm12, 7);
