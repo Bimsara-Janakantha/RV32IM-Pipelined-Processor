@@ -71,7 +71,7 @@ char **generate_chunks(char *str)
     int len = strlen(str);
     // printf("number of elements: %d \n", len);
 
-    /// Allocate memory for chunks
+    // Allocate memory for chunks
     char **chunks = malloc(3 * sizeof(char *));
     for (int i = 0; i < 3; i++)
         chunks[i] = malloc(8 * sizeof(char));
@@ -103,11 +103,11 @@ char **generate_chunks(char *str)
         {
             // Otherwise insert the word into chunks
             chunks[current_chunk][current_position++] = tolower(str[i]);
-        }
 
-        // Handling the edge case;
-        if (i + 1 == len)
-            chunks[current_chunk++][current_position] = '\0';
+            // Handling the edge case;
+            if (i + 1 == len)
+                chunks[current_chunk++][current_position] = '\0';
+        }
     }
 
     return chunks;
@@ -389,8 +389,152 @@ void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
     }
 
     /* ---------------------------------- I - Type ---------------------------------- */
+    else if (strcmp(instr, "lb") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int imm = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+        copy_string(OPCODE_I1, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("000", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
 
-    // Continue
+    else if (strcmp(instr, "lh") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int imm = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+        copy_string(OPCODE_I1, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("001", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "lw") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int imm = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+        copy_string(OPCODE_I1, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("010", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "lbu") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int imm = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+        copy_string(OPCODE_I1, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("100", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "lhu") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int imm = atoi(chunks[1]);
+        int rs1 = atoi(chunks[2]);
+        copy_string(OPCODE_I1, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("101", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "addi") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int imm = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("000", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "slli") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int shamnt_i = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                       // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);       // RD
+        copy_string("001", instruction_32_bit, 14, 3);                          // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);      // RS1
+        copy_string(convert_to_binary(shamnt_i, 5), instruction_32_bit, 24, 5); // SHAMNT_I
+        copy_string("0000000", instruction_32_bit, 31, 7);                      // FUNC7
+    }
+
+    else if (strcmp(instr, "slti") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int imm = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("010", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "sltiu") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int imm = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("011", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "xori") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int imm = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                    // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);    // RD
+        copy_string("100", instruction_32_bit, 14, 3);                       // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);   // RS1
+        copy_string(convert_to_binary(imm, 12), instruction_32_bit, 31, 12); // IMM
+    }
+
+    else if (strcmp(instr, "srli") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int shamnt_i = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                       // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);       // RD
+        copy_string("101", instruction_32_bit, 14, 3);                          // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);      // RS1
+        copy_string(convert_to_binary(shamnt_i, 5), instruction_32_bit, 24, 5); // SHAMNT_I
+        copy_string("0000000", instruction_32_bit, 31, 7);                      // FUNC7
+    }
+
+    else if (strcmp(instr, "srai") == 0)
+    {
+        int rd = atoi(chunks[0]);
+        int rs1 = atoi(chunks[1]);
+        int shamnt_i = atoi(chunks[2]);
+        copy_string(OPCODE_I2, instruction_32_bit, 6, 7);                       // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);       // RD
+        copy_string("101", instruction_32_bit, 14, 3);                          // FUNC3
+        copy_string(convert_to_binary(rs1, 5), instruction_32_bit, 19, 5);      // RS1
+        copy_string(convert_to_binary(shamnt_i, 5), instruction_32_bit, 24, 5); // SHAMNT_I
+        copy_string("0100000", instruction_32_bit, 31, 7);                      // FUNC7
+    }
 
     else
     {
@@ -403,7 +547,7 @@ void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
 // This function is use to generate the instruction
 char *generate_instruction(char *line)
 {
-    // printf("%s\n", line);
+    // printf("\n%s\n", line);
 
     // Find the length
     int length = strlen(line);
@@ -411,7 +555,7 @@ char *generate_instruction(char *line)
 
     // Remove leading spaces
     char *cleaned_line = clean_line(line, length);
-    // printf("%s", cleaned_line);
+    // printf("'%s'\n", cleaned_line);
 
     // If null line drop it
     if (cleaned_line == NULL)
