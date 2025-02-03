@@ -811,9 +811,18 @@ void complete_instruction(char *instr, char **chunks, char *instruction_32_bit)
         int rd = atoi(chunks[0]);
         int imm_j = atoi(chunks[1]);
 
-        copy_string(OPCODE_J, instruction_32_bit, 6, 7);                       // OPCODE
-        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5);      // RD
-        copy_string(convert_to_binary(imm_j, 20), instruction_32_bit, 31, 20); // IMM_J
+        char *imm20 = convert_to_binary(imm_j, 20);
+        char imm10[11], imm8[9];
+
+        strncpy(imm10, imm20 + 10, 10);
+        strncpy(imm8, imm20 + 1, 8);
+
+        copy_string(OPCODE_J, instruction_32_bit, 6, 7);                  // OPCODE
+        copy_string(convert_to_binary(rd, 5), instruction_32_bit, 11, 5); // RD
+        copy_string(imm8, instruction_32_bit, 19, 8);                     // IMM[18:11]
+        copy_string(imm20 + 9, instruction_32_bit, 20, 1);                // IMM[10]
+        copy_string(imm10, instruction_32_bit, 30, 10);                   // IMM[18:11]
+        copy_string(imm20, instruction_32_bit, 31, 1);                    // IMM[19]
     }
 
     /* -------------------------------- Invalid Types -------------------------------- */
