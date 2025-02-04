@@ -17,7 +17,7 @@ architecture testbench of CPUTB is
 
       -- Ports for DMEM
       DMEMREAD, DMEMWRITE : out std_logic;
-      FUNC3               : out std_logic_vector (2 downto 0);
+      DFUNC3               : out std_logic_vector (2 downto 0);
       ALURESULT, DMEMIN   : out std_logic_vector (31 downto 0);
       DMEMOUT             : in std_logic_vector (31 downto 0)
     );
@@ -58,7 +58,7 @@ begin
     PC          => PC,
     DMEMREAD    => MEMREAD,
     DMEMWRITE   => MEMWRITE,
-    FUNC3       => FUNC3,
+    DFUNC3       => FUNC3,
     ALURESULT   => ALURESULT,
     DMEMIN      => MEMDATA,
     DMEMOUT     => MEMOUT
