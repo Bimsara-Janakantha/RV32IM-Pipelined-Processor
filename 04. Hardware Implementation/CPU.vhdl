@@ -45,13 +45,6 @@ architecture CPU_Architecture of CPU is
       ) ;
     end component;
 
-    component IMEM is
-      port(
-        ADDRESS     : in std_logic_vector (31 downto 0);
-        INSTRUCTION : out std_logic_vector (31 downto 0)
-      );
-    end component;
-
     component REG_IF_ID
       port(
         INSTRUCTION_I, PC_I, PC4_I : in std_logic_vector (31 downto 0);
@@ -230,12 +223,6 @@ begin
     RESET => RESET,
     PC    => PC_IF,
     PC4   => PC4_IF
-  );
-
-  RV_IMEM : IMEM
-  port map (
-    ADDRESS     => PC_IF,
-    INSTRUCTION => INSTRUCTION_IF
   );
 
   RV_IF_ID : REG_IF_ID
