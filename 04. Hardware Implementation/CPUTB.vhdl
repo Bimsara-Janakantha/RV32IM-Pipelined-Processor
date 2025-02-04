@@ -8,9 +8,18 @@ end CPUTB ;
 architecture testbench of CPUTB is
   component CPU is
     port(
-      INSTRUCTION : in std_logic_vector (31 downto 0);
+      -- General Ports
       CLK, RESET  : in std_logic;
-      PC          : out std_logic_vector (31 downto 0)
+
+      -- Ports for IMEM
+      INSTRUCTION : in std_logic_vector (31 downto 0);
+      PC          : out std_logic_vector (31 downto 0);
+
+      -- Ports for DMEM
+      DMEMREAD, DMEMWRITE : out std_logic;
+      FUNC3               : out std_logic_vector (2 downto 0);
+      ALURESULT, DMEMIN   : out std_logic_vector (31 downto 0);
+      DMEMOUT             : in std_logic_vector (31 downto 0)
     );
   end component;
 
@@ -21,9 +30,22 @@ architecture testbench of CPUTB is
     );
   end component;
 
-  Signal CLK : std_logic;
-  Signal RESET : std_logic;
-  Signal PC, INSTRUCTION : std_logic_vector (31 downto 0);
+  component DMEM is
+    port(
+      MemAddress   : in std_logic_vector (31 downto 0);
+      MemDataInput : in std_logic_vector (31 downto 0);
+      FUNC3        : in std_logic_vector (2 downto 0);
+      CLK, RESET   : in std_logic;
+      MemRead      : in std_logic;
+      MemWrite     : in std_logic;
+      MemOut       : out std_logic_vector (31 downto 0)
+    );
+  end component;
+
+  Signal FUNC3                                       : std_logic_vector (2 downto 0);
+  Signal CLK, RESET, MEMREAD, MEMWRITE               : std_logic;
+  Signal PC, INSTRUCTION, ALURESULT, MEMDATA, MEMOUT : std_logic_vector (31 downto 0);
+
 
   -- Clock period
   constant clk_period : time := 80 ns;
@@ -33,13 +55,31 @@ begin
     INSTRUCTION => INSTRUCTION,
     CLK         => CLK,
     RESET       => RESET,
-    PC          => PC
+    PC          => PC,
+    DMEMREAD    => MEMREAD,
+    DMEMWRITE   => MEMWRITE,
+    FUNC3       => FUNC3,
+    ALURESULT   => ALURESULT,
+    DMEMIN      => MEMDATA,
+    DMEMOUT     => MEMOUT
   );
 
   RV_IMEM : IMEM
   port map (
     ADDRESS     => PC,
     INSTRUCTION => INSTRUCTION
+  );
+
+  RV_DMEM : DMEM
+  port map(
+    CLK          => CLK, 
+    RESET        => RESET,
+    MemAddress   => ALURESULT,
+    MemDataInput => MEMDATA,
+    FUNC3        => FUNC3,
+    MemRead      => MEMREAD,
+    MemWrite     => MEMWRITE,
+    MemOut       => MEMOUT
   );
 
   -- Clock Process
