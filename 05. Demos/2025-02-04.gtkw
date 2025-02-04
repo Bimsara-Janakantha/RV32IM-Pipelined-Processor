@@ -1,0 +1,61 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Tue Feb 04 16:00:54 2025
+[*]
+[dumpfile] "D:\Personal Files\01. One_Drives\OneDrive - University of Peradeniya\02. Others\02. Documents\11. GitHub\02. RV32IM\RV32IM-Pipelined-Processor\05. Demos\cpu_wavedata.ghw"
+[savefile] "D:\Personal Files\01. One_Drives\OneDrive - University of Peradeniya\02. Others\02. Documents\11. GitHub\02. RV32IM\RV32IM-Pipelined-Processor\05. Demos\2025-02-04.gtkw"
+[timestart] 6300000
+[size] 1536 801
+[pos] -191 -191
+*-25.000000 120000000 40000000 120000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.cputb.
+[treeopen] top.cputb.rv_cpu.
+[treeopen] top.cputb.rv_imem.instr_mem.
+[sst_width] 211
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 373
+@22
+#{top.cputb.rv_imem.instr_mem[0][7:0]} top.cputb.rv_imem.instr_mem[0][7] top.cputb.rv_imem.instr_mem[0][6] top.cputb.rv_imem.instr_mem[0][5] top.cputb.rv_imem.instr_mem[0][4] top.cputb.rv_imem.instr_mem[0][3] top.cputb.rv_imem.instr_mem[0][2] top.cputb.rv_imem.instr_mem[0][1] top.cputb.rv_imem.instr_mem[0][0]
+#{top.cputb.rv_imem.instr_mem[1][7:0]} top.cputb.rv_imem.instr_mem[1][7] top.cputb.rv_imem.instr_mem[1][6] top.cputb.rv_imem.instr_mem[1][5] top.cputb.rv_imem.instr_mem[1][4] top.cputb.rv_imem.instr_mem[1][3] top.cputb.rv_imem.instr_mem[1][2] top.cputb.rv_imem.instr_mem[1][1] top.cputb.rv_imem.instr_mem[1][0]
+#{top.cputb.rv_imem.instr_mem[2][7:0]} top.cputb.rv_imem.instr_mem[2][7] top.cputb.rv_imem.instr_mem[2][6] top.cputb.rv_imem.instr_mem[2][5] top.cputb.rv_imem.instr_mem[2][4] top.cputb.rv_imem.instr_mem[2][3] top.cputb.rv_imem.instr_mem[2][2] top.cputb.rv_imem.instr_mem[2][1] top.cputb.rv_imem.instr_mem[2][0]
+#{top.cputb.rv_imem.instr_mem[3][7:0]} top.cputb.rv_imem.instr_mem[3][7] top.cputb.rv_imem.instr_mem[3][6] top.cputb.rv_imem.instr_mem[3][5] top.cputb.rv_imem.instr_mem[3][4] top.cputb.rv_imem.instr_mem[3][3] top.cputb.rv_imem.instr_mem[3][2] top.cputb.rv_imem.instr_mem[3][1] top.cputb.rv_imem.instr_mem[3][0]
+#{top.cputb.rv_imem.instr_mem[4][7:0]} top.cputb.rv_imem.instr_mem[4][7] top.cputb.rv_imem.instr_mem[4][6] top.cputb.rv_imem.instr_mem[4][5] top.cputb.rv_imem.instr_mem[4][4] top.cputb.rv_imem.instr_mem[4][3] top.cputb.rv_imem.instr_mem[4][2] top.cputb.rv_imem.instr_mem[4][1] top.cputb.rv_imem.instr_mem[4][0]
+#{top.cputb.rv_imem.instr_mem[5][7:0]} top.cputb.rv_imem.instr_mem[5][7] top.cputb.rv_imem.instr_mem[5][6] top.cputb.rv_imem.instr_mem[5][5] top.cputb.rv_imem.instr_mem[5][4] top.cputb.rv_imem.instr_mem[5][3] top.cputb.rv_imem.instr_mem[5][2] top.cputb.rv_imem.instr_mem[5][1] top.cputb.rv_imem.instr_mem[5][0]
+#{top.cputb.rv_imem.instr_mem[6][7:0]} top.cputb.rv_imem.instr_mem[6][7] top.cputb.rv_imem.instr_mem[6][6] top.cputb.rv_imem.instr_mem[6][5] top.cputb.rv_imem.instr_mem[6][4] top.cputb.rv_imem.instr_mem[6][3] top.cputb.rv_imem.instr_mem[6][2] top.cputb.rv_imem.instr_mem[6][1] top.cputb.rv_imem.instr_mem[6][0]
+#{top.cputb.rv_imem.instr_mem[7][7:0]} top.cputb.rv_imem.instr_mem[7][7] top.cputb.rv_imem.instr_mem[7][6] top.cputb.rv_imem.instr_mem[7][5] top.cputb.rv_imem.instr_mem[7][4] top.cputb.rv_imem.instr_mem[7][3] top.cputb.rv_imem.instr_mem[7][2] top.cputb.rv_imem.instr_mem[7][1] top.cputb.rv_imem.instr_mem[7][0]
+#{top.cputb.rv_imem.instr_mem[8][7:0]} top.cputb.rv_imem.instr_mem[8][7] top.cputb.rv_imem.instr_mem[8][6] top.cputb.rv_imem.instr_mem[8][5] top.cputb.rv_imem.instr_mem[8][4] top.cputb.rv_imem.instr_mem[8][3] top.cputb.rv_imem.instr_mem[8][2] top.cputb.rv_imem.instr_mem[8][1] top.cputb.rv_imem.instr_mem[8][0]
+#{top.cputb.rv_imem.instr_mem[9][7:0]} top.cputb.rv_imem.instr_mem[9][7] top.cputb.rv_imem.instr_mem[9][6] top.cputb.rv_imem.instr_mem[9][5] top.cputb.rv_imem.instr_mem[9][4] top.cputb.rv_imem.instr_mem[9][3] top.cputb.rv_imem.instr_mem[9][2] top.cputb.rv_imem.instr_mem[9][1] top.cputb.rv_imem.instr_mem[9][0]
+#{top.cputb.rv_imem.instr_mem[10][7:0]} top.cputb.rv_imem.instr_mem[10][7] top.cputb.rv_imem.instr_mem[10][6] top.cputb.rv_imem.instr_mem[10][5] top.cputb.rv_imem.instr_mem[10][4] top.cputb.rv_imem.instr_mem[10][3] top.cputb.rv_imem.instr_mem[10][2] top.cputb.rv_imem.instr_mem[10][1] top.cputb.rv_imem.instr_mem[10][0]
+#{top.cputb.rv_imem.instr_mem[11][7:0]} top.cputb.rv_imem.instr_mem[11][7] top.cputb.rv_imem.instr_mem[11][6] top.cputb.rv_imem.instr_mem[11][5] top.cputb.rv_imem.instr_mem[11][4] top.cputb.rv_imem.instr_mem[11][3] top.cputb.rv_imem.instr_mem[11][2] top.cputb.rv_imem.instr_mem[11][1] top.cputb.rv_imem.instr_mem[11][0]
+#{top.cputb.rv_imem.instr_mem[12][7:0]} top.cputb.rv_imem.instr_mem[12][7] top.cputb.rv_imem.instr_mem[12][6] top.cputb.rv_imem.instr_mem[12][5] top.cputb.rv_imem.instr_mem[12][4] top.cputb.rv_imem.instr_mem[12][3] top.cputb.rv_imem.instr_mem[12][2] top.cputb.rv_imem.instr_mem[12][1] top.cputb.rv_imem.instr_mem[12][0]
+@200
+-
+@28
+top.cputb.clk
+@420
+#{top.cputb.pc[31:0]} top.cputb.pc[31] top.cputb.pc[30] top.cputb.pc[29] top.cputb.pc[28] top.cputb.pc[27] top.cputb.pc[26] top.cputb.pc[25] top.cputb.pc[24] top.cputb.pc[23] top.cputb.pc[22] top.cputb.pc[21] top.cputb.pc[20] top.cputb.pc[19] top.cputb.pc[18] top.cputb.pc[17] top.cputb.pc[16] top.cputb.pc[15] top.cputb.pc[14] top.cputb.pc[13] top.cputb.pc[12] top.cputb.pc[11] top.cputb.pc[10] top.cputb.pc[9] top.cputb.pc[8] top.cputb.pc[7] top.cputb.pc[6] top.cputb.pc[5] top.cputb.pc[4] top.cputb.pc[3] top.cputb.pc[2] top.cputb.pc[1] top.cputb.pc[0]
+@29
+#{top.cputb.instruction[31:0]} top.cputb.instruction[31] top.cputb.instruction[30] top.cputb.instruction[29] top.cputb.instruction[28] top.cputb.instruction[27] top.cputb.instruction[26] top.cputb.instruction[25] top.cputb.instruction[24] top.cputb.instruction[23] top.cputb.instruction[22] top.cputb.instruction[21] top.cputb.instruction[20] top.cputb.instruction[19] top.cputb.instruction[18] top.cputb.instruction[17] top.cputb.instruction[16] top.cputb.instruction[15] top.cputb.instruction[14] top.cputb.instruction[13] top.cputb.instruction[12] top.cputb.instruction[11] top.cputb.instruction[10] top.cputb.instruction[9] top.cputb.instruction[8] top.cputb.instruction[7] top.cputb.instruction[6] top.cputb.instruction[5] top.cputb.instruction[4] top.cputb.instruction[3] top.cputb.instruction[2] top.cputb.instruction[1] top.cputb.instruction[0]
+@200
+-
+@22
+#{top.cputb.rv_cpu.opcode[6:0]} top.cputb.rv_cpu.opcode[6] top.cputb.rv_cpu.opcode[5] top.cputb.rv_cpu.opcode[4] top.cputb.rv_cpu.opcode[3] top.cputb.rv_cpu.opcode[2] top.cputb.rv_cpu.opcode[1] top.cputb.rv_cpu.opcode[0]
+@c00028
+#{top.cputb.rv_cpu.rd[4:0]} top.cputb.rv_cpu.rd[4] top.cputb.rv_cpu.rd[3] top.cputb.rv_cpu.rd[2] top.cputb.rv_cpu.rd[1] top.cputb.rv_cpu.rd[0]
+@28
+top.cputb.rv_cpu.rd[4]
+top.cputb.rv_cpu.rd[3]
+top.cputb.rv_cpu.rd[2]
+top.cputb.rv_cpu.rd[1]
+top.cputb.rv_cpu.rd[0]
+@1401208
+-group_end
+@28
+#{top.cputb.rv_cpu.func3[2:0]} top.cputb.rv_cpu.func3[2] top.cputb.rv_cpu.func3[1] top.cputb.rv_cpu.func3[0]
+#{top.cputb.rv_cpu.rs1[4:0]} top.cputb.rv_cpu.rs1[4] top.cputb.rv_cpu.rs1[3] top.cputb.rv_cpu.rs1[2] top.cputb.rv_cpu.rs1[1] top.cputb.rv_cpu.rs1[0]
+#{top.cputb.rv_cpu.rs2[4:0]} top.cputb.rv_cpu.rs2[4] top.cputb.rv_cpu.rs2[3] top.cputb.rv_cpu.rs2[2] top.cputb.rv_cpu.rs2[1] top.cputb.rv_cpu.rs2[0]
+#{top.cputb.rv_cpu.func7[6:0]} top.cputb.rv_cpu.func7[6] top.cputb.rv_cpu.func7[5] top.cputb.rv_cpu.func7[4] top.cputb.rv_cpu.func7[3] top.cputb.rv_cpu.func7[2] top.cputb.rv_cpu.func7[1] top.cputb.rv_cpu.func7[0]
+[pattern_trace] 1
+[pattern_trace] 0
