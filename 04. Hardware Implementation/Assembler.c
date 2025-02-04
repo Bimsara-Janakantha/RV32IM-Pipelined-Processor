@@ -1,7 +1,7 @@
 /*
 Create by BG
 Created on Sun, 26 Jan 2025 at 11:37 AM
-Last modified on Mon, 03 Feb 2025 at 09:34 AM
+Last modified on Tue, 04 Feb 2025 at 07:14 PM
 This is the assembler for RMV-32IM Pipelined processor
 
 Description:
@@ -909,8 +909,27 @@ int main()
         char *inst = generate_instruction(line);
         // printf("32 Ins: %s\n", inst);
 
+        char reg1[9], reg2[9], reg3[9], reg4[9];
+
+        strncpy(reg4, inst, 8);
+        strncpy(reg3, inst + 8, 8);
+        strncpy(reg2, inst + 16, 8);
+        strncpy(reg1, inst + 24, 8);
+
+        reg1[8] = '\0';
+        reg2[8] = '\0';
+        reg3[8] = '\0';
+        reg4[8] = '\0';
+
         // Write the modified line to the output file
-        fputs(inst, output_file);
+        fputs(reg1, output_file);
+        fputs("\n", output_file);
+        fputs(reg2, output_file);
+        fputs("\n", output_file);
+        fputs(reg3, output_file);
+        fputs("\n", output_file);
+        fputs(reg4, output_file);
+        fputs("\n", output_file);
     }
 
     // Close the files

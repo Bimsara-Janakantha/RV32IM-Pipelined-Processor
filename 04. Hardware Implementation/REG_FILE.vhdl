@@ -64,14 +64,7 @@ begin
             -- Reset all registers
             if (Reset = '1') then
                 -- Add delay here
-                -- Change this later
-                --registers <= (others => (others => '0'));
-                registers <= (
-                    0 => "00000000000000000000000000000000", 
-                    1 => "00000000000000000000000000000010", 
-                    2 => "00000000000000000000000000000100", 
-                    others => (others => '0')               
-                );
+                registers <= (others => (others => '0'));
 
             -- Write data to the register
             elsif (WriteEnable = '1') then 

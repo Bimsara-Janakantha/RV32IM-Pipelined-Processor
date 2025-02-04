@@ -1,3 +1,3 @@
-auipc x4, 31
-lui x5, 31
-jal x5, 127
+addi x0, x1, 15
+addi x2, x1, 1
+add x3, x2, x0

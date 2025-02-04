@@ -14,19 +14,32 @@ architecture testbench of CPUTB is
     );
   end component;
 
-  Signal CLK : std_logic ;
-  Signal RESET : std_logic ;
+  component IMEM is
+    port(
+      ADDRESS     : in std_logic_vector (31 downto 0);
+      INSTRUCTION : out std_logic_vector (31 downto 0)
+    );
+  end component;
+
+  Signal CLK : std_logic;
+  Signal RESET : std_logic;
   Signal PC, INSTRUCTION : std_logic_vector (31 downto 0);
 
   -- Clock period
   constant clk_period : time := 80 ns;
 begin
-  CPU_TEST : CPU
+  RV_CPU : CPU
   port map (
     INSTRUCTION => INSTRUCTION,
     CLK         => CLK,
     RESET       => RESET,
     PC          => PC
+  );
+
+  RV_IMEM : IMEM
+  port map (
+    ADDRESS     => PC,
+    INSTRUCTION => INSTRUCTION
   );
 
   -- Clock Process
@@ -52,57 +65,6 @@ begin
     wait for clk_period;
     RESET <= '0';
     wait;
-  end process;
-
-  -- Stimulus Process
-  process(PC)
-  begin
-
-    case (PC) is  
-      when x"00000000" => -- SW x2, 0(x1)
-        INSTRUCTION <= x"00208023" after 20 ns;
-        report "Instruction No: 1";
-
-      when x"00000004" => -- SB x2, 4(x1)
-        INSTRUCTION <= x"002073a3" after 20 ns;
-        report "Instruction No: 2";
-
-      when x"00000008" =>
-        INSTRUCTION <= x"0000F197" after 20 ns;
-        report "Instruction No: 3";
-
-      when x"0000000C" =>
-        INSTRUCTION <= x"00000004" after 20 ns;
-        report "Instruction No: 4";
-
-      when x"00000010" =>
-        INSTRUCTION <= x"00000005" after 20 ns;
-        report "Instruction No: 5";
-
-      when x"00000014" =>
-        INSTRUCTION <= x"00000006" after 20 ns;
-        report "Instruction No: 6";
-      
-      when x"00000018" =>
-        INSTRUCTION <= x"00000007" after 20 ns;
-        report "Instruction No: 7";
-
-      when x"0000001C" =>
-        INSTRUCTION <= x"00000008" after 20 ns;
-        report "Instruction No: 8";
-
-      when x"00000020" =>
-        INSTRUCTION <= x"00000009" after 20 ns;
-        report "Instruction No: 9";
-
-      when x"00000024" =>
-        INSTRUCTION <= x"0000000A" after 20 ns;
-        report "Instruction No: 10";
-    
-      when others =>
-        report "Invalid PC";
-        INSTRUCTION <= (others => 'X') after 20 ns;
-    end case ;
   end process;
 
 end architecture ;
