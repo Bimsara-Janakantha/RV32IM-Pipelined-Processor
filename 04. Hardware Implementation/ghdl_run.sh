@@ -9,7 +9,8 @@ set -e
 #FILENAME="PCTB"
 #FILENAME="Pipeline_Reg_TB"
 #FILENAME="MASKTB"
-FILENAME="CPUTB"
+#FILENAME="CPUTB"
+FILENAME="IMEM_TB"
 
 # Step 2: Analyze all VHDL files
 echo "Analyzing all VHDL files."

@@ -1,53 +1,71 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+-- Create by BG
+-- Created on Tue, 04 Feb 2025 at 12:54 PM
+-- Last modified on Tue, 04 Feb 2025 at 02:37 PM
+-- This is the Instruction Memory module for RV32IM Piplined Processor
 
+------------------------------------------------------
+--                Instruction Memory                --
+------------------------------------------------------
+-- A IMEM with 1 input streams and 1 output stream. --
+------------------------------------------------------
+
+-- Note: 1 time unit = 1ns/100ps = 10ns
+
+-- Libraries (IEEE)
+library ieee;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
+    
+
+-- Libraries (STD)
 library std;
 use std.textio.all;
 
+-- IMEM Entity
 entity IMEM is
     port(
-         Clock       : in  std_logic;
-         Reset       : in  std_logic;
-         Address     : in  std_logic_vector(31 downto 0);
-         Instruction : out std_logic_vector(31 downto 0)
+        ADDRESS     : in  std_logic_vector(31 downto 0);
+        INSTRUCTION : out std_logic_vector(31 downto 0)
     );
 end IMEM;
 
-architecture Behavioral of IMEM is
-    -- Memory array: 256 words of 32 bits each.
-    type mem_array is array (0 to 255) of std_logic_vector(31 downto 0);
-    signal mem : mem_array := (others => (others => '0'));
+-- IMEM Architecture
+architecture IMEM_Architecture of IMEM is
+    -- Memory array: 1024 words of 8 bits each.
+    type mem_array is array (0 to 1023) of std_logic_vector(7 downto 0);
+    signal instr_mem : mem_array := (others => (others => '0'));
 
-    -- Function: Convert an 8-character hexadecimal string to an integer.
-    function hex_to_integer(s: string) return integer is
-        variable result : integer := 0;
+    -- Function to convert a string of '0's and '1's to std_logic_vector
+    function string_to_slv(s: string) return std_logic_vector is
+        variable result: std_logic_vector(7 downto 0); -- MSB to LSB order
     begin
-        for i in s'range loop
-            result := result * 16;
-            case s(i) is
-                when '0' => result := result + 0;
-                when '1' => result := result + 1;
-                when '2' => result := result + 2;
-                when '3' => result := result + 3;
-                when '4' => result := result + 4;
-                when '5' => result := result + 5;
-                when '6' => result := result + 6;
-                when '7' => result := result + 7;
-                when '8' => result := result + 8;
-                when '9' => result := result + 9;
-                when 'A' | 'a' => result := result + 10;
-                when 'B' | 'b' => result := result + 11;
-                when 'C' | 'c' => result := result + 12;
-                when 'D' | 'd' => result := result + 13;
-                when 'E' | 'e' => result := result + 14;
-                when 'F' | 'f' => result := result + 15;
-                when others => null;
-            end case;
+        for i in 1 to 8 loop
+            --report "Bit: " & s(i) severity error;
+        case s(i) is
+            when '0' => result(8 - i) := '0'; -- Map '0' to bit '0'
+            when '1' => result(8 - i) := '1'; -- Map '1' to bit '1'
+            when others =>
+            report "Invalid character in string: '" & s(i) & "'" severity error;
+            result(8 - i) := 'X'; -- Handle invalid characters
+        end case;
         end loop;
         return result;
-    end hex_to_integer;
-    
+    end function;
+
+    -- Function to convert std_logic_vector back to string (for reporting)
+    function slv_to_string(vector: std_logic_vector) return string is
+        variable result: string(1 to 8);
+    begin
+        for i in 0 to 7 loop
+        case vector(i) is
+            when '0' => result(i+1) := '0';
+            when '1' => result(i+1) := '1';
+            when others => result(i+1) := 'X';
+        end case;
+        end loop;
+        return result;
+    end function;
+
 begin
 
     ------------------------------------------------------------------
@@ -56,43 +74,41 @@ begin
     -- initialization.
     ------------------------------------------------------------------
     init_memory: process
-        file infile : text open read_mode is "instr_mem.mem";
-        variable L : line;
-        variable index : integer := 0;
-        variable hex_str : string(1 to 8);  -- 8 hex digits per 32-bit word
-        variable int_val : integer;
+        file mem_file     : text open read_mode is "instr_mem.mem";
+        variable mem_line : line;
+        variable mem_str  : string(1 to 8);
+        variable idx      : integer := 0;
     begin
-        while not endfile(infile) loop
-            readline(infile, L);
-            -- Read an 8-character hex string from the line.
-            read(L, hex_str);
-            int_val := hex_to_integer(hex_str);
-            report "Instruction: " & integer'image(int_val) severity note;
-            mem(index) <= std_logic_vector(to_unsigned(int_val, 32));
-            index := index + 1;
+        while not endfile(mem_file) loop
+            readline(mem_file, mem_line);
+
+            -- Read a binary chunk from the ROM
+            read(mem_line, mem_str);
+            report "Instruction: " & mem_str severity note;
+
+            -- Save it into the IMEM
+            instr_mem(idx) <= string_to_slv(mem_str) after 1 ps;
+
+            idx := idx + 1;
         end loop;
         wait;
     end process init_memory;
-
+   
     ------------------------------------------------------------------
     -- Instruction Output Process
     --
-    -- On every rising edge of the Clock, this process uses the PC to
-    -- index into the memory array and outputs the corresponding
-    -- instruction.
-    --
-    -- Here we assume word addressing: for example, if your memory 
-    -- stores 256 words, you may use bits [31 downto 2] (or an 
-    -- appropriate slice) of the PC as the index.
+    -- When the PC changes IMEM get that PC, index into the memory 
+    -- array and outputs the corresponding instruction.
     ------------------------------------------------------------------
-    process(Clock)
-        variable addr : integer;
+    read_memory : process(ADDRESS)
+        variable idx : integer := 0;
     begin
-        if rising_edge(Clock) then
-            -- Example: using bits [9 downto 2] for a 256-word memory.
-            addr := to_integer(unsigned(Address(9 downto 2)));
-            Instruction <= mem(addr);
-        end if;
-    end process;
+        idx := to_integer(unsigned(ADDRESS));
+        report "INDEX: " & integer'image(idx) severity note;
+        
+        INSTRUCTION <= instr_mem(idx+3) & instr_mem(idx+2) & instr_mem(idx+1) & instr_mem(idx) after 40 ns;
 
-end Behavioral;
+    end process read_memory;
+
+end IMEM_Architecture;
+
