@@ -3,13 +3,16 @@
 # Ensure the script exits if any command fails
 set -e
 
-# Step 1: Assign Testbench to the variable
+# Step 0: Assign Testbench to the variable
 #FILENAME="Reg_File_tb"
 #FILENAME="ALUTB"
 #FILENAME="PCTB"
 #FILENAME="Pipeline_Reg_TB"
 #FILENAME="MASKTB"
 FILENAME="CPUTB"
+
+# Step 1: Run the Assembler
+./Assembler
 
 # Step 2: Analyze all VHDL files
 echo "Analyzing all VHDL files."
