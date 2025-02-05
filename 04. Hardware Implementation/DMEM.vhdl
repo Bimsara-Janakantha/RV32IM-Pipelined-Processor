@@ -48,11 +48,11 @@ end DMEM;
 architecture DMEM_Architecture of DMEM is
   -- Deffinition of the Data memory - 1024 Bytes memory
   type DataMemory is Array (0 to 1023) of std_logic_vector(7 downto 0);
+  signal MEMORY : DataMemory := (others => (others => '0'));
 
 begin
   
   process (CLK, MemAddress, MemRead, FUNC3)
-    variable MEMORY : DataMemory := (others => (others => '0'));
     variable EXTENDER : std_logic_vector(31 downto 0) := (others => '0');
   begin
 
@@ -90,7 +90,7 @@ begin
 
       -- Reset Data
       if (RESET = '1') then
-        MEMORY := (others => (others =>  '0'));
+        MEMORY <=  (others => (others =>  '0'));
 
       -- Write Data
       elsif (MemWrite = '1') then
@@ -98,17 +98,17 @@ begin
         case( FUNC3 ) is
         
           when "000" => -- SB
-            MEMORY(to_integer(Unsigned(MemAddress)))     := MemDataInput(7 downto 0);
+            MEMORY(to_integer(Unsigned(MemAddress)))     <= MemDataInput(7 downto 0);
 
           when "001" => -- SH
-            MEMORY(to_integer(Unsigned(MemAddress)))     := MemDataInput(7 downto 0);
-            MEMORY(to_integer(Unsigned(MemAddress) + 1)) := MemDataInput(15 downto 8);
+            MEMORY(to_integer(Unsigned(MemAddress)))     <= MemDataInput(7 downto 0);
+            MEMORY(to_integer(Unsigned(MemAddress) + 1)) <= MemDataInput(15 downto 8);
 
           when others => -- SW
-            MEMORY(to_integer(Unsigned(MemAddress)))     := MemDataInput(7 downto 0);
-            MEMORY(to_integer(Unsigned(MemAddress) + 1)) := MemDataInput(15 downto 8);
-            MEMORY(to_integer(Unsigned(MemAddress) + 2)) := MemDataInput(23 downto 16);
-            MEMORY(to_integer(Unsigned(MemAddress) + 3)) := MemDataInput(31 downto 24);
+            MEMORY(to_integer(Unsigned(MemAddress)))     <= MemDataInput(7 downto 0);
+            MEMORY(to_integer(Unsigned(MemAddress) + 1)) <= MemDataInput(15 downto 8);
+            MEMORY(to_integer(Unsigned(MemAddress) + 2)) <= MemDataInput(23 downto 16);
+            MEMORY(to_integer(Unsigned(MemAddress) + 3)) <= MemDataInput(31 downto 24);
         
         end case ;
 
