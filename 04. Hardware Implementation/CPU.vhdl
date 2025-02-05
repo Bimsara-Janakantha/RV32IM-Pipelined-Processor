@@ -29,9 +29,18 @@ use ieee.numeric_std.all;
 -- Entity 
 entity CPU is
   port(
-    INSTRUCTION : in std_logic_vector (31 downto 0);
+    -- General Ports
     CLK, RESET  : in std_logic;
-    PC          : out std_logic_vector (31 downto 0)
+
+    -- Ports for IMEM
+    INSTRUCTION : in std_logic_vector (31 downto 0);
+    PC          : out std_logic_vector (31 downto 0);
+
+    -- Ports for DMEM
+    DMEMREAD, DMEMWRITE : out std_logic;
+    DFUNC3              : out std_logic_vector (2 downto 0);
+    ALURESULT, DMEMIN   : out std_logic_vector (31 downto 0);
+    DMEMOUT             : in std_logic_vector (31 downto 0)
   );
 end CPU; 
 
@@ -151,18 +160,6 @@ architecture CPU_Architecture of CPU is
       );
     end component ;
 
-    component DMEM is
-      port(
-        MemAddress   : in std_logic_vector (31 downto 0);
-        MemDataInput : in std_logic_vector (31 downto 0);
-        FUNC3        : in std_logic_vector (2 downto 0);
-        CLK, RESET   : in std_logic;
-        MemRead      : in std_logic;
-        MemWrite     : in std_logic;
-        MemOut       : out std_logic_vector (31 downto 0)
-      );
-    end component;
-
     component REG_MEM_WB is
       port (
         -- Signal Ports
@@ -197,10 +194,9 @@ architecture CPU_Architecture of CPU is
     Signal WriteEnable_EX, MUX1_EX, MUX2_EX, MUX3_EX, MUX4_EX, Jump_EX, Branch_EX, MemRead_EX, MemWrite_EX, ZERO_EX, FLUSH : std_logic;
 
     -- Signals in MEM part
-    Signal ALURESULT_MEM, MemDataInput_MEM, MemOut_Mem : std_logic_vector (31 downto 0);
+    Signal ALURESULT_MEM : std_logic_vector (31 downto 0);
     Signal RD_MEM        : std_logic_vector (4 downto 0);
-    Signal FUNC3_MEM     : std_logic_vector (2 downto 0);
-    Signal WriteEnable_MEM, MUX2_MEM, MemRead_MEM, MemWrite_MEM : std_logic;
+    Signal WriteEnable_MEM, MUX2_MEM : std_logic;
 
     -- Signals in WB part
     Signal ALURESULT_WB, MemOut_WB, WriteData_WB : std_logic_vector (31 downto 0);
@@ -378,24 +374,12 @@ begin
     -- OUTPUT PORTS    
     WriteEnable_O  => WriteEnable_MEM,
     MUX2_O         => MUX2_MEM,
-    MemRead_O      => MemRead_MEM,
-    MemWrite_O     => MemWrite_MEM,
+    MemRead_O      => DMEMREAD,
+    MemWrite_O     => DMEMWRITE,
     RD_O           => RD_MEM,
-    FUNC3_O        => FUNC3_MEM,
+    FUNC3_O        => DFUNC3,
     ALURESULT_O    => ALURESULT_MEM,
-    MemDataInput_O => MemDataInput_MEM
-  );
-
-  RV_DMEM : DMEM
-  port map(
-    CLK          => CLK, 
-    RESET        => RESET,
-    MemAddress   => ALURESULT_MEM,
-    MemDataInput => MemDataInput_MEM,
-    FUNC3        => FUNC3_MEM,
-    MemRead      => MemRead_MEM,
-    MemWrite     => MemWrite_MEM,
-    MemOut       => MemOut_Mem
+    MemDataInput_O => DMEMIN
   );
 
   RV_MEM_WB : REG_MEM_WB
@@ -408,7 +392,7 @@ begin
     MUX2_I        => MUX2_MEM,
     RD_I          => RD_MEM,
     ALURESULT_I   => ALURESULT_MEM,
-    MEMOUT_I      => MemOut_Mem,
+    MEMOUT_I      => DMEMOUT,
 
     -- OUTPUT PORTS  
     WriteEnable_O => WriteEnable_WB,
@@ -430,12 +414,12 @@ begin
   PC_UPDATING : process (PC_IF)
   begin
     PC <= PC_IF;
-  end process;
+  end process PC_UPDATING;
 
   INSTRUCTION_FETCHING : process (INSTRUCTION)
   begin
     INSTRUCTION_IF <= INSTRUCTION;
-  end process;
+  end process INSTRUCTION_FETCHING;
 
   INSTUCTION_DECORDING : process (INSTRUCTION_ID)
   begin
@@ -446,6 +430,11 @@ begin
     FUNC3  <= INSTRUCTION_ID(14 downto 12);
     RD     <= INSTRUCTION_ID(11 downto 7);
     OPCODE <= INSTRUCTION_ID(6 downto 0);
-  end process; 
+  end process INSTUCTION_DECORDING; 
+
+  DATAMEMORY_ACCESSING : process (ALURESULT_MEM)
+  begin
+    ALURESULT <= ALURESULT_MEM;
+  end process DATAMEMORY_ACCESSING;
 
 end architecture;
