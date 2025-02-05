@@ -11,6 +11,9 @@
 -- Each input and output stream is 32 bit wide.                                --
 ---------------------------------------------------------------------------------
 
+-- Note: 1 time unit = 1ns/100ps = 10ns
+-- Timing (Delays) : 10ns for Immediate decording operation
+
 -- Libraries (IEEE)
 library ieee ;
     use ieee.std_logic_1164.all ;
@@ -37,37 +40,37 @@ begin
         -- I Type Instruction - Shift Category
         if (INSTRUCTION(6 downto 0) = "0010011" and INSTRUCTION(14 downto 12) = "101") then 
             EXTENSION := (others => '0');
-            IMM_OUTPUT <= EXTENSION(31 downto 5) & INSTRUCTION(24 downto 20);
+            IMM_OUTPUT <= EXTENSION(31 downto 5) & INSTRUCTION(24 downto 20) after 10 ns;
 
         -- S Type Instruction
         elsif (INSTRUCTION(6 downto 0) = "0100011") then 
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(31 downto 25) & INSTRUCTION(11 downto 7);
+            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(31 downto 25) & INSTRUCTION(11 downto 7) after 10 ns;
 
         -- B Type Instruction
         elsif (INSTRUCTION(6 downto 0) = "1100011") then 
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(7) & INSTRUCTION(30 downto 25) & INSTRUCTION(11 downto 8) & '0';
+            IMM_OUTPUT <= EXTENSION(31 downto 12) & INSTRUCTION(7) & INSTRUCTION(30 downto 25) & INSTRUCTION(11 downto 8) & '0' after 10 ns;
         
         -- U Type Instruction - Category 1
         elsif (INSTRUCTION(6 downto 0) = "0010111") then 
             EXTENSION := (others => '0');
-            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0);
+            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0) after 10 ns;
 
         -- U Type Instruction - Category 2
         elsif (INSTRUCTION(6 downto 0) = "0110111") then 
             EXTENSION := (others => '0');
-            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0);
+            IMM_OUTPUT <= INSTRUCTION(31 downto 12) & EXTENSION(11 downto 0) after 10 ns;
 
         -- J Type Instruction
         elsif (INSTRUCTION(6 downto 0) = "1101111") then 
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 20) & INSTRUCTION(19 downto 12) & INSTRUCTION(20) & INSTRUCTION(30 downto 21) & '0';
+            IMM_OUTPUT <= EXTENSION(31 downto 20) & INSTRUCTION(19 downto 12) & INSTRUCTION(20) & INSTRUCTION(30 downto 21) & '0' after 10 ns;
 
         -- Other Instructions (I type load and Jalr) 
         else
             EXTENSION := (others => INSTRUCTION(31));
-            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20);
+            IMM_OUTPUT <= EXTENSION(31 downto 11) & INSTRUCTION(30 downto 20) after 10 ns;
 
         end if ;
 

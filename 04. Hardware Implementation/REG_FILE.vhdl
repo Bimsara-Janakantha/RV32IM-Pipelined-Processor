@@ -17,6 +17,9 @@
 -- ReadData_2     : input : 32-bits wide                      --
 ----------------------------------------------------------------
 
+-- Note: 1 time unit = 1ns/100ps = 10ns
+-- Timing (Delays) : 20ns for data reading operation & 10ns for writing oparation
+
 -- Libraries (IEEE)
 library ieee ;
 use ieee.std_logic_1164.all;
@@ -52,9 +55,8 @@ begin
     process(ReadRegister_1, ReadRegister_2)
     begin
         -- Read data from specified registers
-        -- Add delay here
-        ReadData_1 <= registers(to_integer(unsigned(ReadRegister_1)));
-        ReadData_2 <= registers(to_integer(unsigned(ReadRegister_2)));
+        ReadData_1 <= registers(to_integer(unsigned(ReadRegister_1))) after 20 ns;
+        ReadData_2 <= registers(to_integer(unsigned(ReadRegister_2))) after 20 ns;
     end process;
 
     -- Write Operation - Synchronous
@@ -63,13 +65,11 @@ begin
         if rising_edge(Clock) then
             -- Reset all registers
             if (Reset = '1') then
-                -- Add delay here
-                registers <= (others => (others => '0'));
+                registers <= (others => (others => '0')) after 10 ns;
 
             -- Write data to the register
             elsif (WriteEnable = '1') then 
-                -- Add a delay here
-                registers(to_integer(Unsigned(WriteRegister))) <= WriteData;
+                registers(to_integer(Unsigned(WriteRegister))) <= WriteData after 10 ns;
             end if;
         end if;
     end process;

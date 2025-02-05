@@ -14,11 +14,11 @@
 -- 4. Controll Unit                --
 -- 5. Pipeline Registers           --
 -- 6. Immidiate Decorder           --
--- 7. Data Memory                  --
--- 8. Masking Unit                 --
+-- 7. Masking Unit                 --
 -------------------------------------
 
 -- Note: 1 time unit = 1ns/100ps = 10ns
+-- Timing (Delays) : 10ns for instruction decode operation
 -- Need to configure Jalr, B-Type
 
 -- Libraries (IEEE)
@@ -424,12 +424,12 @@ begin
   INSTUCTION_DECORDING : process (INSTRUCTION_ID)
   begin
     -- Current decording is for R-Type
-    FUNC7  <= INSTRUCTION_ID(31 downto 25);
-    RS2    <= INSTRUCTION_ID(24 downto 20);
-    RS1    <= INSTRUCTION_ID(19 downto 15);
-    FUNC3  <= INSTRUCTION_ID(14 downto 12);
-    RD     <= INSTRUCTION_ID(11 downto 7);
-    OPCODE <= INSTRUCTION_ID(6 downto 0);
+    FUNC7  <= INSTRUCTION_ID(31 downto 25) after 10 ns;
+    RS2    <= INSTRUCTION_ID(24 downto 20) after 10 ns;
+    RS1    <= INSTRUCTION_ID(19 downto 15) after 10 ns;
+    FUNC3  <= INSTRUCTION_ID(14 downto 12) after 10 ns;
+    RD     <= INSTRUCTION_ID(11 downto 7) after 10 ns;
+    OPCODE <= INSTRUCTION_ID(6 downto 0) after 10 ns;
   end process INSTUCTION_DECORDING; 
 
   DATAMEMORY_ACCESSING : process (ALURESULT_MEM)
