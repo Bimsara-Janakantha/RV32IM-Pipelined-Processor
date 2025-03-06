@@ -9,6 +9,9 @@
 -- A PC with 2 input streams and 1 output stream. --
 ----------------------------------------------------
 
+-- Note: 1 time unit = 1ns/100ps = 10ns
+-- Timing (Delays) : 10ns for PC update and 10ns for calculation of PC4
+
 
 -- Libraries (IEEE)
 library ieee ;
@@ -34,14 +37,14 @@ begin
             if (RESET = '1') then
                 -- Reset Logic
                 nextPC := to_unsigned(4, 32);    -- Reset nextPC to 4
-                PC  <= (others => '0');          -- Reset output PC
-                PC4 <= std_logic_vector(nextPC); -- Reset output PC4
+                PC  <= (others => '0') after 10 ns;          -- Reset output PC
+                PC4 <= std_logic_vector(nextPC) after 20 ns; -- Reset output PC4
                 report "RESET PC!" severity note;
             else
                 -- Normal Operation
-                PC     <= std_logic_vector(nextPC);
+                PC     <= std_logic_vector(nextPC) after 10 ns;
                 nextPC := nextPC + 4;
-                PC4    <= std_logic_vector(nextPC);
+                PC4    <= std_logic_vector(nextPC) after 20 ns;
                 report "PC Updated to: " & integer'image(to_integer(nextPC)) severity note;
             end if;
         end if;

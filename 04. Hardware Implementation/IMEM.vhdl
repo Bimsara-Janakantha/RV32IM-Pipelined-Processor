@@ -10,6 +10,7 @@
 ------------------------------------------------------
 
 -- Note: 1 time unit = 1ns/100ps = 10ns
+-- Timing (Delays) : 40ns for reading operation
 
 -- Libraries (IEEE)
 library ieee;
